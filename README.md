@@ -2,7 +2,7 @@
 
 > An evidence-aware family archive that helps people discover questions worth asking before memories lose their context.
 
-**Status:** Deployment-first development baseline v0.2. No runnable application, completed model evaluation, or deployed demo has been verified as of 2026-10-28.
+**Status:** M1a implementation in progress. The local app, SQL migration and automated checks are implemented. Real Supabase Auth/Storage integration is not yet verified; no deployment or model evaluation has been performed. See the [implementation and verification record](docs/m1a-implementation.md).
 
 **Project name:** Trace & Tell is a working product name; it has not been verified as the final name entered on the hackathon application.
 
@@ -27,7 +27,7 @@ An accepted hypothesis remains a hypothesis. A person's testimony is attributed 
 
 ## Current Scope
 
-The agreed implementation is a **deployment-first**, responsive Next.js application backed by Supabase PostgreSQL, Auth and private Storage, with Vercel as the proposed hosting service. An active, Seoul-region Supabase project named `trace-and-tell` has been verified; no application schema or executable app has yet been created.
+The implementation is a **deployment-first**, responsive Next.js application backed by Supabase PostgreSQL, Auth and private Storage, with Vercel as the proposed hosting service. The previously verified Seoul-region Supabase project has not been modified by this implementation. The application schema is supplied as an unapplied SQL migration.
 
 Two distinct experiences are planned:
 
@@ -63,7 +63,38 @@ The authoritative participant rules, submission form, required artefacts, demo a
 
 ## Getting Started
 
-There is **no implemented application, runnable setup or deployed URL yet**. The stack has been selected but packages and migration files have not been installed or created. Once M1a is implemented, this section will document verified local commands, required environment-variable names (never their values), database migrations and test results.
+Requires Node.js 22.12 or later and npm. Versions are pinned in `package-lock.json`.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open `http://localhost:3000/demo` for the read-only synthetic collection. Without credentials, the private archive explicitly reports that setup is pending; it does not substitute browser storage for persistence.
+
+For the private archive, copy `.env.example` to the ignored `.env.local` and supply these **server-only** variables through your local secret mechanism:
+
+| Variable | Purpose |
+| --- | --- |
+| `SUPABASE_URL` | Project API URL |
+| `SUPABASE_PUBLISHABLE_KEY` | Auth and user-scoped RLS requests; legacy anon keys are also supported |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only command transactions and private object operations |
+| `APP_ORIGIN` | Exact app origin, such as `http://localhost:3000` |
+
+No Supabase API key is embedded in client code. Never rename these variables with a `NEXT_PUBLIC_` prefix. Configure the exact `/auth/callback` redirect in Supabase Auth only with approval for that environment. Magic Links use PKCE and must be opened in the browser that requested them.
+
+The migration is [persistent_archive.sql](supabase/migrations/20261028155626_persistent_archive.sql). **Remote application requires separate approval.** Do not run a remote migration as part of installation or deployment. For a disposable local Supabase stack, Docker and the pinned Supabase CLI are required; see [local integration setup](docs/m1a-implementation.md#local-integration-setup).
+
+```sh
+npm run test
+npm run typecheck
+npm run lint
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+Playwright starts the production build, so run `build` first. Default browser checks need no credentials. The private integration suite is skipped unless explicitly enabled against a local Supabase stack. See [results and limitations](docs/m1a-implementation.md#verification) for the distinction between SQL tests and real service tests.
 
 ## Responsible Data Handling
 
@@ -84,4 +115,4 @@ There is **no implemented application, runnable setup or deployed URL yet**. The
 - [ ] M3: Strengthen recovery, corrections and privacy; add audio transcription only if tested and time permits.
 - [ ] M4: Prepare an accessible synthetic demonstration, verify the official submission requirements and submit the actual deliverables.
 
-**Last reviewed:** 2026-10-28. **Deployment:** not yet performed or verified. **Tests:** not run; the repository contains no app implementation.
+**Last reviewed:** 2026-10-29. **Deployment:** not performed. **Tests:** local automated results and outstanding integration gates are recorded in [M1a verification](docs/m1a-implementation.md#verification). M1a acceptance remains open until the real service tests pass.
