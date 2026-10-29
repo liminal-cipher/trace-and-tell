@@ -2,7 +2,7 @@
 
 > An evidence-aware family archive that helps people discover questions worth asking before memories lose their context.
 
-**Status:** M1a implementation in progress. The local app, SQL migration and automated checks are implemented. Real Supabase Auth/Storage integration is not yet verified; no deployment or model evaluation has been performed. See the [implementation and verification record](docs/m1a-implementation.md).
+**Status:** M1a implementation in progress, local security hardening tested. Real Supabase Auth/PostgreSQL/Storage integration is still unverified; no deployment or model evaluation has been performed. See the [audit, acceptance matrix and approval plan](docs/m1a-implementation.md).
 
 **Project name:** Trace & Tell is a working product name; it has not been verified as the final name entered on the hackathon application.
 
@@ -79,11 +79,11 @@ For the private archive, copy `.env.example` to the ignored `.env.local` and sup
 | `SUPABASE_URL` | Project API URL |
 | `SUPABASE_PUBLISHABLE_KEY` | Auth and user-scoped RLS requests; legacy anon keys are also supported |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only command transactions and private object operations |
-| `APP_ORIGIN` | Exact app origin, such as `http://localhost:3000` |
+| `APP_ORIGIN` | Exact HTTPS app origin; local development also accepts `http://localhost:3000` or loopback. No path, query, fragment or credentials |
 
 No Supabase API key is embedded in client code. Never rename these variables with a `NEXT_PUBLIC_` prefix. Configure the exact `/auth/callback` redirect in Supabase Auth only with approval for that environment. Magic Links use PKCE and must be opened in the browser that requested them.
 
-The migration is [persistent_archive.sql](supabase/migrations/20261028155626_persistent_archive.sql). **Remote application requires separate approval.** Do not run a remote migration as part of installation or deployment. For a disposable local Supabase stack, Docker and the pinned Supabase CLI are required; see [local integration setup](docs/m1a-implementation.md#local-integration-setup).
+Apply the [initial schema](supabase/migrations/20261028155626_persistent_archive.sql) followed by [M1a hardening](supabase/migrations/20261029150829_m1a_security_hardening.sql) only to an approved environment. Both are unapplied remotely. The initial migration was revised while still unapplied; use a fresh disposable local stack. **Remote application requires separate approval.** Installation and deployment never apply SQL automatically. Docker and the pinned CLI are needed for [local integration](docs/m1a-implementation.md#local-integration-setup).
 
 ```sh
 npm run test
@@ -94,7 +94,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts the production build, so run `build` first. Default browser checks need no credentials. The private integration suite is skipped unless explicitly enabled against a local Supabase stack. See [results and limitations](docs/m1a-implementation.md#verification) for the distinction between SQL tests and real service tests.
+Playwright starts the production build, so run `build` first. Default browser checks explicitly clear Supabase configuration, including values that Next.js might otherwise load from `.env.local`. Private integration is skipped unless `RUN_LOCAL_SUPABASE_E2E=1` and local service credentials are supplied in the process environment. The runner rejects non-local targets before startup and records no Auth traces. See [results and limitations](docs/m1a-implementation.md#verification): 48 local tests and 6 public browser checks passed; 2 private-service journeys were not run. PGlite runs PostgreSQL 18.6, not the target's PostgreSQL 17.11 or Supabase HTTP services.
 
 ## Responsible Data Handling
 
@@ -115,4 +115,4 @@ Playwright starts the production build, so run `build` first. Default browser ch
 - [ ] M3: Strengthen recovery, corrections and privacy; add audio transcription only if tested and time permits.
 - [ ] M4: Prepare an accessible synthetic demonstration, verify the official submission requirements and submit the actual deliverables.
 
-**Last reviewed:** 2026-10-29. **Deployment:** not performed. **Tests:** local automated results and outstanding integration gates are recorded in [M1a verification](docs/m1a-implementation.md#verification). M1a acceptance remains open until the real service tests pass.
+**Last reviewed:** 2026-10-30. **Deployment:** not performed. **Tests:** evidence and outstanding gates are recorded in [M1a verification](docs/m1a-implementation.md#verification). Read-only remote preflight found no app tables, buckets or applied migrations. The auto-RLS privilege fix is prepared but unapplied. M1a acceptance remains open until real service tests pass.
