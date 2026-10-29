@@ -224,7 +224,7 @@ async function finalize(
       .maybeSingle();
     databaseError(asset.error);
     if (!asset.data) throw new AppError(404, "This record has been deleted.");
-    return { ...asset.data, already_saved: true };
+    return { ...(await rpc(actor, command)), already_saved: true };
   }
   if (intent.state === "rejected")
     throw new AppError(

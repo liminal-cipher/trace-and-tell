@@ -138,6 +138,15 @@ describe("upload recovery with injected HTTP failures", () => {
     ).rejects.toThrow("unavailable");
     expect(operations).toEqual(["GET /rest/v1/upload_intents"]);
   });
+  it("checks a completed upload's receipt instead of silently accepting any retry key", async () => {
+    state = "complete";
+    failCommit = true;
+    await expect(executeCommand(admin, actor, {
+      action: "finalize_upload", key: intentId, intent_id: intentId,
+    })).rejects.toThrow("not been confirmed");
+    expect(operations).toContain("POST /rest/v1/rpc/archive_command");
+    expect(operations.some((op) => op.includes("/storage/"))).toBe(false);
+  });
 });
 describe("request boundaries", () => {
   it("loads records beyond the Data API response cap and propagates a later page failure", async () => {
@@ -148,6 +157,10 @@ describe("request boundaries", () => {
         error: null,
       })),
     ).resolves.toEqual(rows);
+    const capped = await allRows(async (from, to) => ({
+      data: rows.slice(from, Math.min(to + 1, from + 100)), error: null,
+    }));
+    expect(capped.length).toBe(rows.length);
     await expect(
       allRows(async (from, to) =>
         from

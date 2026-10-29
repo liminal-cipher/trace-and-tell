@@ -27,7 +27,7 @@ async function asRole(
     await tx.exec(`set local role ${role}`);
     await tx.query(
       "select set_config('request.jwt.claim.sub',$1,true),set_config('request.jwt.claims',$2,true)",
-      [user, JSON.stringify({ sub: user, is_anonymous: anonymous })],
+      [user, JSON.stringify({ sub: user, session_id: user, is_anonymous: anonymous })],
     );
     return tx.query(sql);
   });
@@ -40,7 +40,9 @@ beforeAll(async () => {
   await db.exec(`create role anon; create role authenticated; create role service_role bypassrls;
     create schema auth; create schema storage;
     create table auth.users(id uuid primary key);
+    create table auth.sessions(id uuid primary key,user_id uuid not null,not_after timestamptz);
     insert into auth.users values ('${owner}'),('${other}');
+    insert into auth.sessions values ('${owner}','${owner}',null),('${other}','${other}',null);
     create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
     create function auth.jwt() returns jsonb language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb $$;
     grant usage on schema public,auth,storage to anon,authenticated,service_role;
@@ -50,14 +52,13 @@ beforeAll(async () => {
     alter table storage.objects enable row level security;
     grant select,insert,update,delete on storage.objects to anon,authenticated;
     create policy unrelated_allow_all on storage.objects for all to anon,authenticated using(true) with check(true);`);
-  const migration = readdirSync("supabase/migrations").find((f) =>
-    f.endsWith("_persistent_archive.sql"),
-  )!;
-  await db.exec(readFileSync(`supabase/migrations/${migration}`, "utf8"));
+  for (const migration of readdirSync("supabase/migrations").filter((f) => f.endsWith(".sql")).sort())
+    await db.exec(readFileSync(`supabase/migrations/${migration}`, "utf8"));
 });
 afterAll(async () => {
   await db?.close();
-  if (directory) rmSync(directory, { recursive: true, force: true });
+  if (directory && directory.startsWith(join(tmpdir(), "trace-archive-db-")))
+    rmSync(directory, { recursive: true, force: true });
 });
 describe("unchanged migration on local PostgreSQL (PGlite)", () => {
   it("creates a workspace exactly once and rejects key reuse with different data", async () => {
@@ -129,6 +130,19 @@ describe("unchanged migration on local PostgreSQL (PGlite)", () => {
     );
     expect(result.rows).toHaveLength(1);
   });
+  it("denies direct writes and privileged columns even to an authenticated owner", async () => {
+    for (const table of ["workspaces", "assets", "asset_revisions", "upload_intents", "command_receipts"]) {
+      await expect(asRole("authenticated", owner, `delete from public.${table} where false`)).rejects.toThrow("permission denied");
+      const privileges = await db.query<{ allowed: boolean }>(
+        "select has_table_privilege('authenticated',$1,privilege) as allowed from unnest(array['INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER']) privilege", [table],
+      );
+      expect(privileges.rows.every((row) => !row.allowed)).toBe(true);
+    }
+    for (const query of ["select * from command_receipts", "select storage_key from asset_revisions", "select stage_key,final_key from upload_intents", `select archive_command('${owner}','{}')`]) {
+      await expect(asRole("authenticated", owner, query)).rejects.toThrow("permission denied");
+      await expect(asRole("anon", "", query)).rejects.toThrow("permission denied");
+    }
+  });
   it("keeps immutable note revisions, Korean text, and rejects concurrent stale edits", async () => {
     const saved = await command({
       action: "save_note",
@@ -187,7 +201,10 @@ describe("unchanged migration on local PostgreSQL (PGlite)", () => {
       width: 5,
       height: 5,
     };
-    const one = await command({ ...finish, key: key(), intent_id: a.id });
+    const completedKey = key();
+    const one = await command({ ...finish, key: completedKey, intent_id: a.id });
+    expect(await command({ action: "finalize_upload", key: completedKey, intent_id: a.id })).toEqual(one);
+    await expect(command({ action: "finalize_upload", key: completedKey, intent_id: b.id })).rejects.toThrow("idempotency_conflict");
     const two = await command({ ...finish, key: key(), intent_id: b.id });
     expect(one.id).toBe(two.id);
     expect(two.duplicate).toBe(true);
@@ -317,5 +334,33 @@ describe("unchanged migration on local PostgreSQL (PGlite)", () => {
     expect(
       (await asRole("authenticated", other, "select * from workspaces")).rows,
     ).toHaveLength(0);
+  });
+  it("blocks a revoked session even when its signed JWT has not expired", async () => {
+    await db.query("delete from auth.sessions where id=$1", [owner]);
+    try {
+      expect((await asRole("authenticated", owner, "select id from workspaces")).rows).toEqual([]);
+    } finally {
+      await db.query("insert into auth.sessions values ($1,$1,null)", [owner]);
+    }
+  });
+  it("denies expired or mismatched sessions without exposing auth tables", async () => {
+    await db.query("update auth.sessions set not_after=now()-interval '1 second' where id=$1", [owner]);
+    expect((await asRole("authenticated", owner, "select id from workspaces")).rows).toEqual([]);
+    await db.query("update auth.sessions set not_after=null,user_id=$2 where id=$1", [owner, other]);
+    expect((await asRole("authenticated", owner, "select id from workspaces")).rows).toEqual([]);
+    await db.query("update auth.sessions set user_id=$1 where id=$1", [owner]);
+    await expect(asRole("authenticated", owner, "select * from auth.sessions")).rejects.toThrow("permission denied");
+    await expect(asRole("anon", "", "select archive_private.session_is_active()" )).rejects.toThrow("permission denied");
+  });
+  it("allows re-upload after deletion without reviving an old asset or reusing its path", async () => {
+    const fresh = await command({ action: "create_workspace", name: "Deletion re-upload", key: key() });
+    const upload = () => command({ action: "create_upload", key: key(), workspace_id: fresh.id, metadata: { title: "Synthetic" }, size: 100, content_type: "image/png" });
+    const finish = (id: unknown) => command({ action: "finalize_upload", key: key(), intent_id: id, sha256: "b".repeat(64), width: 5, height: 5 });
+    const first = await upload(), saved = await finish(first.id);
+    await command({ action: "delete_asset", key: key(), workspace_id: fresh.id, asset_id: saved.id, expected_revision: 1 });
+    const second = await upload(), replacement = await finish(second.id);
+    expect(replacement.id).not.toBe(saved.id);
+    expect(second.final_key).not.toBe(first.final_key);
+    expect((await db.query("select deletion_state from assets where id=$1", [saved.id])).rows).toEqual([{ deletion_state: "pending" }]);
   });
 });

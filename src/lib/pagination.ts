@@ -9,10 +9,14 @@ export async function allRows<T>(
 ): Promise<T[]> {
   const rows: T[] = [];
   const size = 500;
-  for (let offset = 0; ; offset += size) {
+  for (let offset = 0; ; ) {
     const result = await page(offset, offset + size - 1);
     databaseError(result.error);
-    rows.push(...(result.data ?? []));
-    if ((result.data?.length ?? 0) < size) return rows;
+    const batch = result.data ?? [];
+    if (!batch.length) return rows;
+    rows.push(...batch);
+    // A project can cap responses below our requested range. A short page
+    // therefore does not prove exhaustion; advance by what actually arrived.
+    offset += batch.length;
   }
 }

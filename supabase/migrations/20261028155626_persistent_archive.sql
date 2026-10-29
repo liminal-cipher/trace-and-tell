@@ -108,13 +108,18 @@ declare
   receipt public.command_receipts;
   result jsonb;
   m jsonb := payload->'metadata';
+  -- Verification fields are server-derived, not part of the caller's retry
+  -- identity. Completed intents must still go through the receipt check.
+  request_payload jsonb := case when op = 'finalize_upload'
+    then payload - array['sha256','width','height','content_type','size']
+    else payload end;
 begin
   if actor is null or k is null then raise exception 'invalid_input'; end if;
   -- Serialise one owner's commands, including request-key lookup and quota checks.
   perform pg_advisory_xact_lock(hashtextextended(actor::text, 0));
   select * into receipt from public.command_receipts where owner_user_id = actor and key = k;
   if found then
-    if receipt.request <> payload then raise exception 'idempotency_conflict'; end if;
+    if receipt.request <> request_payload then raise exception 'idempotency_conflict'; end if;
     return receipt.result;
   end if;
   if op = 'create_workspace' then
@@ -185,7 +190,7 @@ begin
     else raise exception 'invalid_input';
     end if;
   end if;
-  insert into public.command_receipts(owner_user_id,key,request,result) values(actor,k,payload,result);
+  insert into public.command_receipts(owner_user_id,key,request,result) values(actor,k,request_payload,result);
   return result;
 end;
 $$;

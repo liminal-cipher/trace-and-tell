@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { RecordDialog } from "./record-dialog";
 import { PrivateImage, UploadPreview } from "./archive-image";
+import { createRetryKeys } from "@/lib/retry-keys";
 import {
   MAX_BYTES,
   mimeSchema,
@@ -72,11 +73,12 @@ export function Archive() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const activeUpload = useRef(new Set<string>());
   const mutationInFlight = useRef(false);
-  const retry = useRef<{ signature: string; key: string } | null>(null);
+  const retry = useRef(createRetryKeys());
   const loadSequence = useRef(0);
   const handleError = useCallback((err: unknown) => {
     setError(errorText(err));
     if (err instanceof RequestError && err.status === 401) {
+      retry.current.clear();
       setUnauthorized(true);
       setSnapshot({ workspaces: [], assets: [], revisions: [], intents: [] });
       setSelected(undefined);
@@ -115,12 +117,12 @@ export function Archive() {
     setBusy(true);
     setError("");
     setMessage("Saving…");
-    const signature = JSON.stringify(payload);
-    if (retry.current?.signature !== signature)
-      retry.current = { signature, key: crypto.randomUUID() };
     try {
-      const result = await command({ ...payload, key: retry.current.key });
-      retry.current = null;
+      const result = await command({
+        ...payload,
+        key: retry.current.forPayload(payload),
+      });
+      retry.current.confirmed(payload);
       done?.();
       await load(
         "action" in payload && payload.action === "create_workspace"
