@@ -2,7 +2,7 @@ import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-import { AppError } from "./errors";
+import { AppError, appOrigin, authCookieOptions } from "./errors";
 export function config() {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
@@ -14,6 +14,11 @@ export function config() {
   return { url, key };
 }
 export function configured() {
+  try {
+    appOrigin();
+  } catch {
+    return false;
+  }
   return Boolean(
     process.env.SUPABASE_URL &&
     process.env.SUPABASE_PUBLISHABLE_KEY &&
@@ -24,11 +29,7 @@ export async function userClient() {
   const { url, key } = config();
   const jar = await cookies();
   return createServerClient(url, key, {
-    cookieOptions: {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.APP_ORIGIN?.startsWith("https://") ?? false,
-    },
+    cookieOptions: authCookieOptions(),
     cookies: {
       getAll: () => jar.getAll(),
       setAll: (items) => {

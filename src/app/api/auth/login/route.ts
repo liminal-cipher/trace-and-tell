@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { userClient } from "@/lib/supabase";
-import { AppError, checkOrigin, failure, readJson } from "@/lib/errors";
+import { AppError, appOrigin, checkOrigin, failure, readJson } from "@/lib/errors";
 export async function POST(request: Request) {
   try {
     checkOrigin(request);
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const client = await userClient();
     const { error } = await client.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${process.env.APP_ORIGIN}/auth/callback` },
+      options: { emailRedirectTo: `${appOrigin()}/auth/callback` },
     });
     if (error)
       throw new AppError(

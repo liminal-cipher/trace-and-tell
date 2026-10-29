@@ -26,9 +26,36 @@ export function failure(error: unknown) {
   );
 }
 export function checkOrigin(request: Request) {
-  const allowed = process.env.APP_ORIGIN;
-  if (!allowed || request.headers.get("origin") !== new URL(allowed).origin)
+  if (request.headers.get("origin") !== appOrigin())
     throw new AppError(403, "This request origin is not allowed.");
+}
+export function appOrigin() {
+  const value = process.env.APP_ORIGIN;
+  try {
+    const url = new URL(value ?? "");
+    const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+    if (
+      (url.protocol !== "https:" && !(url.protocol === "http:" && local)) ||
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash ||
+      (value !== url.origin && value !== `${url.origin}/`)
+    )
+      throw new Error("origin");
+    return url.origin;
+  } catch {
+    // Do not include configuration values in errors or logs.
+    throw new AppError(503, "The application's secure origin is not configured.");
+  }
+}
+export function authCookieOptions() {
+  return {
+    httpOnly: true,
+    sameSite: "lax" as const,
+    secure: appOrigin().startsWith("https://"),
+    path: "/",
+  };
 }
 export async function readJson(
   request: Request,
