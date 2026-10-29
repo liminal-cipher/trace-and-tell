@@ -2,7 +2,7 @@
 
 > An evidence-aware family archive that helps people discover questions worth asking before memories lose their context.
 
-**Status:** M1a implementation in progress, local security hardening tested. Real Supabase Auth/PostgreSQL/Storage integration is still unverified; no deployment or model evaluation has been performed. See the [audit, acceptance matrix and approval plan](docs/m1a-implementation.md).
+**Status:** Approved M1 SQL is applied and checked on Supabase. Real email/Auth/Storage integration remains unverified. The observation → inquiry → testimony → exhibit flow passes local fixture UI/SQL tests; actual Meta calls and the new investigation migration remain unapproved. See [current evidence and remaining gates](docs/m1b-m2-implementation.md) and the [M1a audit](docs/m1a-implementation.md).
 
 **Project name:** Trace & Tell is a working product name; it has not been verified as the final name entered on the hackathon application.
 
@@ -27,7 +27,7 @@ An accepted hypothesis remains a hypothesis. A person's testimony is attributed 
 
 ## Current Scope
 
-The implementation is a **deployment-first**, responsive Next.js application backed by Supabase PostgreSQL, Auth and private Storage, with Vercel as the proposed hosting service. The previously verified Seoul-region Supabase project has not been modified by this implementation. The application schema is supplied as an unapplied SQL migration.
+The implementation is a **deployment-first**, responsive Next.js application backed by Supabase PostgreSQL, Auth and private Storage, with Vercel as the proposed hosting service. The approved M1 schema and hardening are applied to the Seoul project; the new investigation schema is local only. No deployment has been performed.
 
 Two distinct experiences are planned:
 
@@ -83,7 +83,7 @@ For the private archive, copy `.env.example` to the ignored `.env.local` and sup
 
 No Supabase API key is embedded in client code. Never rename these variables with a `NEXT_PUBLIC_` prefix. Configure the exact `/auth/callback` redirect in Supabase Auth only with approval for that environment. Magic Links use PKCE and must be opened in the browser that requested them.
 
-Apply the [initial schema](supabase/migrations/20261028155626_persistent_archive.sql) followed by [M1a hardening](supabase/migrations/20261029150829_m1a_security_hardening.sql) only to an approved environment. Both are unapplied remotely. The initial migration was revised while still unapplied; use a fresh disposable local stack. **Remote application requires separate approval.** Installation and deployment never apply SQL automatically. Docker and the pinned CLI are needed for [local integration](docs/m1a-implementation.md#local-integration-setup).
+For a fresh disposable local stack, migrations initialise the [archive](supabase/migrations/20261028155626_persistent_archive.sql), [M1 hardening](supabase/migrations/20261029150829_m1a_security_hardening.sql) and [investigation](supabase/migrations/20261029165416_investigation_flow.sql), in order. Docker and the pinned CLI are needed for [local integration](docs/m1a-implementation.md#local-integration-setup). The first two files have already been applied to the approved remote project. The investigation migration has **not** been approved or applied there. **Do not run remote `db push`: connector-assigned history timestamps differ from the local filenames.** Review the [verified content mapping](docs/m1b-m2-implementation.md#git-and-approved-remote-work) before any history repair or further remote migration. Installation and deployment do not apply SQL automatically.
 
 ```sh
 npm run test
@@ -94,7 +94,16 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts the production build, so run `build` first. Default browser checks explicitly clear Supabase configuration, including values that Next.js might otherwise load from `.env.local`. Private integration is skipped unless `RUN_LOCAL_SUPABASE_E2E=1` and local service credentials are supplied in the process environment. The runner rejects non-local targets before startup and records no Auth traces. See [results and limitations](docs/m1a-implementation.md#verification): 48 local tests and 6 public browser checks passed; 2 private-service journeys were not run. PGlite runs PostgreSQL 18.6, not the target's PostgreSQL 17.11 or Supabase HTTP services.
+Playwright starts the production build, so run `build` first. Default browser checks explicitly clear Supabase configuration, including `.env.local`. Private integration is skipped unless `RUN_LOCAL_SUPABASE_E2E=1` and local service credentials are supplied in the process environment. This runner rejects remote targets and records no Auth traces. Investigation browser tests exercise the real UI/domain/SQL against PGlite with a test Auth/HTTP boundary; they do not certify Supabase integration. PGlite is PostgreSQL 18.6, not the target's 17.11/Auth/Storage services. See [current verification](docs/m1b-m2-implementation.md#verification-and-acceptance).
+
+After signing in and selecting a workspace, choose **Open investigation**. Fixture mode clearly labels authored suggestions; replay requires a recorded live response. Meta-live is closed by default. Keep `MODEL_API_KEY` server-only and do not enable live use without separate approval. The local allowance ledger deliberately refuses Vercel's ephemeral filesystem. See [provider limits, corpus and evaluation commands](docs/m1b-m2-implementation.md#provider-and-evaluation-preparation).
+
+```sh
+npm run corpus:create
+npm run evaluate
+```
+
+Evaluation defaults to one synthetic fixture case, writes immutable ignored records, and makes no Meta call. Structural validation and semantic model quality are reported separately. A target-locked, read-only remote M1 preflight is available as `npm run m1:remote:preflight`; the existing local-only browser guard is unchanged.
 
 ## Responsible Data Handling
 
@@ -108,11 +117,11 @@ Playwright starts the production build, so run `build` first. Default browser ch
 
 ## Roadmap
 
-- [ ] M0: Finalise implementation contracts, check participant-only rules and bootstrap the approved stack. The initial documentation baseline and Supabase project are prepared, not an implemented app.
-- [ ] M1a: Build an authenticated hosted archive with PostgreSQL persistence, private object storage, upload validation, revisions and cross-user denial tests; request separate approval before actual deployment.
-- [ ] M1b: Complete the fixture-driven observation → hypothesis → question → testimony → exhibit journey, with source tracing and revision propagation.
-- [ ] M2: Validate the same journey using the real Meta Model API with approved spending limits and recorded results.
+- [ ] M0: Confirm participant-only rules; the initial specifications, application scaffolding and Supabase project are present.
+- [ ] M1a: Complete actual Auth/Storage/user-isolation acceptance; code and approved schema are present. Deployment requires separate approval.
+- [ ] M1b: Complete the real Supabase fixture journey; local observation → inquiry → testimony → exhibit UI/SQL checks pass.
+- [ ] M2: Validate the prepared adapter and same journey using Meta with separate approval, recorded usage and human quality review.
 - [ ] M3: Strengthen recovery, corrections and privacy; add audio transcription only if tested and time permits.
 - [ ] M4: Prepare an accessible synthetic demonstration, verify the official submission requirements and submit the actual deliverables.
 
-**Last reviewed:** 2026-10-30. **Deployment:** not performed. **Tests:** evidence and outstanding gates are recorded in [M1a verification](docs/m1a-implementation.md#verification). Read-only remote preflight found no app tables, buckets or applied migrations. The auto-RLS privilege fix is prepared but unapplied. M1a acceptance remains open until real service tests pass.
+**Last reviewed:** 2026-10-30. **Deployment:** not performed. The approved M1 schema and auto-RLS privilege fix are applied; no test users or records were created. M1 and M2 acceptance remain open for the [specific service and model gates](docs/m1b-m2-implementation.md#verification-and-acceptance).

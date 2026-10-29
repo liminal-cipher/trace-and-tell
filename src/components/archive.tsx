@@ -311,6 +311,9 @@ export function Archive() {
           </form>
           {current && (
             <>
+              <Link className="button" href={`/investigation?workspace=${current.id}`}>
+                Open investigation
+              </Link>
               <form
                 className="panel stack"
                 key={`${current.id}-${current.revision}`}

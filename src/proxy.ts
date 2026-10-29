@@ -30,4 +30,4 @@ export async function proxy(request: NextRequest) {
     return failure(error);
   }
 }
-export const config = { matcher: ["/archive/:path*", "/api/archive/:path*"] };
+export const config = { matcher: ["/archive/:path*", "/investigation/:path*", "/api/archive/:path*", "/api/investigation/:path*"] };

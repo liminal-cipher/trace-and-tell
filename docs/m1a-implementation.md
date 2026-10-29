@@ -1,6 +1,8 @@
 # M1a Implementation and Verification
 
-Reviewed 2026-10-30 (Asia/Seoul). **M1a operational acceptance remains open.** This audit changed local source and tests. No remote SQL, data, Auth configuration, deployment, model call, Git commit or push was performed.
+Historical audit completed 2026-10-30 (Asia/Seoul), before the subsequently authorised continuation. **M1a operational acceptance remains open.** During the audit itself, no remote changes, commit or push occurred. The dated findings below retain that audit's evidence.
+
+**Current continuation:** the 25 audit files were preserved in four commits and pushed through `6b39ca8`. The user then approved the two M1 SQL files; both are now applied and checked on the existing project. Auto-RLS EXECUTE warnings are resolved, while real email/Auth/Storage integration is still blocked by missing app credentials and authorised test mailboxes. No test accounts/data or Auth settings were changed. See [current M1/M2 report](m1b-m2-implementation.md) for exact remote history mapping, checks and new local-only investigation work. The connector assigned different migration timestamps; do not blindly run remote `db push`.
 
 ## Baseline and Environment
 
