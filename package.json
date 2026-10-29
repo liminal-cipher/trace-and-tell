@@ -9,7 +9,11 @@
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "corpus:create": "node scripts/create-synthetic-corpus.mjs",
+    "evaluate": "vitest run --config vitest.evaluation.config.ts",
+    "evaluate:compare": "node scripts/compare-evaluations.mjs",
+    "m1:remote:preflight": "node scripts/remote-m1-preflight.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

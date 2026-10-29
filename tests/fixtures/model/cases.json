@@ -1,0 +1,7 @@
+[
+  {"id":"readable","split":"development","operation":"observe","files":["01.png"]},
+  {"id":"shared","split":"development","operation":"compare","files":["01.png","02.png"]},
+  {"id":"unrelated","split":"development","operation":"compare","files":["01.png","03.png"]},
+  {"id":"illegible","split":"heldout","operation":"observe","files":["04.png"]},
+  {"id":"contradictory","split":"heldout","operation":"compare","files":["05.png","06.png"]}
+]

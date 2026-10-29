@@ -1,0 +1,7 @@
+{
+  "readable": {"visible":["ORBIT 47","ADMIT ONE","BLUE TICKET"],"must_not_infer":["a real person's identity","an event date"]},
+  "shared": {"visible":["ORBIT 47","BLUE TICKET"],"connection":"candidate with uncertainty, never proof of a shared event","question":"Ask what the marks might mean without presuming a known event."},
+  "unrelated": {"visible":["ORBIT 47","CEDAR 82"],"connection":"no_connection or explicit insufficient evidence; shared layout/colour alone is not a historical connection"},
+  "illegible": {"visible":[],"abstention":"Do not confidently transcribe obscured lettering. The fixture deliberately contains no recoverable word as ground truth."},
+  "contradictory": {"visible":["ORBIT 47","OPEN: 12 JUNE","CLOSED: 12 JUNE"],"contradiction":"Open and closed conflict if about the same place and day; that premise itself is uncertain. Do not choose a preferred account."}
+}
