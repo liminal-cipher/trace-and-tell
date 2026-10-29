@@ -1,14 +1,24 @@
 import { test, expect, type Page } from "@playwright/test";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
+import { assertLocalOrigin } from "../local-environment";
 const enabled = process.env.RUN_LOCAL_SUPABASE_E2E === "1";
 const url = process.env.SUPABASE_URL ?? "";
 const publishable = process.env.SUPABASE_PUBLISHABLE_KEY ?? "";
 const secret = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 const mailbox = process.env.LOCAL_MAILPIT_URL ?? "http://127.0.0.1:54324";
 function assertLocal(value: string) {
-  if (!["localhost", "127.0.0.1", "[::1]"].includes(new URL(value).hostname))
-    throw new Error("Integration tests refuse remote targets.");
+  const target = new URL(value);
+  assertLocalOrigin(target.origin);
+  if (target.username || target.password) throw new Error("Integration tests refuse URL credentials.");
+}
+async function signedPut(target: string, bytes: Buffer, upsert = false) {
+  assertLocal(target);
+  try {
+    return (await fetch(target, { method: "PUT", redirect: "error", headers: {
+      "Content-Type": "image/png", "x-upsert": String(upsert),
+    }, body: new Uint8Array(bytes) })).ok;
+  } catch { throw new Error("Local signed upload request failed; capability omitted."); }
 }
 async function signIn(page: Page) {
   const email = `archive-${crypto.randomUUID()}@example.test`;
@@ -34,7 +44,8 @@ async function signIn(page: Page) {
     )
     .toBe(true);
   assertLocal(link);
-  await page.goto(link);
+  try { await page.goto(link); }
+  catch { throw new Error("Local Magic Link navigation failed; link omitted."); }
   await expect(page).toHaveURL(/\/archive$/);
   await expect(
     page.getByRole("button", { name: "Create workspace" }),
@@ -64,6 +75,9 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
   }) => {
     test.setTimeout(120000);
     await signIn(page);
+    const sessionCookies = (await page.context().cookies()).filter((cookie) => cookie.name.includes("auth-token"));
+    expect(sessionCookies.length > 0).toBe(true);
+    expect(sessionCookies.every((cookie) => cookie.httpOnly && cookie.sameSite === "Lax" && !cookie.secure)).toBe(true);
     await page
       .getByLabel("Workspace name", { exact: true })
       .fill("Synthetic browser collection");
@@ -163,6 +177,8 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
     expect((await (await post(page, repeated)).json()).id).toBe(
       (await (await post(page, repeated)).json()).id,
     );
+    expect((await post(page, { ...repeated, content: "Different payload" })).status()).toBe(409);
+    expect(snapshot.revisions.filter((r: { asset_id: string }) => r.asset_id === note.id).length).toBe(2);
 
     const otherContext = await browser.newContext({
       baseURL: "http://127.0.0.1:3000",
@@ -182,6 +198,7 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
     expect(
       (await post(other, { ...request, key: crypto.randomUUID() })).status(),
     ).toBe(404);
+    expect((await post(other, { action: "delete_asset", key: crypto.randomUUID(), workspace_id: photo.workspace_id, asset_id: photo.id, expected_revision: 1 })).status()).toBe(404);
     const anonymous = await browser.newContext({
       baseURL: "http://127.0.0.1:3000",
     });
@@ -254,6 +271,29 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
       .from("archive-originals")
       .createSignedUrl(revision.data!.storage_key, 60);
     expect(signed.error).not.toBeNull();
+    expect((await stranger.rpc("archive_command", { actor: created.data.user!.id, payload: repeated })).error !== null).toBe(true);
+    expect((await stranger.from("command_receipts").select("key")).error !== null).toBe(true);
+    expect((await stranger.from("assets").delete().eq("id", photo.id)).error !== null).toBe(true);
+    expect((await stranger.from("asset_revisions").select("storage_key")).error !== null).toBe(true);
+
+    // A revoked access token must also lose direct Data API read access.
+    const ownWorkspace = await admin.rpc("archive_command", { actor: created.data.user!.id, payload: { action: "create_workspace", key: crypto.randomUUID(), name: "Session boundary" } });
+    expect(ownWorkspace.error === null).toBe(true);
+    expect((await stranger.from("workspaces").select("id")).data?.length).toBe(1);
+    const access = (await stranger.auth.getSession()).data.session!.access_token;
+    expect((await stranger.auth.signOut()).error === null).toBe(true);
+    const revoked = createClient(url, publishable, { auth: { persistSession: false, autoRefreshToken: false }, global: { headers: { Authorization: `Bearer ${access}` } } });
+    expect((await revoked.from("workspaces").select("id")).data).toEqual([]);
+
+    // Lose the upload request, then retry the same pending intent through UI.
+    await page.route("**/storage/v1/object/upload/sign/**", (route) => route.abort("failed"));
+    const interruptedBytes = await sharp({ create: { width: 20, height: 20, channels: 3, background: "#ab4266" } }).png().toBuffer();
+    await page.getByLabel("Choose photographs").setInputFiles({ name: "interrupted.png", mimeType: "image/png", buffer: interruptedBytes });
+    const interrupted = page.locator(".upload-status").filter({ hasText: "interrupted.png" });
+    await expect(interrupted).toContainText("Not saved");
+    await page.unroute("**/storage/v1/object/upload/sign/**");
+    await interrupted.getByRole("button", { name: "Retry this file", exact: true }).click();
+    await expect(interrupted).toContainText("Saved and verified.");
 
     const intentResponse = await post(page, {
       action: "create_upload",
@@ -264,20 +304,27 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
       content_type: "image/png",
     });
     const intent = await intentResponse.json();
+    expect(intentResponse.ok()).toBe(true);
+    assertLocal(intent.upload_url);
+    const capability = new URL(intent.upload_url);
+    const claims = JSON.parse(Buffer.from(capability.searchParams.get("token")!.split(".")[1], "base64url").toString());
+    const lifetime = claims.exp * 1000 - Date.now();
+    expect(lifetime > 110 * 60_000 && lifetime <= 125 * 60_000).toBe(true);
+    const wrongPath = new URL(capability); wrongPath.pathname += "-wrong";
+    expect(await signedPut(wrongPath.toString(), bytes)).toBe(false);
+    const wrongBucket = new URL(capability); wrongBucket.pathname = wrongBucket.pathname.replace("archive-staging", "archive-originals");
+    expect(await signedPut(wrongBucket.toString(), bytes)).toBe(false);
     const badUrl = new URL(intent.upload_url);
     badUrl.searchParams.set("token", "invalid");
-    expect(
-      (
-        await page.request.put(badUrl.toString(), {
-          data: bytes,
-          headers: { "Content-Type": "image/png" },
-        })
-      ).ok(),
-    ).toBe(false);
-    await admin
+    expect(await signedPut(badUrl.toString(), bytes)).toBe(false);
+    expect(await signedPut(intent.upload_url, Buffer.alloc(6291457))).toBe(false);
+    expect(await signedPut(intent.upload_url, bytes)).toBe(true);
+    expect(await signedPut(intent.upload_url, interruptedBytes, true)).toBe(false);
+    const expired = await admin
       .from("upload_intents")
       .update({ expires_at: new Date(Date.now() - 1000).toISOString() })
       .eq("id", intent.id);
+    expect(expired.error === null).toBe(true);
     expect(
       (
         await post(page, {
@@ -296,6 +343,11 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
         })
       ).ok(),
     ).toBe(true);
+    // Cleanup can remove staging before the native token expires. A replay may
+    // recreate staging, but may never create an active record after intent expiry.
+    await signedPut(intent.upload_url, bytes);
+    expect((await post(page, { action: "finalize_upload", key: crypto.randomUUID(), intent_id: intent.id })).status()).toBe(410);
+    expect((await post(page, { action: "cleanup", key: crypto.randomUUID(), workspace_id: photo.workspace_id })).ok()).toBe(true);
 
     await page.reload();
     await page.getByRole("button", { name: /synthetic.png/ }).click();
@@ -307,11 +359,21 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
     expect(
       (await page.request.get(`/api/archive/assets/${photo.id}/file`)).status(),
     ).toBe(404);
+    const quotaWorkspace = await (await post(page, { action: "create_workspace", key: crypto.randomUUID(), name: "Synthetic quota test" })).json();
+    const reservations = await Promise.all(Array.from({ length: 21 }, () => post(page, {
+      action: "create_upload", key: crypto.randomUUID(), workspace_id: quotaWorkspace.id,
+      metadata: { title: "Concurrent reservation" }, size: bytes.length, content_type: "image/png",
+    })));
+    expect(reservations.filter((response) => response.status() === 200).length).toBe(20);
+    expect(reservations.filter((response) => response.status() === 409).length).toBe(1);
+    const beforeLogout = await page.context().cookies();
     await page.getByRole("button", { name: "Sign out" }).click();
     await expect(
       page.getByRole("link", { name: "Sign in with email" }),
     ).toBeVisible();
     expect((await page.request.get("/api/archive")).status()).toBe(401);
+    await anonymous.addCookies(beforeLogout);
+    expect((await anonymous.request.get("/api/archive")).status()).toBe(401);
     await anonymous.close();
     await otherContext.close();
   });

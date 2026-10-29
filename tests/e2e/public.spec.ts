@@ -69,4 +69,8 @@ test("API rejects cross-origin writes and anonymous access without leaking recor
   expect([401, 503]).toContain(file.status());
   const noModel = await request.post("/api/meta", { data: {} });
   expect(noModel.status()).toBe(404);
+  const callback = await request.get("/auth/callback", { maxRedirects: 0 });
+  expect(callback.status()).toBe(303);
+  expect(callback.headers()["location"]).toBe("http://127.0.0.1:3000/login?error=expired");
+  expect(callback.headers()["cache-control"]).toContain("no-store");
 });

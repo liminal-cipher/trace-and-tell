@@ -1,9 +1,13 @@
 import { defineConfig, devices } from "@playwright/test";
+import { browserEnvironment } from "./tests/local-environment";
+const environment = browserEnvironment(process.env);
+Object.assign(process.env, environment);
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: false,
   workers: 1,
-  use: { baseURL: "http://127.0.0.1:3000", trace: "retain-on-failure" },
+  // Auth cookies, email links and upload capabilities must not enter artifacts.
+  use: { baseURL: environment.APP_ORIGIN, trace: "off", screenshot: "off", video: "off" },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     {
@@ -15,6 +19,6 @@ export default defineConfig({
     command: "npm run start -- --hostname 127.0.0.1",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: false,
-    env: { APP_ORIGIN: "http://127.0.0.1:3000" },
+    env: environment,
   },
 });
