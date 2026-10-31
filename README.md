@@ -2,7 +2,7 @@
 
 > An evidence-aware family archive that helps people discover questions worth asking before memories lose their context.
 
-**Status:** Approved M1 SQL is applied and checked on Supabase. Real email/Auth/Storage integration remains unverified. The observation → inquiry → testimony → exhibit flow passes local fixture UI/SQL tests; actual Meta calls and the new investigation migration remain unapproved. See [current evidence and remaining gates](docs/m1b-m2-implementation.md) and the [M1a audit](docs/m1a-implementation.md).
+**Status:** In progress; not deployed. Actual single-user Supabase Auth/DB/Storage flows and duplicate-photo handling have passed with synthetic data. Full M1a security acceptance remains open. One approved Meta synthetic inference succeeded; it does not establish general model quality. The investigation flow passes local fixture UI/SQL tests but its remote migration and E2E remain unapproved. See [current evidence and remaining gates](docs/m1b-m2-implementation.md) and the [M1a audit](docs/m1a-implementation.md).
 
 **Project name:** Trace & Tell is a working product name; it has not been verified as the final name entered on the hackathon application.
 
@@ -96,7 +96,7 @@ npm run test:e2e
 
 Playwright starts the production build, so run `build` first. Default browser checks explicitly clear Supabase configuration, including `.env.local`. Private integration is skipped unless `RUN_LOCAL_SUPABASE_E2E=1` and local service credentials are supplied in the process environment. This runner rejects remote targets and records no Auth traces. Investigation browser tests exercise the real UI/domain/SQL against PGlite with a test Auth/HTTP boundary; they do not certify Supabase integration. PGlite is PostgreSQL 18.6, not the target's 17.11/Auth/Storage services. See [current verification](docs/m1b-m2-implementation.md#verification-and-acceptance).
 
-After signing in and selecting a workspace, choose **Open investigation**. Fixture mode clearly labels authored suggestions; replay requires a recorded live response. Meta-live is closed by default. Keep `MODEL_API_KEY` server-only and do not enable live use without separate approval. The local allowance ledger deliberately refuses Vercel's ephemeral filesystem. See [provider limits, corpus and evaluation commands](docs/m1b-m2-implementation.md#provider-and-evaluation-preparation).
+On a local stack with the investigation migration applied, sign in, select a workspace and choose **Open investigation**. This flow is not ready on the current remote project. Fixture mode clearly labels authored suggestions; replay requires a recorded live response. Meta-live is closed by default. Keep `MODEL_API_KEY` server-only and do not enable live use without separate approval. The local allowance ledger deliberately refuses Vercel's ephemeral filesystem. See [provider limits, corpus and evaluation commands](docs/m1b-m2-implementation.md#provider-and-evaluation-preparation).
 
 ```sh
 npm run corpus:create
@@ -104,6 +104,15 @@ npm run evaluate
 ```
 
 Evaluation defaults to one synthetic fixture case, writes immutable ignored records, and makes no Meta call. Structural validation and semantic model quality are reported separately. A target-locked, read-only remote M1 preflight is available as `npm run m1:remote:preflight`; the existing local-only browser guard is unchanged.
+
+The evaluation CLI loads ignored `.env.local` without overriding process variables; ordinary unit tests remain disconnected. Set `EVALUATION_PLAN_ONLY=1` to calculate input hashes and limits without inference. A plan or API key does not grant live-call approval. The remote preflight intentionally refuses a project that already contains app data; it is not the acceptance runner for the retained test collection.
+
+## Verification & Limitations
+
+- **Actual M1:** Magic Link/PKCE, session retention, workspace/photo/note persistence, original byte equality, revision history/conflict rejection, refresh/server restart, double-click note prevention, duplicate-photo suppression, damaged-image rejection, deletion/access denial and expired-upload cleanup were observed with synthetic data. Oversize rejection was verified in the browser, not as a Storage HTTP boundary test.
+- **Remaining:** real A/B isolation is required before public deployment. Old-token/capability replay, some interrupted-upload failure paths, hosted Storage patch-level confirmation and HTTPS cookie/cache behaviour remain unverified. The newest duplicate-upload intent requires a final cleanup check after **1 November 2026, 02:29:02 KST**; no unwanted file remained at the last check. Test data and the personal-email Auth account are preserved.
+- **First Meta inference:** one synthetic PNG, `muse-spark-1.3` Standard, HTTP 200, 2.359 s; 1,399 input and 222 output tokens. Calculated cost **US$0.00269225**; actual bill unconfirmed. Schema checks and an assistant visual review found the three principal strings correct. This single case is not a model-wide quality evaluation. No further calls are approved; the consumed allowance ledger is preserved.
+- **Local versus remote:** unit/PGlite/mock checks do not substitute for hosted Auth/Storage tests. M1b remote E2E is still blocked by the separate history-repair and Investigation SQL approval gates. Private execution artefacts are excluded from Git; sanitised findings are in the implementation report.
 
 ## Responsible Data Handling
 
@@ -118,10 +127,10 @@ Evaluation defaults to one synthetic fixture case, writes immutable ignored reco
 ## Roadmap
 
 - [ ] M0: Confirm participant-only rules; the initial specifications, application scaffolding and Supabase project are present.
-- [ ] M1a: Complete actual Auth/Storage/user-isolation acceptance; code and approved schema are present. Deployment requires separate approval.
+- [ ] M1a: Complete remaining security gates and final cleanup; actual single-user Auth/Storage and duplicate-photo checks passed. Deployment requires separate approval.
 - [ ] M1b: Complete the real Supabase fixture journey; local observation → inquiry → testimony → exhibit UI/SQL checks pass.
-- [ ] M2: Validate the prepared adapter and same journey using Meta with separate approval, recorded usage and human quality review.
+- [ ] M2: Extend evaluation beyond the first successful synthetic Meta inference only with new approval, recorded usage and human quality review.
 - [ ] M3: Strengthen recovery, corrections and privacy; add audio transcription only if tested and time permits.
 - [ ] M4: Prepare an accessible synthetic demonstration, verify the official submission requirements and submit the actual deliverables.
 
-**Last reviewed:** 2026-10-30. **Deployment:** not performed. The approved M1 schema and auto-RLS privilege fix are applied; no test users or records were created. M1 and M2 acceptance remain open for the [specific service and model gates](docs/m1b-m2-implementation.md#verification-and-acceptance).
+**Last reviewed:** 2026-11-01. **Deployment:** not performed. The approved M1 schema is applied; synthetic test records and one real-email Auth account remain for follow-up. M1a security acceptance and M1b remote integration remain open. Historical audit results are distinguished from current findings in the [implementation report](docs/m1b-m2-implementation.md).
