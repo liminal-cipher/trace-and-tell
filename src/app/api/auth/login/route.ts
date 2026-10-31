@@ -12,10 +12,20 @@ export async function POST(request: Request) {
       email,
       options: { emailRedirectTo: `${appOrigin()}/auth/callback` },
     });
-    if (error)
+    if (error?.code === "over_email_send_rate_limit")
       throw new AppError(
         429,
-        "The sign-in email could not be sent. Wait a moment and try again.",
+        "The email sending limit has been reached. Stop resending and wait for the limit to reset before requesting one new link.",
+      );
+    if (error?.status === 429)
+      throw new AppError(
+        429,
+        "Too many sign-in requests. Please wait before requesting another link.",
+      );
+    if (error)
+      throw new AppError(
+        503,
+        "The sign-in email could not be sent. Please try again later.",
       );
     return Response.json(
       {
