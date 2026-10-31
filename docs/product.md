@@ -128,7 +128,7 @@
 
 ## 검증 가능한 출처
 
-- 주최측 공식 행사 정보: https://events.cerebralvalley.ai/e/meta-ai-developer-hackathon
+- 주최 측 공식 행사 정보: https://events.cerebralvalley.ai/e/meta-ai-developer-hackathon
 - Meta 공식 행사 소개: https://dev.meta.ai/events/global-hackathon
 - Meta 모델 문서: https://dev.meta.ai/docs/models
 - Meta 구조화 출력: https://dev.meta.ai/docs/structured-output

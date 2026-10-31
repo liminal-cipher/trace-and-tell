@@ -92,7 +92,7 @@ Finalisation checks exact size, actual format, complete decoding, animation and 
 
 Intent validity is 10 minutes; the [documented signed capability](https://supabase.com/docs/reference/javascript/file-buckets-createsigneduploadurl) lasts two hours. The pinned SDK documents that upsert is controlled at capability creation. The app records a 125-minute cleanup horizon and never extends finalisation time. A valid capability may recreate staging after cleanup, but cannot reactivate a completed/rejected/expired intent. Cleanup therefore stays pending until the horizon ends. Native token/path/upsert/replay behaviour and natural two-hour expiry are unverified.
 
-Deletion commits pending before removal. Revision/original access is blocked; the download route rechecks RLS after Storage I/O. Removal failure is visible and retryable. Bytes already received, or a response authorised just before concurrent deletion, cannot be recalled; no linearizable recall guarantee is claimed.
+Deletion commits pending before removal. Revision/original access is blocked; the download route rechecks RLS after Storage I/O. Removal failure is visible and retryable. Bytes already received, or a response authorised just before concurrent deletion, cannot be recalled; no linearisable recall guarantee is claimed.
 
 Originals bypass the Next image optimiser and use authenticated private/no-store/nosniff responses, without public/signed-download links. Original EXIF/GPS bytes are preserved for the owner, not extracted into the demo or sent externally. This is not metadata sanitisation. Tombstones, revisions, intent metadata and receipts remain retained; deletion blocks access rather than erasing every database byte.
 

@@ -6,7 +6,7 @@ export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: false,
   workers: 1,
-  // Auth cookies, email links and upload capabilities must not enter artifacts.
+  // Auth cookies, email links and upload capabilities must not enter artefacts.
   use: { baseURL: environment.APP_ORIGIN, trace: "off", screenshot: "off", video: "off" },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
