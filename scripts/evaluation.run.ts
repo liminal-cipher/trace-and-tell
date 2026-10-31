@@ -28,7 +28,14 @@ test("records an immutable synthetic evaluation batch (not a model-quality asser
         // This plan contains hashes only. Ground truth is never part of the input.
         const identity = { case_id: item.id, split, input_sha256: inputHash(input), source_revisions: input.sources.map(({ asset_id, revision, image }) => ({ asset_id, revision, image_sha256: createHash("sha256").update(Buffer.from(image!.split(",")[1], "base64")).digest("hex") })), prompt_version: PROMPT_VERSION, schema_version: SCHEMA_VERSION, mode };
         if (process.env.EVALUATION_PLAN_ONLY === "1") {
-            writeFileSync(join(directory, `${item.id}.plan.json`), JSON.stringify({ ...identity, request_limits: { images: 2, dimension: 1024, bytes_each: 524288, text_characters: 6000, output_tokens: 1200 }, request_valid: Boolean(metaRequest(input, "muse-spark-1.3")) }, null, 2), { flag: "wx" });
+            const request = metaRequest(input, "muse-spark-1.3");
+            const images = input.sources.flatMap(({ image }) => {
+                if (!image) return [];
+                const png = Buffer.from(image.split(",")[1], "base64");
+                return [{ bytes: png.length, width: png.readUInt32BE(16), height: png.readUInt32BE(20) }];
+            });
+            const textCharacters = request.messages.reduce((sum, message) => sum + (typeof message.content === "string" ? message.content.length : message.content.reduce((length, part) => length + (part.type === "text" ? part.text.length : 0), 0)), 0);
+            writeFileSync(join(directory, `${item.id}.plan.json`), JSON.stringify({ ...identity, model: request.model, request_limits: { images: 2, dimension: 1024, bytes_each: 524288, text_characters: 6000, output_tokens: 1200 }, actual_input: { images, text_characters: textCharacters }, environment: { model_api_key_configured: Boolean(process.env.MODEL_API_KEY), live_enabled: process.env.META_LIVE_APPROVED === "yes", approval_path_configured: Boolean(process.env.META_APPROVAL_FILE) }, request_valid: true, live_calls: 0 }, null, 2), { flag: "wx" });
             continue;
         }
         try {
@@ -51,7 +58,7 @@ test("records an immutable synthetic evaluation batch (not a model-quality asser
                 break;
         }
     }
-    writeFileSync(join(directory, "summary.json"), JSON.stringify({ mode, split, completed, failed, model_quality: "not assessed", live_calls: mode === "meta-live" ? "See durable allowance records; failures may have unknown outcome" : 0 }, null, 2), { flag: "wx" });
+    writeFileSync(join(directory, "summary.json"), JSON.stringify({ mode, split, completed, failed, model_quality: "not assessed", live_calls: process.env.EVALUATION_PLAN_ONLY === "1" ? 0 : mode === "meta-live" ? "See durable allowance records; failures may have unknown outcome" : 0 }, null, 2), { flag: "wx" });
     console.log(`Evaluation records: ${directory}; completed=${completed}, failed=${failed}; semantic quality not assessed.`);
     expect(failed, "Evaluation failures are recorded; inspect the sanitised records.").toBe(0);
 }, 120000);
