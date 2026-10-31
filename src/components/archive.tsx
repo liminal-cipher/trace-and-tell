@@ -116,7 +116,8 @@ export function Archive() {
     mutationInFlight.current = true;
     setBusy(true);
     setError("");
-    setMessage("Saving…");
+    const cleaning = "action" in payload && payload.action === "cleanup";
+    setMessage(cleaning ? "Checking file cleanup…" : "Saving…");
     try {
       const result = await command({
         ...payload,
@@ -130,7 +131,9 @@ export function Archive() {
           : workspace,
       );
       setMessage(
-        result.warnings?.join(" ") || "Saved to your private archive.",
+        result.warnings?.join(" ") || (cleaning
+          ? "File cleanup checked. Any remaining work is listed below."
+          : "Saved to your private archive."),
       );
     } catch (err) {
       setMessage("");
@@ -550,12 +553,12 @@ export function Archive() {
                 Cleanup remains pending until upload capabilities expire.
               </p>
               {snapshot.intents
-                .filter((i) => i.state !== "complete")
+                .filter((i) => i.state === "pending" || i.cleanup_state !== "done")
                 .map((intent) => (
                   <div className="upload-status" key={intent.id}>
                     <strong>{intent.metadata.title}</strong>
                     <span>
-                      {intent.state} · expires{" "}
+                      {intent.state} · cleanup {intent.cleanup_state} · upload permission expires{" "}
                       {new Date(intent.expires_at).toLocaleString("en-AU")}
                     </span>
                     {intent.state === "pending" && (
@@ -574,6 +577,9 @@ export function Archive() {
                     )}
                   </div>
                 ))}
+              {!snapshot.intents.some((i) => i.state === "pending" || i.cleanup_state !== "done") && (
+                <p>No pending uploads or file cleanup.</p>
+              )}
               <button
                 className="secondary"
                 disabled={busy}
