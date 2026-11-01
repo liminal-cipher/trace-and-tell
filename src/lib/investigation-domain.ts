@@ -70,7 +70,7 @@ export function importAnalysis(document: InvestigationDocument, run: RunResult, 
         return entry;
     };
     for (const observation of output.observations)
-        add("observation", observation.claim, [{ asset_id: observation.asset_id, revision: observation.revision }], [], { locator: observation.locator, uncertainty: observation.uncertainty });
+        add("observation", observation.claim, [{ asset_id: observation.asset_id, revision: observation.revision }], [], { locator: observation.locator, uncertainty: observation.uncertainty, original_uncertainty: observation.uncertainty });
     if (output.connection) {
         const sources = run.input.sources.map(({ asset_id, revision }) => ({ asset_id, revision }));
         const hypothesis = add("hypothesis", output.connection.statement, sources, run.input.observations.map(({ id, revision }) => ({ id, revision })), output.connection);
@@ -116,8 +116,17 @@ export function applyReview(document: InvestigationDocument, command: Exclude<In
                     throw new AppError(409, "Choose the hypothesis for inquiry first.");
             }
         }
-        if (command.decision === "corrected" && !command.text)
+        if (command.uncertainty !== undefined && (e.kind !== "observation" || command.decision !== "corrected"))
+            throw new AppError(400, "Only observation corrections can change uncertainty.");
+        if (command.decision === "corrected" && !command.text && !(e.kind === "observation" && command.uncertainty))
             throw new AppError(400, "Enter the correction.");
+        if (e.kind === "observation" && command.decision === "corrected") {
+            // Legacy documents could only correct text. Capture their untouched
+            // uncertainty before the first edit; null means it was not recorded.
+            if (e.details.original_uncertainty === undefined)
+                e.details.original_uncertainty = e.details.uncertainty ?? null;
+            e.details.uncertainty = command.uncertainty ?? e.details.uncertainty;
+        }
         e.text = command.text ?? e.text;
         e.review_state = command.decision;
         e.revision += 1;

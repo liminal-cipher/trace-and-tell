@@ -34,7 +34,8 @@ it("persists the three fixture slices, keeping hypothesis, original reading and 
 it("marks descendants for review after a correction without overwriting earlier versions", async () => {
     const s = await repo.snapshot();
     const observation = s.document.entries.find((e) => e.kind === "observation")!;
-    const next = await send({ action: "review", id: observation.id, entry_revision: observation.revision, decision: "corrected", text: "ORBIT 47 may be a reference number." });
+    const next = await send({ action: "review", id: observation.id, entry_revision: observation.revision, decision: "corrected", uncertainty: "Neither the exact colour nor the reason for uncertainty is established." });
+    expect(next.document.entries.find((e) => e.id === observation.id)?.text).toBe(observation.text);
     expect(next.document.entries.filter((e) => ["hypothesis", "question", "testimony", "exhibit"].includes(e.kind)).every((e) => e.evidence_validity === "needs_review")).toBe(true);
     await expect(send({ action: "exhibit", title: "Must not silently refresh", testimony_ids: [next.document.entries.find((e) => e.kind === "testimony")!.id] })).rejects.toThrow("Review");
 });

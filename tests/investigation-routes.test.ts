@@ -24,3 +24,11 @@ it("denies anonymous reads, expired-session writes and cross-origin mutations be
     expect(mocks.execute).not.toHaveBeenCalled();
     expect(mocks.read).not.toHaveBeenCalled();
 });
+it("passes an uncertainty-only correction through validation without trusting original details", async () => {
+    const response = await POST(new Request("https://archive.example.test/api/investigation", {
+        method: "POST", headers: { Origin: "https://archive.example.test", "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "review", key: actor, workspace_id: actor, expected_revision: 2, id: actor, entry_revision: 2, decision: "corrected", uncertainty: "The cause is unknown.", original_uncertainty: "Forged", details: { original_uncertainty: "Forged" } }),
+    }));
+    expect(response.status).toBe(200);
+    expect(mocks.execute.mock.calls[0][2]).toEqual({ action: "review", key: actor, workspace_id: actor, expected_revision: 2, id: actor, entry_revision: 2, decision: "corrected", uncertainty: "The cause is unknown." });
+});

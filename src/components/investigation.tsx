@@ -74,7 +74,9 @@ export function Investigation({ workspace }: {
             const next = await request("/api/investigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload, key: keys.current.forPayload(payload) }) });
             keys.current.confirmed(payload);
             setSnapshot(next);
-            setNotice("Saved to your private collection.");
+            const corrected = action.action === "review" && action.decision === "corrected"
+                ? next.document.entries.find((entry) => entry.id === action.id && entry.kind === "observation") : undefined;
+            setNotice(corrected ? `Observation revision ${corrected.revision} saved to your private collection.` : "Saved to your private collection.");
         }
         catch (e) {
             fail(e);
@@ -98,12 +100,24 @@ export function Investigation({ workspace }: {
         <p>{revision.source_note}</p></details> : <p className="error" key={s.asset_id}>Broken source · record deleted or unavailable · revision {s.revision}</p>;
             })}{entry.parents.map((p)=><EvidenceReference key={`${p.id}-${p.revision}-${entry.evidence_validity}`} workspace={workspace} id={p.id} revision={p.revision}/>)}</div>;
     }
-    function review(entry: Entry, decision: string, text?: string) { return mutate({ action: "review", id: entry.id, entry_revision: entry.revision, decision, ...(text ? { text } : {}) }); }
+    function review(entry: Entry, decision: string, text?: string, uncertainty?: string) { return mutate({ action: "review", id: entry.id, entry_revision: entry.revision, decision, ...(text ? { text } : {}), ...(uncertainty !== undefined ? { uncertainty } : {}) }); }
     function entryHeader(entry: Entry) { return <><div className="eyebrow">{entry.kind} · {entry.mode} · revision {entry.revision}</div><p className="entry-status">{entry.review_state.replaceAll("_", " ")} · {entry.evidence_validity.replaceAll("_", " ")}</p></>; }
     function correction(entry: Entry) {
+        const observation = entry.kind === "observation";
+        const originalUncertainty = entry.details.original_uncertainty !== undefined ? entry.details.original_uncertainty : entry.details.uncertainty;
         return <details><summary>Compare original suggestion and correct</summary><blockquote className="model-original">Original suggestion: {entry.original_text}</blockquote>
-    <form className="stack" key={`${entry.id}-${entry.revision}`} onSubmit={(e) => { e.preventDefault(); void review(entry, "corrected", String(new FormData(e.currentTarget).get("text"))); }}>
-      <label>Corrected {entry.kind}<textarea name="text" defaultValue={entry.text} required maxLength={2000}/></label><button disabled={busy || entry.review_state === "rejected"}>Save correction</button></form></details>;
+    {observation && <blockquote className="model-original">Original uncertainty: {originalUncertainty ?? "Not recorded."}</blockquote>}
+    <form className="stack" key={`${entry.id}-${entry.revision}`} onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const uncertainty = observation ? String(data.get("uncertainty")) : undefined;
+        void review(entry, "corrected", String(data.get("text")),
+            uncertainty !== (entry.details.uncertainty ?? "") ? uncertainty : undefined);
+    }}>
+      <label>Corrected {entry.kind}<textarea name="text" defaultValue={entry.text} required maxLength={2000}/></label>
+      {observation && <label>Current uncertainty explanation<textarea name="uncertainty" defaultValue={entry.details.uncertainty ?? ""} required={entry.details.uncertainty !== undefined} maxLength={2000}/></label>}
+      <button disabled={busy || entry.review_state === "rejected"}>Save correction</button></form>
+    {observation && entry.revision > 1 && <details><summary>Previous observation revisions</summary>{Array.from({ length: entry.revision - 1 }, (_, index) => <EvidenceReference key={`${index + 1}-${entry.revision}-${entry.evidence_validity}`} workspace={workspace} id={entry.id} revision={index + 1}/>)}</details>}</details>;
     }
     return <div className="investigation">
     <div className="research-toolbar"><label>Suggestion provider<select value={mode} onChange={(e) => setMode(e.target.value as ProviderMode)} disabled={busy}><option value="fixture">FIXTURE · authored examples</option><option value="replay">REPLAY · saved live response</option><option value="meta-live">META-LIVE · approval required</option></select></label>

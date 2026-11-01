@@ -67,6 +67,7 @@ export interface Entry {
     details: {
         locator?: string;
         uncertainty?: string;
+        original_uncertainty?: string | null;
         outcome?: "candidate" | "no_connection";
         supports?: {
             asset_id: string;
@@ -108,7 +109,7 @@ export const investigationCommandSchema = z.discriminatedUnion("action", [
     z.object({ ...envelope, action: z.literal("analyse"), operation: z.enum(["observe", "compare"]),
         sources: z.array(sourceSchema).min(1).max(2), mode: providerMode, replay_id: z.uuid().optional() }),
     z.object({ ...envelope, action: z.literal("review"), id: z.uuid(), entry_revision: z.number().int().positive(),
-        decision: z.enum(["corrected", "rejected", "accepted_for_inquiry", "selected"]), text: text.optional() }),
+        decision: z.enum(["corrected", "rejected", "accepted_for_inquiry", "selected"]), text: text.optional(), uncertainty: text.optional() }),
     z.object({ ...envelope, action: z.literal("testify"), question_id: z.uuid(), speaker: z.string().trim().min(1).max(100),
         response: z.enum(["answered", "unknown", "declined", "conflicting"]), source_mode: z.enum(["heard_directly", "reported"]),
         text: z.string().max(4000), id: z.uuid().optional(), entry_revision: z.number().int().positive().optional() }),

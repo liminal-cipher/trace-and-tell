@@ -18,6 +18,7 @@ export function EvidenceReference({ workspace, id, revision }: { workspace: stri
     {result&&(result.entry ? <div><div className="eyebrow">{result.entry.kind} · {result.entry.mode} · revision {result.entry.revision}</div>
       <p>{result.historical?"Historical revision; a newer correction exists.":"Saved source revision."} · {result.validity.replaceAll("_"," ")}</p>
       <p>{result.entry.details.speaker??""}</p><blockquote>{result.entry.text||result.entry.details.response}</blockquote>
+      {result.entry.kind==="observation"&&<p>Uncertainty: {result.entry.details.uncertainty??"Not recorded."}</p>}
       <p className="muted">{result.entry.details.recorder?`Recorder: ${result.entry.details.recorder}`:""}</p></div>:<p className="error">Broken source: its original is deleted or unavailable.</p>)}
   </div>;
 }
