@@ -4,9 +4,16 @@ Historical audit completed 2026-10-30 (Asia/Seoul), before the subsequently auth
 
 **Current continuation (1 November 2026):** both approved M1 migrations are applied, and actual single-user Magic Link/PKCE, DB/Storage persistence, original bytes, revisions/conflicts, restart, note double-click prevention, duplicate-photo suppression, corrupt-image rejection, deletion and expired-intent cleanup have passed with synthetic data. Browser-only oversize rejection is not a hosted Storage size-limit test. Auth settings were not changed. Test records and the personal-email Auth account are retained; the account must not be deleted without separate confirmation.
 
-Full M1a acceptance remains open: real A/B isolation is a pre-public-deployment requirement; old-token and raw capability replay, some interrupted-upload paths, hosted Storage patch level and HTTPS security remain unverified. The newest duplicate intent is correctly pending its final cleanup check after **1 November 2026, 02:29:02 KST**, although no unwanted file remains. See the [current M1/M2 report](m1b-m2-implementation.md) for direct service evidence, the login/cleanup feedback fixes and precise migration approvals. One successful synthetic Meta inference does not establish general model quality. M1b remote SQL/E2E remain unapplied/unverified. The connector assigned different M1 migration timestamps; do not blindly run remote `db push`.
+Full M1a acceptance remains open: real A/B isolation is a pre-public-deployment requirement; old-token and raw capability replay, some interrupted-upload paths, hosted Storage patch level and HTTPS security remain unverified. Final upload cleanup passed at **1 November 2026, 02:43 KST**: all four intents done, zero pending/staging objects, one unchanged original and all existing records preserved. See the [current M1/M2 report](m1b-m2-implementation.md) for direct service evidence, the login/cleanup feedback fixes and precise migration approvals. Three successful synthetic Meta inferences (CLI image and authenticated app text/image) do not establish general model quality. M1 migration history was repaired to the local versions on 1 November under explicit approval, preserving M1 data and permissions. The Investigation migration and single-user fixture E2E then passed against hosted Supabase; this does not establish real model quality or A/B isolation. Do not blindly run remote `db push`.
 
 The sections below describe the **30 October audit snapshot**, including its then-missing credentials and unrun service tests; they are not current blockers where superseded above.
+
+**Later cleanup check (1 November 2026, 16:22 KST):** the separately approved
+M2-A image upload introduced a fifth intent and a second original after the
+02:43 check. Its expired intent was cleaned through the app once. All five
+intents are now done, with zero staging objects and two byte-verified unchanged
+originals. Existing workspaces, notes, revisions and the Auth account were
+preserved. This does not close the remaining security gates above.
 
 ## Baseline and Environment
 

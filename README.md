@@ -2,7 +2,7 @@
 
 > An evidence-aware family archive that helps people discover questions worth asking before memories lose their context.
 
-**Status:** In progress; not deployed. Actual single-user Supabase Auth/DB/Storage flows and duplicate-photo handling have passed with synthetic data. Full M1a security acceptance remains open. One approved Meta synthetic inference succeeded; it does not establish general model quality. The investigation flow passes local fixture UI/SQL tests but its remote migration and E2E remain unapproved. See [current evidence and remaining gates](docs/m1b-m2-implementation.md) and the [M1a audit](docs/m1a-implementation.md).
+**Status:** In progress; not deployed. Actual single-user Supabase Auth/DB/Storage flows and duplicate-photo handling have passed with synthetic data. Full M1a security acceptance remains open. Three separately approved Meta synthetic inferences succeeded: one CLI image case and authenticated app text and image cases. App persistence and correction passed; general model quality remains unverified. The Investigation migration is applied; its single-user fixture journey passed against real Supabase, including refresh, server restart and testimony-revision review. See [current evidence and remaining gates](docs/m1b-m2-implementation.md) and the [M1a audit](docs/m1a-implementation.md).
 
 **Project name:** Trace & Tell is a working product name; it has not been verified as the final name entered on the hackathon application.
 
@@ -27,7 +27,7 @@ An accepted hypothesis remains a hypothesis. A person's testimony is attributed 
 
 ## Current Scope
 
-The implementation is a **deployment-first**, responsive Next.js application backed by Supabase PostgreSQL, Auth and private Storage, with Vercel as the proposed hosting service. The approved M1 schema and hardening are applied to the Seoul project; the new investigation schema is local only. No deployment has been performed.
+The implementation is a **deployment-first**, responsive Next.js application backed by Supabase PostgreSQL, Auth and private Storage, with Vercel as the proposed hosting service. The approved M1 schema and hardening are applied to the Seoul project; the Investigation schema is also applied following explicit approval. No deployment has been performed.
 
 Two distinct experiences are planned:
 
@@ -83,7 +83,7 @@ For the private archive, copy `.env.example` to the ignored `.env.local` and sup
 
 No Supabase API key is embedded in client code. Never rename these variables with a `NEXT_PUBLIC_` prefix. Configure the exact `/auth/callback` redirect in Supabase Auth only with approval for that environment. Magic Links use PKCE and must be opened in the browser that requested them.
 
-For a fresh disposable local stack, migrations initialise the [archive](supabase/migrations/20261028155626_persistent_archive.sql), [M1 hardening](supabase/migrations/20261029150829_m1a_security_hardening.sql) and [investigation](supabase/migrations/20261029165416_investigation_flow.sql), in order. Docker and the pinned CLI are needed for [local integration](docs/m1a-implementation.md#local-integration-setup). The first two files have already been applied to the approved remote project. The investigation migration has **not** been approved or applied there. **Do not run remote `db push`: connector-assigned history timestamps differ from the local filenames.** Review the [verified content mapping](docs/m1b-m2-implementation.md#git-and-approved-remote-work) before any history repair or further remote migration. Installation and deployment do not apply SQL automatically.
+For a fresh disposable local stack, migrations initialise the [archive](supabase/migrations/20261028155626_persistent_archive.sql), [M1 hardening](supabase/migrations/20261029150829_m1a_security_hardening.sql) and [investigation](supabase/migrations/20261029165416_investigation_flow.sql), in order. Docker and the pinned CLI are needed for [local integration](docs/m1a-implementation.md#local-integration-setup). All three migrations are applied to the approved remote project. The M1 history timestamps were reconciled under separate approval without rerunning M1 SQL. **Further remote migrations require separate approval; do not blindly run remote `db push`.** See the [migration execution record](docs/m1b-m2-implementation.md#remote-ab-execution--1-november-2026-0152-kst). Installation and deployment do not apply SQL automatically.
 
 ```sh
 npm run test
@@ -96,7 +96,7 @@ npm run test:e2e
 
 Playwright starts the production build, so run `build` first. Default browser checks explicitly clear Supabase configuration, including `.env.local`. Private integration is skipped unless `RUN_LOCAL_SUPABASE_E2E=1` and local service credentials are supplied in the process environment. This runner rejects remote targets and records no Auth traces. Investigation browser tests exercise the real UI/domain/SQL against PGlite with a test Auth/HTTP boundary; they do not certify Supabase integration. PGlite is PostgreSQL 18.6, not the target's 17.11/Auth/Storage services. See [current verification](docs/m1b-m2-implementation.md#verification-and-acceptance).
 
-On a local stack with the investigation migration applied, sign in, select a workspace and choose **Open investigation**. This flow is not ready on the current remote project. Fixture mode clearly labels authored suggestions; replay requires a recorded live response. Meta-live is closed by default. Keep `MODEL_API_KEY` server-only and do not enable live use without separate approval. The local allowance ledger deliberately refuses Vercel's ephemeral filesystem. See [provider limits, corpus and evaluation commands](docs/m1b-m2-implementation.md#provider-and-evaluation-preparation).
+With the investigation migration applied, sign in, select a workspace and choose **Open investigation**. The single-user fixture journey also passed through the local app against the approved hosted project. Fixture mode clearly labels authored suggestions; replay requires a recorded live response. Meta-live is closed by default. Keep `MODEL_API_KEY` server-only and do not enable live use without separate approval. The local allowance ledger deliberately refuses Vercel's ephemeral filesystem. See [provider limits, corpus and evaluation commands](docs/m1b-m2-implementation.md#provider-and-evaluation-preparation).
 
 ```sh
 npm run corpus:create
@@ -110,9 +110,9 @@ The evaluation CLI loads ignored `.env.local` without overriding process variabl
 ## Verification & Limitations
 
 - **Actual M1:** Magic Link/PKCE, session retention, workspace/photo/note persistence, original byte equality, revision history/conflict rejection, refresh/server restart, double-click note prevention, duplicate-photo suppression, damaged-image rejection, deletion/access denial and expired-upload cleanup were observed with synthetic data. Oversize rejection was verified in the browser, not as a Storage HTTP boundary test.
-- **Remaining:** real A/B isolation is required before public deployment. Old-token/capability replay, some interrupted-upload failure paths, hosted Storage patch-level confirmation and HTTPS cookie/cache behaviour remain unverified. The newest duplicate-upload intent requires a final cleanup check after **1 November 2026, 02:29:02 KST**; no unwanted file remained at the last check. Test data and the personal-email Auth account are preserved.
+- **Remaining:** real A/B isolation is required before public deployment. Old-token/capability replay, some interrupted-upload failure paths, hosted Storage patch-level confirmation and HTTPS cookie/cache behaviour remain unverified. At **1 November 2026, 16:22 KST**, all five upload intents were done, with two unchanged originals and zero staging objects. Test data and the personal-email Auth account are preserved.
 - **First Meta inference:** one synthetic PNG, `muse-spark-1.3` Standard, HTTP 200, 2.359 s; 1,399 input and 222 output tokens. Calculated cost **US$0.00269225**; actual bill unconfirmed. Schema checks and an assistant visual review found the three principal strings correct. This single case is not a model-wide quality evaluation. No further calls are approved; the consumed allowance ledger is preserved.
-- **Local versus remote:** unit/PGlite/mock checks do not substitute for hosted Auth/Storage tests. M1b remote E2E is still blocked by the separate history-repair and Investigation SQL approval gates. Private execution artefacts are excluded from Git; sanitised findings are in the implementation report.
+- **Local versus remote:** unit/PGlite/mock checks do not substitute for hosted Auth/Storage tests. Separately approved hosted checks passed the single-user fixture journey and the existing M2-A meta-live Observation's uncertainty correction from REV2 to REV3, preserving both original fields and prior revisions after refresh. This correction made no new Meta call. The target had no descendants, so its remote `needs_review` propagation was not exercised; local tests cover that behaviour. Private execution artefacts are excluded from Git; sanitised findings are in the implementation report.
 
 ## Responsible Data Handling
 
@@ -127,10 +127,10 @@ The evaluation CLI loads ignored `.env.local` without overriding process variabl
 ## Roadmap
 
 - [ ] M0: Confirm participant-only rules; the initial specifications, application scaffolding and Supabase project are present.
-- [ ] M1a: Complete remaining security gates and final cleanup; actual single-user Auth/Storage and duplicate-photo checks passed. Deployment requires separate approval.
-- [ ] M1b: Complete the real Supabase fixture journey; local observation → inquiry → testimony → exhibit UI/SQL checks pass.
-- [ ] M2: Extend evaluation beyond the first successful synthetic Meta inference only with new approval, recorded usage and human quality review.
+- [ ] M1a: Complete remaining security gates; actual single-user Auth/Storage, duplicate-photo and expired-upload cleanup checks passed. Deployment requires separate approval.
+- [x] M1b: The single-user fixture observation → inquiry → testimony → exhibit journey passed locally and against hosted Supabase; this does not close M1a security gates.
+- [ ] M2: Extend evaluation beyond three successful synthetic Meta inferences only with new approval, recorded usage and human quality review. M2-A uncertainty correction passed local and hosted acceptance; live comparison quality remains unverified.
 - [ ] M3: Strengthen recovery, corrections and privacy; add audio transcription only if tested and time permits.
 - [ ] M4: Prepare an accessible synthetic demonstration, verify the official submission requirements and submit the actual deliverables.
 
-**Last reviewed:** 2026-11-01. **Deployment:** not performed. The approved M1 schema is applied; synthetic test records and one real-email Auth account remain for follow-up. M1a security acceptance and M1b remote integration remain open. Historical audit results are distinguished from current findings in the [implementation report](docs/m1b-m2-implementation.md).
+**Last reviewed:** 2026-11-01. **Deployment:** not performed. The approved M1 and Investigation schemas are applied; synthetic test records and one real-email Auth account remain for follow-up. M1a security acceptance and general model quality remain open. Historical audit results are distinguished from current findings in the [implementation report](docs/m1b-m2-implementation.md).

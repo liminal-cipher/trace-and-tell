@@ -1,5 +1,349 @@
 # M1 Stabilisation and M2 Preparation
 
+## Observation correction remote acceptance — 1 November 2026, 16:22 KST
+
+Separately authorised hosted acceptance passed through the official Edge
+extension, the existing signed-in profile and the local production app.
+Workspace `M2-A-image-20261101` (`6efb78d4-d2c4-4ced-b17c-e38c9c47c2e8`)
+contains Source `4e1f3f5b-a8a8-4f49-b315-9bd28f5e189b` REV1 and meta-live
+Observation `f7929e12-6c7a-4e4a-847d-bb92e68bf123`. One correction advanced
+both Observation and Investigation from REV2 to REV3. The existing claim
+was unchanged. The new uncertainty is: "The exact colour and the cause of
+colour uncertainty cannot be established from the current source material.
+Image compression is not a verified cause."
+
+The original claim and "Background color description uncertain from image
+compression." remain preserved. Previous observation revisions reopened
+REV1 and REV2, including their earlier uncertainty. A browser refresh retained
+REV3 and both historical views. The target has no descendants, so hosted
+`needs_review` propagation was not applicable; no records were added to test it.
+
+The expired upload intent `ce9e158b-7f93-4ee5-9e76-0dcb5dca2af9` was cleaned
+through exactly one Retry file cleanup action. All five intents are now done;
+Storage retains two originals and zero staging objects. Both originals were
+downloaded before and after cleanup: each remains 15,635 bytes and matches
+the fixture SHA-256 `de6ea03faeba4ca2d231ab4a1ced2d26d86264b69512ba663c478462f7b4fc03`.
+
+Read-only before/after comparisons preserved both workspaces, all five assets,
+nine Source revisions, four Model Runs, all 13 pre-existing Investigation
+versions, the other Investigation, Storage metadata and the existing Auth
+account identity. Exactly one Investigation version and save receipt were
+added. Apart from the target Investigation save, only the approved intent's
+cleanup state changed. Nine Meta approval/allowance files retained their hashes.
+No additional Meta request, reanalysis, migration, commit/push or deployment ran.
+
+This session reran the correction/domain/route suites: 21 tests across three
+files passed; `git diff --check` passed. The full-suite, build and automated
+desktop/mobile results below belong to the earlier local implementation run.
+The real Edge/Supabase checks above are separate from those local tests and
+do not close the broader M1 security or model-quality gates. Local main and
+fetched origin/main remained `6639830a79a13706f3511e612385176d51579d9e`.
+
+## M2-A uncertainty correction follow-up — 1 November 2026
+
+This section records the earlier local implementation session. The later
+hosted acceptance and completed cleanup are recorded above.
+
+Local implementation now allows an Observation's claim and uncertainty
+explanation to be corrected independently or together. The correction form
+shows the original suggestion and original uncertainty alongside editable
+current values. A successful save names the new Observation revision, and
+Previous observation revisions opens both fields from the saved history.
+This supersedes the UI limitation in the dated M2-A report below; the actual
+hosted M2-A record has **not** been corrected by this session.
+
+`investigationCommandSchema` accepts an optional, trimmed, non-empty
+`uncertainty` string of at most 2,000 characters. `applyReview` permits it only
+for an Observation correction. It preserves `original_text`, locator, source
+IDs/revisions, run ID, model and mode; it increments the entry revision and
+uses the existing reconciliation and SQL save path. Blank replacement
+explanations are rejected; users can explicitly record that the cause is
+unknown. Other record editing flows are unchanged.
+
+New imports retain `details.original_uncertainty`. For existing documents
+without that optional field, reads display the untouched current uncertainty
+as the original. The first explicit correction captures it before updating
+the current value. Missing historical uncertainty is recorded as `null`,
+displayed as Not recorded, rather than invented. No read-time backfill or
+bulk update occurs. Existing `investigation_versions` snapshots and immutable
+run records retain the earlier values. No SQL migration, table, dependency,
+model prompt or provider request contract changed. This follows the existing
+[Postgres JSONB storage model](https://supabase.com/docs/guides/database/json).
+
+Verification used synthetic local data only:
+
+| Check | Observed result |
+| --- | --- |
+| Focused domain, SQL, route and provider suite | 28 tests passed |
+| Full `npm test` | 83 tests passed across 14 files |
+| New correction suite, final rerun | 9 tests passed |
+| Text-only, uncertainty-only and combined correction | Passed; omitted fields and original values retained |
+| Legacy read and first correction; missing historical explanation | Passed; no backfill on read |
+| Previous revision and refreshed state | Passed in SQL; browser reload and on-disk PGlite reopen also passed |
+| Stale entry, stale investigation, rejected entry, changed duplicate payload | Rejected as expected; identical SQL receipt replay creates no revision |
+| Descendant propagation | Uncertainty-only correction marks hypothesis, question, testimony and exhibit `needs_review` |
+| Fixture/Replay/Meta-labelled storage | Passed using authored records through import, `storedRun` and actual local SQL RPC; saved run records unchanged |
+| Provider regression | Existing fixture/replay and injected HTTP Meta tests passed; no real Meta request |
+| `npm run typecheck` | Passed, including final rerun |
+| `npm run lint` | Passed with 0 errors and 2 existing warnings in ignored `.local/m1-persistence-check.mjs` and `.local/meta-first.config.ts` |
+| Lint of all changed TypeScript files | Passed with no warnings |
+| `npm run build` | Passed; Meta and remote credentials disabled in the child process |
+| `npx playwright test tests/e2e/investigation.spec.ts` | Desktop and mobile passed, 2 tests; production UI + local PGlite, API boundary intercepted |
+| Visual review | Both Observation screenshots inspected; original/current fields and historical uncertainty visible; no horizontal overflow |
+| Actual Supabase UI, live model quality, M1 security acceptance | Not run by this follow-up; not implied by local tests |
+
+Initial branch `main`, HEAD and fetched `origin/main` were
+`6639830a79a13706f3511e612385176d51579d9e`. Existing changes in README and
+the two M1/M2 reports were preserved. Shared engineering policy matched
+fetched agents-sync main `4acf97ee5b58e05b72f5ddfbc3ab25851eaffb57`.
+No remote data request, mutation, cleanup, migration, live Meta call,
+allowance activation, commit/push or deployment was performed. The pending
+upload cleanup was not rechecked or executed. Historical remote counts in
+earlier sections are not a new observation.
+The before/after SHA-256 inventory covered 89 existing local files. Only this
+report and `CURRENT_TASK.md` changed within that inventory; all other 87,
+including `.env.local`, existing `.local` evidence/allowances, evaluation
+results, README and the M1a report, matched. `git diff --check` passed.
+
+### Next minimum M2-B proposal — not authorised or executed
+
+Propose one `compare` request with the unchanged synthetic card image
+`tests/fixtures/model/inputs/01.png` and a typed synthetic note containing
+exactly these two lines (UTF-8, LF between lines, no trailing newline):
+
+```text
+ORBIT 47
+BLUE TICKET
+```
+
+- Image: 640×480 PNG, 15,635 bytes; original and app-prepared PNG SHA-256
+  `de6ea03faeba4ca2d231ab4a1ced2d26d86264b69512ba663c478462f7b4fc03`.
+- Note: 20 UTF-8 bytes; SHA-256
+  `6c896c139ec6bc2c9259ad8fa892913cbe49c9d6b3a56ba40f539a5bdd400c3e`.
+- Proposed model: `muse-spark-1.3` Standard; one request total, zero retries,
+  at most 1,200 output tokens, maximum US$1.32 under the existing local
+  reservation mechanism. This is a proposed cap, not a fresh price quote.
+- Prefer a separately approved synthetic workspace with these two source
+  revisions and no pre-existing observations (`observations: []`). One compare
+  call can return the tentative connection, supporting/contrary evidence,
+  unknowns and questions; separate observe calls are unnecessary for this test.
+- Before any inference approval, authorise the exact source creation, verify
+  actual source IDs/revisions, recompute `inputHash` for the complete prepared
+  `ModelInput`, and recheck the official model/pricing. Content hashes above
+  are **not** the full request allowlist hash: source UUIDs are not assigned.
+  No new source, approval file or ledger was created during this follow-up.
+- Assess the shared visible wording with evidence from both records, honest
+  absence of contrary evidence, unknown identity/date/relationship, and a
+  useful non-leading question. Transport/schema success alone is insufficient.
+  M2-C remains a separate future approval and experiment.
+
+## M2-A image app inference — 1 November 2026, 03:04 KST
+
+After separate creation approval, the user uploaded the unchanged synthetic
+01.png to M2-A-image-20261101 (workspace
+`6efb78d4-d2c4-4ced-b17c-e38c9c47c2e8`, asset
+`4e1f3f5b-a8a8-4f49-b315-9bd28f5e189b`, source REV 1). Read-only preflight
+confirmed source bytes, app PNG preparation, no prior analysis and exact input
+SHA-256 `16abfa4c9f7ae1481bd99885ca386a7a7aca71a980d1150706fce6bb659cfdec`.
+The user then separately approved one Standard muse-spark-1.3 request, no
+retries, 1,200 output tokens and US$1.32 maximum. A new 30-minute ignored
+allowance was created; prior ledgers were preserved without reuse.
+
+One Edge Suggest observations action succeeded through the real authenticated
+app, private Storage, Meta and hosted DB. Run
+`244f18a8-4849-4b1e-83ac-d9720a65589d` returned muse-spark-1.3,
+chat.completion/JSON, finish_reason stop, 3,931 ms, 1,420 input / 376 output
+tokens (253 reasoning tokens included; cached input zero). Estimated cost
+US$0.003373 matched the settled ledger; actual invoice remains unknown.
+No retry or fixture substitution occurred. Live mode was immediately disabled
+by restarting the owned server, and the result survived reload without login.
+
+Assistant visual comparison confirmed ORBIT 47, ADMIT ONE and BLUE TICKET,
+the card/border and a horizontal line. No date, identity or relationship was
+invented. However, the model attributed colour uncertainty to image compression
+without evidence; the line description was also less precise than its visible
+placement below ORBIT 47. Structural acceptance passed, with this semantic
+caveat. An attributed correction saved observation REV 2; SQL retained the
+original suggestion in both versions. The current correction UI changes claim
+text but retains original locator/uncertainty details, so the unsupported
+compression explanation remains visible beside the correction. This is a
+follow-up product limitation, not silently corrected model output.
+
+Three separately approved historical inference requests now total an estimated
+US$0.00903650: CLI image, app text, app image. This single clean image case does
+not establish general image quality or live comparison/question/exhibit flow.
+Existing M1 data/history remains separate. The new upload has its own cleanup
+horizon, **05:05:29.926 KST on 1 November**; its pending status does not reverse
+the earlier four-intent cleanup pass. No runtime code, migration, Auth setting,
+commit/push or deployment changed. Evidence and allowances remain ignored.
+
+## Final M1 cleanup and M2-A image preflight — 1 November 2026
+
+At 02:43 KST, hosted DB time confirmed the last capability had expired. The
+existing signed-in Edge session executed Retry file cleanup exactly once.
+All four upload intents are now `cleanup_state=done`, with zero pending work,
+zero staging objects and the same one original. The UI displayed **No pending
+uploads or file cleanup.** The original still matched the 15,635-byte fixture;
+both duplicate paths returned 404. Workspace/assets/revisions/investigation,
+version-history and run hashes matched before/after. The two active records,
+eight asset revisions, eleven investigation versions and Auth account were
+preserved. This supersedes earlier dated pending-cleanup notes, not the open
+A/B, HTTPS, token-replay, failure-path or hosted Storage patch-level gates.
+
+At 02:54 KST a read-only M2-A preflight rechecked the existing `01.png` in
+workspace `56b7510b-d21c-447c-81c3-608553ce410c` (M1-20261030-A), asset
+`73a2443d-153c-4fb2-b4bc-6288b5bc7961`, revision 1. Downloaded original and
+the app-equivalent sanitised PNG match: 640x480 pixels, 15,635 bytes, SHA-256
+`de6ea03faeba4ca2d231ab4a1ced2d26d86264b69512ba663c478462f7b4fc03`.
+The exact full ModelInput hash for this existing source is
+`e182b238fe441b9ae5f1346cce1dfed8d6a4998f3f953cdbba820518d0de5c58`.
+It is **blocked, not an executable proposal**: observe for that source/revision
+already exists in the analysed registry from the fixture run. Provider choice
+does not change identity. Local request validation and duplicate-import
+rejection passed; no Meta request or remote write occurred.
+
+Propose a separate `M2-A-image-20261101` workspace with one upload of the exact
+same local fixture, preserving the original workspace/history. This would use
+two workspaces and two active originals in total, within existing test limits,
+but needs the user's requested separate creation approval. No workspace or
+asset has been created. The new source would be revision 1; its UUID is assigned
+by the app/DB, so its full approval hash cannot truthfully be fixed before
+upload. After authorised creation, recompute the real prepared input hash and
+request a separate one-shot Meta approval. Do not alter deduplication, fabricate
+IDs, revise old sources to bypass it, or reuse an old allowance.
+
+Proposed inference: `muse-spark-1.3` Standard, chat/completions, one PNG,
+at most 1,200 output tokens, one request total, zero retries and US$1.32 cap.
+The existing-source request has 1,109 prompt-text characters; recompute after
+new IDs are assigned. Standard listing/prices were rechecked at 02:54 KST on
+the official pricing page (US$1.25/M input, US$4.25/M output). Prior successful
+calls establish past account access, not a fresh permission/quota probe.
+
+Acceptance separates transport/schema from visual grounding: inspect returned
+model, completion status, source revision, raw output, latency, usage and ledger
+settlement; compare visible ORBIT 47 / ADMIT ONE / BLUE TICKET text with claims,
+abstention and invented dates/relationships. Verify a META-LIVE observation in
+the app and hosted run, reload it, make one attributed correction, and verify
+both original and corrected revisions. Image misunderstanding is a quality
+failure even if schema passes. Provider/incomplete/unknown-cost failure stops
+the experiment without retry or fixture substitution. Observe alone does not
+validate live connection/question/exhibit generation. No new approval file,
+model call, migration, Git publication or deployment was made in this preflight.
+
+## M2 authenticated app experiment — 1 November 2026, 02:07 KST
+
+The user separately approved exactly one text-only app inference after the
+read-only plan. Existing synthetic note REV 3 was not yet observed alone, so
+no source change or duplicate-analysis bypass was needed. Input SHA-256:
+`cac554eea28b2b8ba451412af62bf683e6cce5719d4fcbdfab4200172d96b706`.
+The request contained 1,125 prompt-text characters, no image, and at most 1,200
+output tokens. A new ignored 30-minute allowance authorised one request,
+zero retries and US$1.32 maximum; the previously consumed allowance was not
+reset or reused. Its two file hashes remained unchanged.
+
+Official model/pricing pages were checked at 02:05 KST: Standard
+`muse-spark-1.3`, US$1.25/M input and US$4.25/M output
+([pricing](https://dev.meta.ai/docs/pricing-rate-limits),
+[model](https://dev.meta.ai/models/muse-spark)). This confirms published pricing,
+not the invoice. The Edge app executed one successful request and stored run
+`7a0f538a-357c-4224-bbca-b3cc6a2a69ff` in hosted Supabase: returned model
+`muse-spark-1.3`, finish reason `stop`, 4,088 ms, 1,000 input / 405 output tokens,
+estimated US$0.00297125. The local reservation settled for that same amount.
+Actual billed cost is unknown. No model-list call or automatic retry occurred.
+
+The response quoted the synthetic note exactly, referenced its correct ID and
+revision, returned no connection/questions, and passed the analysis schema.
+Review found no invented date, identity or relationship in this one result.
+Its uncertainty text described the supplied text as legible; this is not a
+handwriting or image-reading test. UI labelled the observation META-LIVE.
+After success the server was immediately restarted with live mode disabled;
+session and saved response survived reload. A human-style clarification then
+saved observation REV 2 while preserving the model's original text. Hosted
+investigation revision is now 11. Existing M1 records/revisions/Storage/Auth
+account remain unchanged. Total historical inference count is two (one CLI
+image case and this app text case), estimated combined US$0.00566350; this is
+not general model-quality acceptance or a fully live connection/exhibit flow.
+
+### Integration review and no-call checks
+
+The route verifies Origin and online Auth; RLS checks workspace ownership.
+Source IDs/revisions are validated before starting the run. For live photo
+inputs the server downloads only the authorised revision's private original,
+rotates/resizes to at most 1024px and emits PNG capped at 512 KiB. A read-only
+check of the existing synthetic photo produced 640x480 / 15,635 bytes, identical
+to its fixture bytes. No image was sent in this app experiment.
+
+The provider validates text/image bounds, reserves the exact full input hash
+before fetch, uses a 45-second timeout and no retries, and validates returned
+model, token usage, completion status, JSON schema and source references.
+Unknown outcomes retain a blocking ledger charge. Failed responses never
+substitute fixture output. Auth and evidence are checked again before saving;
+SQL repeats source/revision checks atomically. SQL stores raw response, usage,
+cost and image hashes rather than image copies. UI exposes provider/model/run
+status; token/cost details currently require the saved run/ledger, not the UI.
+These failure branches were reviewed/tested locally, not injected remotely.
+
+The read-only proposal and local fixture check passed. The first plan config
+also ran the existing 73 tests (74 total including the plan); an isolated plan
+rerun passed. Nine focused provider/route tests and a replay of the original
+CLI response passed without external inference. Runtime code changes were not
+needed. The existing duplicate-analysis guard intentionally applies across
+providers: a saved source revision cannot be re-analysed merely by selecting
+Replay or Meta. Before this run no matching live app record existed; the old
+CLI record uses different source IDs. Local replay is not remote app Replay
+acceptance, and no recorded result was relabelled to bypass this restriction.
+
+Both allowances and raw results are retained only in ignored local evidence.
+`.env.local` remains live-disabled with no approval path; the running server
+also has live mode disabled. No new SQL, Git publication, deployment or Auth
+configuration change occurred. Final upload cleanup still awaits its
+02:29:02.346 KST horizon. A/B user isolation, HTTPS cookies/cache, token replay
+and remaining failure cases remain pre-public-deployment gates.
+
+## Remote A/B execution — 1 November 2026, 01:52 KST
+
+Here A/B refers to the two migration approval stages, not two-user isolation.
+
+The user explicitly approved both stages. CLI authentication was initially
+missing; after the user signed in, Approval A completed both history-only
+repair steps. Each step was read back. The final M1 versions are
+`20261028155626` and `20261029150829`; no M1 SQL was rerun. Before execution,
+the full original history and M1 data, policies, ACLs, functions and Storage
+baseline were saved under ignored `.local/`. Both original SQL bodies matched
+their local files. Post-A comparisons matched every captured M1 category.
+
+Approval B then applied only `20261029165416_investigation_flow.sql`, after
+verifying the approved SHA-256 and that it was the only pending migration.
+The recorded version is `20261029165416`. All three new tables have RLS and
+owner-read policies via workspaces, authenticated SELECT and service-role
+writes. The invoker RPC permits service_role, not anon/authenticated execution.
+Post-B M1 workspace, assets, eight revisions, intents, functions, bucket/object
+metadata and Auth-account presence matched the baseline. Two active records,
+one original and zero staging objects remain. No existing material was deleted.
+
+Official Edge exercised the signed-in app against hosted Supabase: fixture
+observation, correction, rejection, no-supported-connection inquiry, question
+selection, synthetic testimony and a sourced exhibit. Refresh and an owned
+production-server restart retained the session and saved content. Correcting
+testimony advanced it to revision 2, preserved the original testimony and
+marked its existing exhibit `needs review`. The exhibit's evidence control
+retrieved historical testimony revision 1. The database contains six entries,
+nine investigation versions and two succeeded `authored-fixture-v1` runs.
+This verifies real Auth/app/DB persistence with fixture suggestions, not model
+analysis quality. No new Meta calls occurred; the live gate remains disabled.
+
+All 73 local tests across 13 files passed. No runtime source changed, so build,
+typecheck and lint were not rerun. Security Advisor has the same receipt-table
+RLS-without-policy information and leaked-password-protection warning; no new
+Investigation finding or Auth-setting change. Real A/B isolation, HTTPS security,
+raw token/capability replay and remaining failure paths are still unverified.
+At 01:52 KST the latest upload capability had not expired: its final cleanup
+remains pending until after 02:29:02.346 KST. Existing active materials and the
+personal-email Auth account are preserved. No commit, push or deployment.
+
+The approval proposals and publication notes below are historical and are
+superseded by this execution record where they describe A/B as unapproved.
+
 ## Publication verification — 1 November 2026
 
 The user approved committing and pushing the current results while explicitly
