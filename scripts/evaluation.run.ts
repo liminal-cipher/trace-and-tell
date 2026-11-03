@@ -1,3 +1,4 @@
+import { MODEL_IMAGE_MAX_EDGE, MODEL_IMAGE_BYTE_LIMIT, MODEL_REQUEST_BYTE_LIMIT } from "../src/lib/model-image";
 import { test, expect } from "vitest";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -35,7 +36,7 @@ test("records an immutable synthetic evaluation batch (not a model-quality asser
                 return [{ bytes: png.length, width: png.readUInt32BE(16), height: png.readUInt32BE(20) }];
             });
             const textCharacters = request.messages.reduce((sum, message) => sum + (typeof message.content === "string" ? message.content.length : message.content.reduce((length, part) => length + (part.type === "text" ? part.text.length : 0), 0)), 0);
-            writeFileSync(join(directory, `${item.id}.plan.json`), JSON.stringify({ ...identity, model: request.model, request_limits: { images: 2, dimension: 1024, bytes_each: 524288, text_characters: 6000, output_tokens: 1200 }, actual_input: { images, text_characters: textCharacters }, environment: { model_api_key_configured: Boolean(process.env.MODEL_API_KEY), live_enabled: process.env.META_LIVE_APPROVED === "yes", approval_path_configured: Boolean(process.env.META_APPROVAL_FILE) }, request_valid: true, live_calls: 0 }, null, 2), { flag: "wx" });
+            writeFileSync(join(directory, `${item.id}.plan.json`), JSON.stringify({ ...identity, model: request.model, request_limits: { images: 2, dimension: MODEL_IMAGE_MAX_EDGE, bytes_each: MODEL_IMAGE_BYTE_LIMIT, request_bytes: MODEL_REQUEST_BYTE_LIMIT, text_characters: 6000, output_tokens: 1200 }, actual_input: { images, text_characters: textCharacters }, environment: { model_api_key_configured: Boolean(process.env.MODEL_API_KEY), live_enabled: process.env.META_LIVE_APPROVED === "yes", approval_path_configured: Boolean(process.env.META_APPROVAL_FILE) }, request_valid: true, live_calls: 0 }, null, 2), { flag: "wx" });
             continue;
         }
         try {

@@ -1,0 +1,424 @@
+{
+  "version": 1,
+  "scope": "Private Standard API inference. No public redistribution authorised.",
+  "licence_guidance": [
+    "https://creativecommons.org/faq/#artificial-intelligence-and-cc-licenses",
+    "https://creativecommons.org/licenses/by-sa/4.0/legalcode.en"
+  ],
+  "photos": [
+    {
+      "id": "rw-01",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Korail-P313-Seoul-station-sign-20191021-112154.jpg",
+      "page_sha256": "bcd34d1532eb08ed711c5d3154a118274225c57e8db236559144dab3ba006454",
+      "checked_at": "2026-11-03T11:59:57.598955+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "LERK / Korail-P313-Seoul-station-sign-20191021-112154.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Korail-P313-Seoul-station-sign-20191021-112154.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-02",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Korail-P313-Seoul-station-sign-20191021-112136.jpg",
+      "page_sha256": "9997f28bed17e7bfa79b2803ed6c67db8707a0f5d46a513a4922da34b396d409",
+      "checked_at": "2026-11-03T11:59:57.599115+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "LERK / Korail-P313-Seoul-station-sign-20191021-112136.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Korail-P313-Seoul-station-sign-20191021-112136.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-03",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg",
+      "page_sha256": "1947e6189350fca4a433185d9d03540b944ec468ff20104ad94d751852d0aec6",
+      "checked_at": "2026-11-03T11:59:57.599240+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "LERK / Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-04",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg",
+      "page_sha256": "745b149ff881c8a595a7c908969a21d16fa7728d104eee09a6267242ee4f8492",
+      "checked_at": "2026-11-03T11:59:57.599357+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "LERK / Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-05",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg",
+      "page_sha256": "9a22d637839b7c9e962da101d76b4a70aaa2ca2ef553e554c7c08b077eaf4ca7",
+      "checked_at": "2026-11-03T11:59:57.599496+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "LERK / Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-06",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg",
+      "page_sha256": "a5163415c8bb99f5b03b27483e652bfc9b7654775f9d65dc7e986ac2a7ce1985",
+      "checked_at": "2026-11-03T11:59:57.599615+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attribution": "LERK / Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg / CC BY-SA 3.0 / https://commons.wikimedia.org/wiki/File:Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-07",
+      "page_url": "https://commons.wikimedia.org/wiki/File:N%C3%A4rcon_handwritten_sign,_Link%C3%B6ping_universitet,_2024.jpg",
+      "page_sha256": "0e8028367a50d792d9c7c71a2daac51b47e6f471cce27f8c03a264d03e07e3cd",
+      "checked_at": "2026-11-03T11:59:57.599719+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "GabiS83 / Närcon handwritten sign, Linköping universitet, 2024.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:N%C3%A4rcon_handwritten_sign,_Link%C3%B6ping_universitet,_2024.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-08",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Manual,_handwritten_elevator_status_sign_(24120978028).jpg",
+      "page_sha256": "57c8b23e43048349e702ac486ba28ceaadd47f5207908f4075d138b2c3034557",
+      "checked_at": "2026-11-03T11:59:57.599830+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "attribution": "Eric Fischer / Manual, handwritten elevator status sign (24120978028).jpg / CC BY 2.0 / https://commons.wikimedia.org/wiki/File:Manual,_handwritten_elevator_status_sign_(24120978028).jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-09",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Black_Friday_handwritten_sign._Dnipro.jpg",
+      "page_sha256": "5d61cba9c36c045797ac1e6699d26d9e79f9190936bca646c3dc90c30a736b2a",
+      "checked_at": "2026-11-03T11:59:57.599929+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Alex Blokha / Black Friday handwritten sign. Dnipro.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Black_Friday_handwritten_sign._Dnipro.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-10",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Handwritten_sign_denouncing_littering_by_sport_anglers,_Etang_blanc,_Seignosse,_France.jpg",
+      "page_sha256": "493bdc4841deb4e9a0a3020769c9f8d10e249f7cf20df50438cdec1960666334",
+      "checked_at": "2026-11-03T11:59:57.600034+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "additional_conditions",
+      "public_redistribution": "needs_review",
+      "basis": "Photographer licence does not clearly resolve authorship of the substantial handwritten message.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "KaiKemmann / Handwritten sign denouncing littering by sport anglers, Etang blanc, Seignosse, France.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Handwritten_sign_denouncing_littering_by_sport_anglers,_Etang_blanc,_Seignosse,_France.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-11",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kalkar_Grieth_-_M%C3%BChle_Haan_01B_PM21-01.jpg",
+      "page_sha256": "f53111be20626197580768e55f697cbe9218255db3fab29c41129840c5476457",
+      "checked_at": "2026-11-03T11:59:57.600168+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Pieter Delicaat / Kalkar Grieth - Mühle Haan 01B PM21-01.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Kalkar_Grieth_-_M%C3%BChle_Haan_01B_PM21-01.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-12",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kalkar_Grieth_-_M%C3%BChle_Haan_01A_PM21-01.jpg",
+      "page_sha256": "a05b91a363a640523e2c4ef577e4da5b675c871de35147b313a41a4b7c24f23e",
+      "checked_at": "2026-11-03T11:59:57.600289+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Pieter Delicaat / Kalkar Grieth - Mühle Haan 01A PM21-01.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Kalkar_Grieth_-_M%C3%BChle_Haan_01A_PM21-01.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-13",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Perpignan_ancienne_devanture_rue_de_la_pierre_Trouee2.jpg",
+      "page_sha256": "670fd37c086dc8e185f1a5085f7dd7a9b287f6ac39ea14f1edb5b40cb8f057f8",
+      "checked_at": "2026-11-03T11:59:57.600401+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Drong~commonswiki / Perpignan ancienne devanture rue de la pierre Trouee2.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Perpignan_ancienne_devanture_rue_de_la_pierre_Trouee2.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-14",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Jacob_Riis_Park_td_(2018-08-03)_145_-_QM16_Bus_Stop.jpg",
+      "page_sha256": "ba1a40149350f7aff9d1778a379681640aec09826640c76f1b0e5ddf50b9ba79",
+      "checked_at": "2026-11-03T11:59:57.600510+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Tdorante10 / Jacob Riis Park td (2018-08-03) 145 - QM16 Bus Stop.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Jacob_Riis_Park_td_(2018-08-03)_145_-_QM16_Bus_Stop.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-15",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Spring_Crk_Pk_Fountain_Flatlands_03.jpg",
+      "page_sha256": "71bd5d35bd4a60519ce3d8854e8fa1257f4e3ba9a8bdd912d4d146a3d9b5c825",
+      "checked_at": "2026-11-03T11:59:57.600615+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Tdorante10 / Spring Crk Pk Fountain Flatlands 03.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Spring_Crk_Pk_Fountain_Flatlands_03.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-16",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Llauro_2011_11.jpg",
+      "page_sha256": "80bbc48e3c95fc05b10144b50bfaf26222e70e5d214a3bc9a8b86b2747d6c3d2",
+      "checked_at": "2026-11-03T11:59:57.600725+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attribution": "Bertrand GRONDIN  → (Talk) / Llauro 2011 11.jpg / CC BY-SA 3.0 / https://commons.wikimedia.org/wiki/File:Llauro_2011_11.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-18",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_storefront,_probably_between_1911_and_1930_(SEATTLE_1721).jpg",
+      "page_sha256": "d1e9496390720f7721ddc50fc1a4c94e47cfa8cbc95e957128d8331bc86e295f",
+      "checked_at": "2026-11-03T11:59:57.600830+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "additional_conditions",
+      "public_redistribution": "needs_review",
+      "basis": "Photographic advertisement: US pre-1931 public-domain statement; underlying advertisement and cross-border reuse need further confirmation.",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_storefront,_probably_between_1911_and_1930_(SEATTLE_1721).jpg#Licensing",
+      "attribution": "Unknown photographerUnknown photographer / Benton University Jeweler storefront, probably between 1911 and 1930 (SEATTLE 1721).jpg / Public domain / https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_storefront,_probably_between_1911_and_1930_(SEATTLE_1721).jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-19",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_shop_storefront,_probably_between_1920_and_1930_(SEATTLE_1719).jpg",
+      "page_sha256": "5587df4c235ed303a3a6711227e96e25252e1ccbd1f1a09ca081b4f4bb0871d9",
+      "checked_at": "2026-11-03T11:59:57.600926+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "additional_conditions",
+      "public_redistribution": "needs_review",
+      "basis": "Historical identifiable people and a US-specific public-domain statement; personality rights/context require separate review.",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_shop_storefront,_probably_between_1920_and_1930_(SEATTLE_1719).jpg#Licensing",
+      "attribution": "Unknown photographerUnknown photographer / Benton University Jeweler shop storefront, probably between 1920 and 1930 (SEATTLE 1719).jpg / Public domain / https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_shop_storefront,_probably_between_1920_and_1930_(SEATTLE_1719).jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "needs_review"
+    },
+    {
+      "id": "rw-20",
+      "page_url": "https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg",
+      "page_sha256": "c31689925be7754f1a9024a066fbeb41ea9cf3d1908373577941b09b1687e3a5",
+      "checked_at": "2026-11-03T11:59:57.601131+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg#Licensing",
+      "attribution": "Flip Schulke / A NEWLY RESTORED AND PAINTED OLDER STOREFRONT ON MINNESOTA STREET IN NEW ULM, MINNESOTA. THE BUILDING NOW HOUSES A... - NARA - 558126.jpg / Public domain / https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-21",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kashiwa_Sogo_OPEN-CLOSED_Sign_(back).jpg",
+      "page_sha256": "41f242b930c0bffb61cf1f0e895d88d9765a0bf30f044808b4971e40e7708e46",
+      "checked_at": "2026-11-03T11:59:57.601283+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Algebar / Kashiwa Sogo OPEN-CLOSED Sign (back).jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:Kashiwa_Sogo_OPEN-CLOSED_Sign_(back).jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-22",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Lane_Closed_Sign,_Louisiana.jpg",
+      "page_sha256": "ca35a46e4336bbda81a6388ed2a9ea2d1cd72a7c82eab2aa52019873d3e4cb65",
+      "checked_at": "2026-11-03T11:59:57.601456+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "permitted_standard_inference",
+      "public_redistribution": "conditional_attribution_and_licence",
+      "basis": "Explicit public licence grants reproduction/technical conversion. Screened sign/building subject with no identified private person; eligible for bounded Standard inference, not Contributor training. Attribution, title, source, licence and conversion notices remain in the review and batch packet. This is a scoped licence assessment, not a claim of an AI-specific permission statement.",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "attribution": "Ktkvtsh / Lane Closed Sign, Louisiana.jpg / CC BY 4.0 / https://commons.wikimedia.org/wiki/File:Lane_Closed_Sign,_Louisiana.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-23",
+      "page_url": "https://commons.wikimedia.org/wiki/File:A_Worn_Out_Road_Closed_Sign_with_graffiti.jpg",
+      "page_sha256": "a8328d22b280337e74ef164c5c8d71b9b4d874bdba98e3a645db019574266961",
+      "checked_at": "2026-11-03T11:59:57.601596+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "additional_conditions",
+      "public_redistribution": "needs_review",
+      "basis": "Photograph licence is present, but the prominent third-party graffiti rights are unresolved.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attribution": "Gogerr / A Worn Out Road Closed Sign with graffiti.jpg / CC BY-SA 4.0 / https://commons.wikimedia.org/wiki/File:A_Worn_Out_Road_Closed_Sign_with_graffiti.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    },
+    {
+      "id": "rw-24",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Shop_sign_at_hairdresser_shop_in_Scalloway_-_geograph.org.uk_-_971090.jpg",
+      "page_sha256": "dd9b0deb408f1a7cf73fac81198d1502420c4c81888750776b5b7037cbe102bf",
+      "checked_at": "2026-11-03T11:59:57.601740+00:00",
+      "reviewer": "assistant source-page and licence review",
+      "external_ai": "additional_conditions",
+      "public_redistribution": "needs_review",
+      "basis": "Photograph licence is present, but the separately authored sheep illustration is not explicitly cleared.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "attribution": "Nicholas Mutton / Shop sign at hairdresser shop in Scalloway - geograph.org.uk - 971090.jpg / CC BY-SA 2.0 / https://commons.wikimedia.org/wiki/File:Shop_sign_at_hairdresser_shop_in_Scalloway_-_geograph.org.uk_-_971090.jpg",
+      "conditions": [
+        "Standard mode only; no Contributor training.",
+        "Retain source title, author, licence and source URL with the evaluation packet; conversion does not change the original rights.",
+        "No public demo publication in this sprint; public reuse requires its own attribution/licence check."
+      ],
+      "privacy": "assistant screened; no identity inference permitted"
+    }
+  ]
+}

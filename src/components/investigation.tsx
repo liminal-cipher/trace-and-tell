@@ -140,6 +140,7 @@ export function Investigation({ workspace }: {
         </article>;
             })}</div>
         {!assets.length && <p>Add a photograph or typed note in Archive to begin.</p>}
+        {mode === "meta-live" && <p className="muted">The original stays unchanged. A separate image is oriented, stripped of metadata and fitted within 2048 pixels without enlargement, using lossless PNG encoding. Review small lettering against the original. Images exceeding the app’s 8 MiB prepared-input limit are rejected before any model call.</p>}
         <div className="actions"><button disabled={busy || selected.length !== 1} onClick={() => void analyse("observe")}>Suggest observations</button><button disabled={busy || selected.length !== 2} onClick={() => void analyse("compare")}>Compare selected records</button></div>
       </section><section className="evidence-desk"><h2>Observation notebook</h2><p>Compare every reading with its original.</p>
         {entries.filter((e) => e.kind === "observation").map((entry) => <article className="evidence-card" key={entry.id}>{entryHeader(entry)}<p>{entry.text}</p><p className="muted">{entry.details.locator} · {entry.details.uncertainty}</p>{sourceLinks(entry)}{correction(entry)}<button className="secondary" disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "rejected")}>Reject observation</button></article>)}

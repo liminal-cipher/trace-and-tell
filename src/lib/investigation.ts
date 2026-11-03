@@ -1,5 +1,5 @@
 import "server-only";
-import sharp from "sharp";
+import { prepareModelImage, ImagePreparationError } from "./model-image";
 import { createHash } from "node:crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { listArchive } from "./archive";
@@ -64,7 +64,8 @@ export async function executeInvestigation(client: SupabaseClient, actor: string
         const input = modelInput(command.operation, command.sources, snapshot.document, evidence);
         if (snapshot.document.analysed.includes(analysisIdentity(input)))
             throw new AppError(409, "These source revisions already have saved suggestions. Review them instead.");
-        const runMetadata = { mode: command.mode, input: withoutImages(input), prompt_version: PROMPT_VERSION, schema_version: SCHEMA_VERSION };
+        const imagePreparations: { asset_id: string; revision: number; evidence: Awaited<ReturnType<typeof prepareModelImage>>["evidence"] }[] = [];
+        const runMetadata = { image_preparations: imagePreparations, mode: command.mode, input: withoutImages(input), prompt_version: PROMPT_VERSION, schema_version: SCHEMA_VERSION };
         const begun = await rpc(actor, { ...command, op: "begin_run", request: command, sources: command.sources, mode: command.mode, record: runMetadata,
             model: command.mode === "fixture" ? "authored-fixture-v1" : command.mode === "replay" ? "recorded-response" : "muse-spark-1.3" });
         if (begun.existing)
@@ -79,10 +80,9 @@ export async function executeInvestigation(client: SupabaseClient, actor: string
                         const bytes = await storageAdmin().storage.from("archive-originals").download(original.data!.storage_key);
                         if (bytes.error || !bytes.data)
                             throw new AppError(503, "The original could not be read.");
-                        const png = await sharp(Buffer.from(await bytes.data.arrayBuffer()), { limitInputPixels: 24000000 }).rotate().resize(1024, 1024, { fit: "inside", withoutEnlargement: true }).png().toBuffer();
-                        if (png.length > 512 * 1024)
-                            throw new AppError(413, "The sanitised image exceeds the experiment input limit.");
-                        source.image = `data:image/png;base64,${png.toString("base64")}`;
+                        const prepared = await prepareModelImage(Buffer.from(await bytes.data.arrayBuffer()));
+                        source.image = prepared.data_url;
+                        imagePreparations.push({asset_id:source.asset_id,revision:source.revision,evidence:prepared.evidence});
                     }
             let replay: RunResult | undefined;
             if (command.mode === "replay") {
@@ -100,11 +100,11 @@ export async function executeInvestigation(client: SupabaseClient, actor: string
                 throw new AppError(401, "Sign in again before saving.");
             const fresh = await context(client, command.workspace_id);
             document = importAnalysis(snapshot.document, run, fresh.evidence);
-            await rpc(actor, { ...command, op: "save", request: command, sources: command.sources, document, run_id: run.id, record: storedRun(run) });
+            await rpc(actor, { ...command, op: "save", request: command, sources: command.sources, document, run_id: run.id, record: { ...storedRun(run), image_preparations: imagePreparations } });
         }
         catch (error) {
             await rpc(actor, { ...command, op: "fail_run", run_id: begun.id,
-                record: run ? storedRun(run) : { ...runMetadata, ...(error instanceof ProviderFailure ? error.record : { validation: "failed", cost_usd: null }) } });
+                record: run ? storedRun(run) : { ...runMetadata, ...(error instanceof ProviderFailure ? error.record : { validation: "failed", cost_usd: null, ...(error instanceof ImagePreparationError ? { failure_stage: "image_preparation", failure_category: error.category, model_request_sent: false } : {}) }) } });
             throw error;
         }
     }

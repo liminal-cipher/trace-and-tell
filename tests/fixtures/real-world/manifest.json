@@ -1,0 +1,1209 @@
+{
+  "version": 2,
+  "dataset_id": "real-world-vision-v2",
+  "photos": [
+    {
+      "id": "rw-01",
+      "title": "Korail-P313-Seoul-station-sign-20191021-112154.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Korail-P313-Seoul-station-sign-20191021-112154.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Korail-P313-Seoul-station-sign-20191021-112154.jpg/960px-Korail-P313-Seoul-station-sign-20191021-112154.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "LERK",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "652f7c52298dbb019f7f525b26ff1da14c7d51d5100559dbe2ec18cad4987ea6",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-01.preview.jpg",
+      "sha256": "8e1fc2cdda772ff6313605709db555b053edec995b4d643980990fa78d478487",
+      "bytes": 86126,
+      "width": 960,
+      "height": 540,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": "cc5c603009f1d592e496acc911d199cd338ec8542634f3d5291dc7c591d7e17f",
+      "tags": [
+        "Korean",
+        "English",
+        "clear",
+        "station"
+      ],
+      "facts": [
+        {
+          "id": "rw-01-f1",
+          "text": "The central sign reads 서울역 and Seoul Station; P313 is visible.",
+          "locator": "central station name"
+        }
+      ],
+      "unknowns": [
+        "The arrow and neighbouring station do not prove the capture date or a family visit.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "A full-resolution source is retained separately; evaluation uses the preview hash."
+      ]
+    },
+    {
+      "id": "rw-02",
+      "title": "Korail-P313-Seoul-station-sign-20191021-112136.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Korail-P313-Seoul-station-sign-20191021-112136.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Korail-P313-Seoul-station-sign-20191021-112136.jpg/960px-Korail-P313-Seoul-station-sign-20191021-112136.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "LERK",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "450b729e1b65aee1503fbd90ee0d71ebd653bfa552338c502fe1e1128fe37016",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-02.preview.jpg",
+      "sha256": "ac6c6cddee1847ab6a09f42f0638a16f4bce06b405f69faf4cb2724a922555f9",
+      "bytes": 81155,
+      "width": 960,
+      "height": 540,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "Korean",
+        "English",
+        "clear",
+        "station"
+      ],
+      "facts": [
+        {
+          "id": "rw-02-f1",
+          "text": "The sign reads 서울 and Seoul, with P313.",
+          "locator": "central blue/yellow sign"
+        }
+      ],
+      "unknowns": [
+        "A shared station name does not prove that two photographs show the same physical sign.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-03",
+      "title": "Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg/960px-Seoul-metro-617-Jeungsan-station-sign-20191022-092814.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "LERK",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "3d724c395b210b38134c0bcbab742591d9500c7246dfce64216f247ba35015b7",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-03.preview.jpg",
+      "sha256": "01b742954ff17bfec053c0245d9a93783efaa716fbeea45767d9316854a52ee8",
+      "bytes": 127845,
+      "width": 960,
+      "height": 540,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": "8bda5ed173eeea23e8fcfa46395dd7796eb4a735fce18dcf59f5b28202219847",
+      "tags": [
+        "Korean",
+        "English",
+        "clear",
+        "station"
+      ],
+      "facts": [
+        {
+          "id": "rw-03-f1",
+          "text": "The sign shows 증산 and Jeungsan, and 617.",
+          "locator": "orange station sign"
+        }
+      ],
+      "unknowns": [
+        "Do not infer a trip, person or date from station text.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "A full-resolution source is retained separately; evaluation uses the preview hash."
+      ]
+    },
+    {
+      "id": "rw-04",
+      "title": "Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg/960px-Seoul-metro-229-Bongcheon-station-sign-20181121-123102.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "LERK",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "b49db4c1de92df067641728ba82f1a9968fb6762f213fd0423f813177afdf9ac",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-04.preview.jpg",
+      "sha256": "8435d143b10e355a1dd8a2fa3191113c04b0a6a0e4d2ff61d98d6a25c4d714a6",
+      "bytes": 76021,
+      "width": 960,
+      "height": 540,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "Korean",
+        "English",
+        "clutter",
+        "station"
+      ],
+      "facts": [
+        {
+          "id": "rw-04-f1",
+          "text": "The sign shows 봉천 and Bongcheon, with 229.",
+          "locator": "long central station sign"
+        }
+      ],
+      "unknowns": [
+        "Small neighbouring text requires enlarged inspection.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-05",
+      "title": "Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg/960px-Seoul-metro-612-Bulgwang-station-sign-20191022-120318.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "LERK",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "caea162f416c9047390c5ef798853d95b00b78920539af87603fd36dd304e909",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-05.preview.jpg",
+      "sha256": "a15cf0196eb03d3fe3b8b8480bc8efea067d266b61ff95a58b497e7449ad2fc7",
+      "bytes": 387262,
+      "width": 960,
+      "height": 1707,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "Korean",
+        "English",
+        "glare",
+        "station"
+      ],
+      "facts": [
+        {
+          "id": "rw-05-f1",
+          "text": "The circular orange sign reads 불광 and Bulgwang, with 612.",
+          "locator": "central circle"
+        }
+      ],
+      "unknowns": [
+        "Reflection is visible; its effect on specific characters must be inspected.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-06",
+      "title": "Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg/960px-Keikyu-railway-KK12-Kojiya-station-sign-20150630.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "LERK",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 3.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "ce05f9574c50323b4056f73ed8d1f19566a9299b500266e25ed414a9a2f89bf1",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-06.preview.jpg",
+      "sha256": "217b292844032bb31561a4dbb2a5ec66b3fdf480b591cad61a1e3017db21ceae",
+      "bytes": 70957,
+      "width": 960,
+      "height": 540,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "Korean",
+        "English",
+        "Japanese",
+        "multilingual",
+        "station"
+      ],
+      "facts": [
+        {
+          "id": "rw-06-f1",
+          "text": "KK12 and Kōjiya are visible on a dark sign.",
+          "locator": "central label"
+        }
+      ],
+      "unknowns": [
+        "Multiple scripts do not establish the country or a traveller identity by themselves.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-07",
+      "title": "Närcon handwritten sign, Linköping universitet, 2024.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:N%C3%A4rcon_handwritten_sign,_Link%C3%B6ping_universitet,_2024.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/N%C3%A4rcon_handwritten_sign%2C_Link%C3%B6ping_universitet%2C_2024.jpg/960px-N%C3%A4rcon_handwritten_sign%2C_Link%C3%B6ping_universitet%2C_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "GabiS83",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "5f4080f71c47a4dfa85ba9c9745d1a3f19b6df1d19199a1547b2db3e84d27fd9",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-07.preview.jpg",
+      "sha256": "24852079f75f233afa66ace0321da7e4e0752567dd41244f576e02721f0e4e44",
+      "bytes": 369019,
+      "width": 960,
+      "height": 1707,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "handwriting",
+        "English",
+        "Swedish",
+        "clutter"
+      ],
+      "facts": [
+        {
+          "id": "rw-07-f1",
+          "text": "KARAOKE is handwritten on the paper; (Please) is below.",
+          "locator": "central handwritten paper"
+        }
+      ],
+      "unknowns": [
+        "Do not confidently transcribe every smaller handwritten word from this edition.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-08",
+      "title": "Manual, handwritten elevator status sign (24120978028).jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Manual,_handwritten_elevator_status_sign_(24120978028).jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Manual%2C_handwritten_elevator_status_sign_%2824120978028%29.jpg/960px-Manual%2C_handwritten_elevator_status_sign_%2824120978028%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Eric Fischer",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY 2.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "274ca1951f1e76205b163f470693afecc21723074c25b99aff7eae6b211e96ca",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-08.preview.jpg",
+      "sha256": "4fccab0b33f7c1c7270e711c248f6360ada639e7a5151a774546bb079b528761",
+      "bytes": 176280,
+      "width": 960,
+      "height": 720,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "handwriting",
+        "English",
+        "clutter",
+        "dated-text"
+      ],
+      "facts": [
+        {
+          "id": "rw-08-f1",
+          "text": "The heading reads STATION ELEVATOR STATUS; the printed text says elevators are out of service.",
+          "locator": "top heading and printed sentence"
+        }
+      ],
+      "unknowns": [
+        "A written status date is not necessarily the capture date or current operating status.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-09",
+      "title": "Black Friday handwritten sign. Dnipro.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Black_Friday_handwritten_sign._Dnipro.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Black_Friday_handwritten_sign._Dnipro.jpg/960px-Black_Friday_handwritten_sign._Dnipro.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Alex Blokha",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "e2fc775693c824502bff9a7f6349fbc36ff9902bc1cd7f63ec0cc4aa2aac6856",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-09.preview.jpg",
+      "sha256": "795420878f1477e81e080140167bc769b8147239de07fb43d799d4456286dc9b",
+      "bytes": 316699,
+      "width": 960,
+      "height": 1280,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "handwriting",
+        "Cyrillic",
+        "clutter"
+      ],
+      "facts": [
+        {
+          "id": "rw-09-f1",
+          "text": "A large yellow handwritten sign sits in a shopfront beside glass doors.",
+          "locator": "left storefront"
+        }
+      ],
+      "unknowns": [
+        "A complete transcription/translation and identities of the shop operators are not established.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-10",
+      "title": "Handwritten sign denouncing littering by sport anglers, Etang blanc, Seignosse, France.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Handwritten_sign_denouncing_littering_by_sport_anglers,_Etang_blanc,_Seignosse,_France.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Handwritten_sign_denouncing_littering_by_sport_anglers%2C_Etang_blanc%2C_Seignosse%2C_France.jpg/960px-Handwritten_sign_denouncing_littering_by_sport_anglers%2C_Etang_blanc%2C_Seignosse%2C_France.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "KaiKemmann",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "needs_review",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "4f1f3a29478d8e16c9f11ad9188e5f56f616016643166427333abc10e169e664",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-10.preview.jpg",
+      "sha256": "ccdc422a18af2721b7a781ab728a8fc9dbb23fca50581a81c3332f87ab739cde",
+      "bytes": 279289,
+      "width": 960,
+      "height": 720,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "handwriting",
+        "French",
+        "weathered-text"
+      ],
+      "facts": [
+        {
+          "id": "rw-10-f1",
+          "text": "An outdoor handwritten sign addresses pêcheurs; dark stains obscure portions.",
+          "locator": "wooden sign"
+        }
+      ],
+      "unknowns": [
+        "Full text and the event that motivated the sign are unverified.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-11",
+      "title": "Kalkar Grieth - Mühle Haan 01B PM21-01.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kalkar_Grieth_-_M%C3%BChle_Haan_01B_PM21-01.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Kalkar_Grieth_-_M%C3%BChle_Haan_01B_PM21-01.jpg/960px-Kalkar_Grieth_-_M%C3%BChle_Haan_01B_PM21-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Pieter Delicaat",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "32481fa8f3df4e573490d1ab3195888b16dfe92d4e4753ccb74a3cd3d06f9566",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-11.preview.jpg",
+      "sha256": "d05987c477ebe6fd8cbe2171c53bfb17c21db084341e531fa3dbf107bb26ffab",
+      "bytes": 167012,
+      "width": 960,
+      "height": 720,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "damaged-text",
+        "German",
+        "close-up"
+      ],
+      "facts": [
+        {
+          "id": "rw-11-f1",
+          "text": "Letter shapes on a metal surface include Mühle and Rhein; some characters are displaced.",
+          "locator": "upper metal lettering"
+        }
+      ],
+      "unknowns": [
+        "Missing/displaced letters must not be silently reconstructed; printed numbers are not capture dates.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-12",
+      "title": "Kalkar Grieth - Mühle Haan 01A PM21-01.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kalkar_Grieth_-_M%C3%BChle_Haan_01A_PM21-01.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Kalkar_Grieth_-_M%C3%BChle_Haan_01A_PM21-01.jpg/960px-Kalkar_Grieth_-_M%C3%BChle_Haan_01A_PM21-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Pieter Delicaat",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "0dc726f4911cb5d64cebd6bc3dac19599d1c87509baac8889b92496b2f0f88b6",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-12.preview.jpg",
+      "sha256": "c4e724192c25767d60d27ff4fd0c36d9b7d0e9c1ba29f64f97acece12c93b01d",
+      "bytes": 186895,
+      "width": 960,
+      "height": 720,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "damaged-text",
+        "German",
+        "close-up"
+      ],
+      "facts": [
+        {
+          "id": "rw-12-f1",
+          "text": "Letter shapes on a metal surface are visibly displaced or missing.",
+          "locator": "central metal surface"
+        }
+      ],
+      "unknowns": [
+        "A shared catalogue location is not proof of an identical object or event from the pixels alone.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-13",
+      "title": "Perpignan ancienne devanture rue de la pierre Trouee2.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Perpignan_ancienne_devanture_rue_de_la_pierre_Trouee2.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Perpignan_ancienne_devanture_rue_de_la_pierre_Trouee2.jpg/960px-Perpignan_ancienne_devanture_rue_de_la_pierre_Trouee2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Drong~commonswiki",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "f159e0a6f3ada34baa701559999724a73fa72edf24b3d6b649eff5fb220d927b",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-13.preview.jpg",
+      "sha256": "da2844595befe473710a864945e9903d7fbfdeab0f469d45af8170da43982d27",
+      "bytes": 250501,
+      "width": 960,
+      "height": 719,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "faded-text",
+        "French",
+        "clutter"
+      ],
+      "facts": [
+        {
+          "id": "rw-13-f1",
+          "text": "Faded painted lettering appears above shuttered windows.",
+          "locator": "upper façade"
+        }
+      ],
+      "unknowns": [
+        "The full historical shop name and exact date are not visually established.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-14",
+      "title": "Jacob Riis Park td (2018-08-03) 145 - QM16 Bus Stop.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Jacob_Riis_Park_td_(2018-08-03)_145_-_QM16_Bus_Stop.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Jacob_Riis_Park_td_%282018-08-03%29_145_-_QM16_Bus_Stop.jpg/960px-Jacob_Riis_Park_td_%282018-08-03%29_145_-_QM16_Bus_Stop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Tdorante10",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "6b6ff312a77b8ab51a924ed63397df9595143400bfb25e127819fd46a6ef03ec",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-14.preview.jpg",
+      "sha256": "ae9bb1f632be8074314ec6aa92013c2b08ec0597a7aa5a56f127ab2ebb4498d0",
+      "bytes": 229242,
+      "width": 960,
+      "height": 1440,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "English",
+        "clutter",
+        "distant-text"
+      ],
+      "facts": [
+        {
+          "id": "rw-14-f1",
+          "text": "A sign says NO STANDING above a bus pictogram and right arrow.",
+          "locator": "foreground signpost"
+        }
+      ],
+      "unknowns": [
+        "Small lower text is difficult to read in this preview; no event or family link is established.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-15",
+      "title": "Spring Crk Pk Fountain Flatlands 03.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Spring_Crk_Pk_Fountain_Flatlands_03.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Spring_Crk_Pk_Fountain_Flatlands_03.jpg/960px-Spring_Crk_Pk_Fountain_Flatlands_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Tdorante10",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "577867341ee739dfec396a8119eb9a2e76debf3815836646d8476147a046bcbe",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-15.preview.jpg",
+      "sha256": "ab6882215bf5588ff2cb45a30f02ec32c420709dee862be415253c1cd748cd45",
+      "bytes": 231139,
+      "width": 960,
+      "height": 720,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "English",
+        "faded-text",
+        "clutter"
+      ],
+      "facts": [
+        {
+          "id": "rw-15-f1",
+          "text": "A weathered sign is surrounded by plants and fencing.",
+          "locator": "central sign"
+        }
+      ],
+      "unknowns": [
+        "Full inscription and named-person identity cannot be established reliably from this preview.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-16",
+      "title": "Llauro 2011 11.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Llauro_2011_11.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Llauro_2011_11.jpg/960px-Llauro_2011_11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Bertrand GRONDIN  → (Talk)",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 3.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "a559164542549bd2f00672612ce44f535d4850df7831b632ff6989f45420aad4",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-16.preview.jpg",
+      "sha256": "e53f9fe49e31e5fc4f393c954c8a4dbfcaa389505218e8bd2da5f787dc0a3b10",
+      "bytes": 324462,
+      "width": 960,
+      "height": 721,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "illegible",
+        "weathered-text",
+        "abstention"
+      ],
+      "facts": [
+        {
+          "id": "rw-16-f1",
+          "text": "A rounded stone surface carries severely worn, low-contrast marks.",
+          "locator": "stone inscription"
+        }
+      ],
+      "unknowns": [
+        "No complete transcription is verified. Abstention is preferable to invented names or dates.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-18",
+      "title": "Benton University Jeweler storefront, probably between 1911 and 1930 (SEATTLE 1721).jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_storefront,_probably_between_1911_and_1930_(SEATTLE_1721).jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Benton_University_Jeweler_storefront%2C_probably_between_1911_and_1930_%28SEATTLE_1721%29.jpg/330px-Benton_University_Jeweler_storefront%2C_probably_between_1911_and_1930_%28SEATTLE_1721%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Unknown photographerUnknown photographer",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_storefront,_probably_between_1911_and_1930_(SEATTLE_1721).jpg#Licensing",
+      "rights_status": "needs_review",
+      "rights_note": "Source metadata declares public domain; This work is in the public domain in the United States because it was published (or registered with the U.S. Copyright Office) before January 1, 1931.",
+      "metadata_sha256": "26987df96b732219c06d6720fd31c0ce7ac549af483555b9c2167dfd87e19338",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-18.preview.jpg",
+      "sha256": "22819002d811c3859acadacea146d1d15cdfb427709d3ae7cf76557d831fb51b",
+      "bytes": 27885,
+      "width": 330,
+      "height": 210,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "historical",
+        "English",
+        "photographic-advertisement",
+        "low-resolution"
+      ],
+      "facts": [
+        {
+          "id": "rw-18-f1",
+          "text": "An advertisement combines a photograph of a shop and street clock with printed words BENTON and UNIVERSITY JEWELER.",
+          "locator": "right photograph and left printed block"
+        }
+      ],
+      "unknowns": [
+        "This is a composite photographic advertisement, not a modern camera original; exact capture date and identity are not visible facts.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-19",
+      "title": "Benton University Jeweler shop storefront, probably between 1920 and 1930 (SEATTLE 1719).jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_shop_storefront,_probably_between_1920_and_1930_(SEATTLE_1719).jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Benton_University_Jeweler_shop_storefront%2C_probably_between_1920_and_1930_%28SEATTLE_1719%29.jpg/330px-Benton_University_Jeweler_shop_storefront%2C_probably_between_1920_and_1930_%28SEATTLE_1719%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Unknown photographerUnknown photographer",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Benton_University_Jeweler_shop_storefront,_probably_between_1920_and_1930_(SEATTLE_1719).jpg#Licensing",
+      "rights_status": "needs_review",
+      "rights_note": "Source metadata declares public domain; This work is in the public domain in the United States because it was published (or registered with the U.S. Copyright Office) before January 1, 1931.",
+      "metadata_sha256": "2ac4e7ab4b698e3b2fb639e0d9bdc058abe2f8e3abd8c5f97c9fe394d18525ef",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-19.preview.jpg",
+      "sha256": "3b0253f35d02f235e58277d6a8dce677745f7fb7adffaa81e4c5369bba5b8b57",
+      "bytes": 24217,
+      "width": 330,
+      "height": 206,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "historical",
+        "English",
+        "people",
+        "low-resolution"
+      ],
+      "facts": [
+        {
+          "id": "rw-19-f1",
+          "text": "A monochrome storefront photograph shows BENTON UNIVERSITY JEWELER lettering and two people on the right.",
+          "locator": "shop window and right edge"
+        }
+      ],
+      "unknowns": [
+        "Do not identify the people or infer kinship, names, ownership or an exact date from their appearance.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "needs_review",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-20",
+      "title": "A NEWLY RESTORED AND PAINTED OLDER STOREFRONT ON MINNESOTA STREET IN NEW ULM, MINNESOTA. THE BUILDING NOW HOUSES A... - NARA - 558126.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM%2C_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg/330px-A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM%2C_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Flip Schulke",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg#Licensing",
+      "rights_status": "cleared",
+      "rights_note": "Source licensing section identifies this as an EPA employee official-duty photograph in the public domain. Author Flip Schulke; NARA 558126. Page inspected 2026-11-03; catalogue date is not visual ground truth.",
+      "metadata_sha256": "840a29447f769987629adb893c70a77b5f1da8bed69ac18049841861f66799e6",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-20.preview.jpg",
+      "sha256": "c78f126edc2bd9227cabf69b57c333e95757b9d630237175bea5236c80c9ae32",
+      "bytes": 52574,
+      "width": 330,
+      "height": 489,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "historical",
+        "English",
+        "shopfront",
+        "low-resolution"
+      ],
+      "facts": [
+        {
+          "id": "rw-20-f1",
+          "text": "A multistorey storefront has a striped awning with stevensons lettering.",
+          "locator": "awning and upper façade"
+        }
+      ],
+      "unknowns": [
+        "Catalogue history is context, not a visually verifiable date or proof of who used the building.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-21",
+      "title": "Kashiwa Sogo OPEN-CLOSED Sign (back).jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kashiwa_Sogo_OPEN-CLOSED_Sign_(back).jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Kashiwa_Sogo_OPEN-CLOSED_Sign_%28back%29.jpg/330px-Kashiwa_Sogo_OPEN-CLOSED_Sign_%28back%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Algebar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "100a6447ee083ae39c317033ae99ea3b322e005b166597b6f7cb9d86dd8361f7",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-21.preview.jpg",
+      "sha256": "6d3e8fc2ad9615b85af652641bae6f79818fb06d24106b4672e389c50f6cd4bd",
+      "bytes": 18788,
+      "width": 330,
+      "height": 247,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "Japanese",
+        "clear",
+        "sign"
+      ],
+      "facts": [
+        {
+          "id": "rw-21-f1",
+          "text": "A blue framed sign has white Japanese writing, including ありがとうございました.",
+          "locator": "central blue sign"
+        }
+      ],
+      "unknowns": [
+        "A filename mentioning OPEN-CLOSED is not visible English text and must not be fed into the model.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-22",
+      "title": "Lane Closed Sign, Louisiana.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Lane_Closed_Sign,_Louisiana.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Lane_Closed_Sign%2C_Louisiana.jpg/330px-Lane_Closed_Sign%2C_Louisiana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Ktkvtsh",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "rights_status": "cleared",
+      "rights_note": "Source metadata grants CC BY 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "1ca710febc7458c90cd80d6c81bff062ccf48f658e3756071f8ea54c021041e5",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-22.preview.jpg",
+      "sha256": "13f1495e42d3a6a1a379794e5c4a63e0008264cf486868e78119d5a2109eaa54",
+      "bytes": 39225,
+      "width": 330,
+      "height": 247,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "English",
+        "clear",
+        "clutter"
+      ],
+      "facts": [
+        {
+          "id": "rw-22-f1",
+          "text": "The foreground barrier sign reads LANE CLOSED.",
+          "locator": "central white rectangle"
+        }
+      ],
+      "unknowns": [
+        "It does not prove the entire road is closed, the cause, duration or capture date.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-23",
+      "title": "A Worn Out Road Closed Sign with graffiti.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:A_Worn_Out_Road_Closed_Sign_with_graffiti.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/A_Worn_Out_Road_Closed_Sign_with_graffiti.jpg/330px-A_Worn_Out_Road_Closed_Sign_with_graffiti.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Gogerr",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "rights_status": "needs_review",
+      "rights_note": "Source metadata grants CC BY-SA 4.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "d23752d105a750d1b02bdf861b179020210c6ebd3fa3e551a6c51f243859e932",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-23.preview.jpg",
+      "sha256": "5eb2251ea92c6b9ebf350a5c121218be4a8d3f32c7f17b800ee60ef065097ec4",
+      "bytes": 61856,
+      "width": 330,
+      "height": 440,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "English",
+        "graffiti",
+        "damaged-text"
+      ],
+      "facts": [
+        {
+          "id": "rw-23-f1",
+          "text": "ROAD CLOSED appears below a red circular sign covered in graffiti.",
+          "locator": "bottom text and upper circle"
+        }
+      ],
+      "unknowns": [
+        "Do not infer who wrote the graffiti or link this closure to another road.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    },
+    {
+      "id": "rw-24",
+      "title": "Shop sign at hairdresser shop in Scalloway - geograph.org.uk - 971090.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Shop_sign_at_hairdresser_shop_in_Scalloway_-_geograph.org.uk_-_971090.jpg",
+      "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Shop_sign_at_hairdresser_shop_in_Scalloway_-_geograph.org.uk_-_971090.jpg/330px-Shop_sign_at_hairdresser_shop_in_Scalloway_-_geograph.org.uk_-_971090.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Nicholas Mutton",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "rights_status": "needs_review",
+      "rights_note": "Source metadata grants CC BY-SA 2.0; retain author, source, licence, and mark resizing. ShareAlike applies to adaptations where required.",
+      "metadata_sha256": "94e5841d50d2bd538fd23100f22d598c37bc913c26cb5c34f0bbbe2412e1b2ed",
+      "retrieved_at": "2026-11-03",
+      "file": "rw-24.preview.jpg",
+      "sha256": "3dd1a5ac061a04af42fb9ac5c19b973fe3cfa3527fa22c0d67a47876018942ce",
+      "bytes": 37732,
+      "width": 330,
+      "height": 440,
+      "edition": "Commons resized JPEG preview; not full-resolution original",
+      "original_sha256": null,
+      "tags": [
+        "English",
+        "illustration-in-photo",
+        "shopfront"
+      ],
+      "facts": [
+        {
+          "id": "rw-24-f1",
+          "text": "A photographed window sign reads THE SHEARING SHED and depicts two sheep heads.",
+          "locator": "central window"
+        }
+      ],
+      "unknowns": [
+        "This is a photograph containing a drawing; do not describe the sheep as living animals in the scene.",
+        "Historical catalogue metadata is not ground truth for visual inference."
+      ],
+      "visual_review": "assistant-provisional",
+      "privacy_status": "screened",
+      "interpretations": [
+        "Catalogue names, dates and suggested pair relationships are context only; not visual ground truth."
+      ],
+      "illegible": [
+        "Any characters not legible in this downloaded edition remain untranscribed."
+      ],
+      "source_uncertainties": [
+        "Full-resolution source not locally available; this is a labelled preview edition."
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "id": "pair-01",
+      "photo_ids": [
+        "rw-01",
+        "rw-02"
+      ],
+      "category": "related",
+      "expectation": "Shared Seoul/P313 text supports a tentative topic link, not an identical sign, event or traveller."
+    },
+    {
+      "id": "pair-02",
+      "photo_ids": [
+        "rw-11",
+        "rw-12"
+      ],
+      "category": "related",
+      "expectation": "Possibly related metal lettering; candidate requires visible specific support from each. no_connection is acceptable if the damaged text is insufficient. Catalogue filenames are hidden."
+    },
+    {
+      "id": "pair-03",
+      "photo_ids": [
+        "rw-18",
+        "rw-19"
+      ],
+      "category": "related",
+      "expectation": "BENTON UNIVERSITY JEWELER text supports a tentative shop-topic link; no exact date, person identity or same-event conclusion."
+    },
+    {
+      "id": "pair-04",
+      "photo_ids": [
+        "rw-03",
+        "rw-04"
+      ],
+      "category": "unrelated",
+      "expectation": "Different station names/codes; station-sign format alone is insufficient for a common event."
+    },
+    {
+      "id": "pair-05",
+      "photo_ids": [
+        "rw-07",
+        "rw-08"
+      ],
+      "category": "unrelated",
+      "expectation": "Handwritten karaoke request versus elevator status; handwriting alone is not a connection."
+    },
+    {
+      "id": "pair-06",
+      "photo_ids": [
+        "rw-10",
+        "rw-15"
+      ],
+      "category": "unrelated",
+      "expectation": "Outdoor handwritten sign versus weathered plaque; no specific common referent is established."
+    },
+    {
+      "id": "pair-07",
+      "photo_ids": [
+        "rw-09",
+        "rw-13"
+      ],
+      "category": "unrelated",
+      "expectation": "Two storefronts with different lettering; shop category alone is insufficient."
+    },
+    {
+      "id": "pair-08",
+      "photo_ids": [
+        "rw-22",
+        "rw-23"
+      ],
+      "category": "unrelated",
+      "expectation": "Shared generic CLOSED wording is not proof of the same road, closure or event."
+    },
+    {
+      "id": "pair-09",
+      "photo_ids": [
+        "rw-16",
+        "rw-21"
+      ],
+      "category": "unrelated",
+      "expectation": "Worn stone versus Japanese sign; abstain from inventing shared unreadable words."
+    },
+    {
+      "id": "pair-10",
+      "photo_ids": [
+        "rw-22"
+      ],
+      "category": "contradictory-control",
+      "expectation": "The authored text conflicts with visible LANE CLOSED. Distinguish an inconsistent description from proof of a different event. Never suppress the image text.",
+      "text_control": "The sign reads LANE OPEN. No lane is closed."
+    },
+    {
+      "id": "pair-11",
+      "photo_ids": [
+        "rw-01"
+      ],
+      "category": "contradictory-control",
+      "expectation": "The authored station name/code conflict with Seoul/P313. Detect the mismatch without inventing a historical relationship.",
+      "text_control": "Station label: BUSAN. Station number: P777."
+    },
+    {
+      "id": "pair-12",
+      "photo_ids": [
+        "rw-24"
+      ],
+      "category": "contradictory-control",
+      "expectation": "The authored description conflicts with THE SHEARING SHED and sheep illustration. Do not invent living animals or endorse the incorrect transcription.",
+      "text_control": "This window says THE RIDING SCHOOL and depicts two horses."
+    }
+  ]
+}

@@ -13,6 +13,7 @@
     "corpus:create": "node scripts/create-synthetic-corpus.mjs",
     "evaluate": "vitest run --config vitest.evaluation.config.ts",
     "evaluate:compare": "node scripts/compare-evaluations.mjs",
+    "evaluate:real-world": "vitest run --config vitest.real-world.config.ts",
     "m1:remote:preflight": "node scripts/remote-m1-preflight.mjs"
   },
   "engines": {
