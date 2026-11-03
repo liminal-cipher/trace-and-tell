@@ -18,7 +18,7 @@ export default function RootLayout({
           </Link>
           <nav aria-label="Main navigation">
             <Link href="/demo">Explore the demo</Link>
-            <Link href="/archive">
+            <Link href="/archive" prefetch={false}>
               Private archive <span aria-hidden="true">↗</span>
             </Link>
           </nav>
@@ -27,7 +27,7 @@ export default function RootLayout({
         <footer className="footer">
           <span>TRACE & TELL</span>
           <span>Keep the record. Leave room for the unknown.</span>
-          <span>Archive · M1a</span>
+          <span>A Living Family Gallery</span>
         </footer>
       </body>
     </html>

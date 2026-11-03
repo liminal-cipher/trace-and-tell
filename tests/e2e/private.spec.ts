@@ -54,7 +54,7 @@ async function signIn(page: Page) {
 }
 async function post(page: Page, body: object) {
   return page.request.post("/api/archive", {
-    headers: { Origin: "http://127.0.0.1:3000" },
+    headers: { Origin: process.env.APP_ORIGIN! },
     data: body,
   });
 }
@@ -181,7 +181,7 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
     expect(snapshot.revisions.filter((r: { asset_id: string }) => r.asset_id === note.id).length).toBe(2);
 
     const otherContext = await browser.newContext({
-      baseURL: "http://127.0.0.1:3000",
+      baseURL: process.env.APP_ORIGIN,
     });
     const other = await otherContext.newPage();
     await signIn(other);
@@ -200,7 +200,7 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
     ).toBe(404);
     expect((await post(other, { action: "delete_asset", key: crypto.randomUUID(), workspace_id: photo.workspace_id, asset_id: photo.id, expected_revision: 1 })).status()).toBe(404);
     const anonymous = await browser.newContext({
-      baseURL: "http://127.0.0.1:3000",
+      baseURL: process.env.APP_ORIGIN,
     });
     expect((await anonymous.request.get("/api/archive")).status()).toBe(401);
     expect(

@@ -16,8 +16,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run start -- --hostname 127.0.0.1",
-    url: "http://127.0.0.1:3000",
+    command: `npm run start -- --hostname 127.0.0.1 --port ${new URL(environment.APP_ORIGIN).port}`,
+    url: environment.APP_ORIGIN,
     reuseExistingServer: false,
     env: environment,
   },

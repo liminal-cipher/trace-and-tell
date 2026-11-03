@@ -24,11 +24,20 @@ it("canonicalises the origin and always sets host-only HttpOnly/Lax cookies", ()
   expect(authCookieOptions().secure).toBe(false);
 });
 describe("browser test service boundaries", () => {
+  it("isolates the test port without allowing a remote origin", () => {
+    expect(browserEnvironment({ PLAYWRIGHT_PORT: "3100" }).APP_ORIGIN).toBe("http://127.0.0.1:3100");
+    for (const port of ["0", "65536", "https://remote.test", "3000 --other"]) {
+      expect(() => browserEnvironment({ PLAYWRIGHT_PORT: port })).toThrow("local test port");
+    }
+  });
   it("explicitly clears credentials by default, overriding Next.js dotenv loading", () => {
     const environment = browserEnvironment({ SUPABASE_URL: "https://remote.example.test" });
     expect(environment.SUPABASE_URL).toBe("");
     expect(environment.SUPABASE_PUBLISHABLE_KEY).toBe("");
     expect(environment.SUPABASE_SERVICE_ROLE_KEY).toBe("");
+    expect(environment.MODEL_API_KEY).toBe("");
+    expect(environment.META_LIVE_APPROVED).toBe("no");
+    expect(environment.META_APPROVAL_FILE).toBe("");
   });
   it.each(["https://remote.example.test", "http://127.0.0.1.example.test", "http://user:password@localhost", "http://localhost/path"])("rejects non-local targets before starting a server (%s)", (url) => {
     expect(() => browserEnvironment({ RUN_LOCAL_SUPABASE_E2E: "1", SUPABASE_URL: url })).toThrow("local HTTP origin");
