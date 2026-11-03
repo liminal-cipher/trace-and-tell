@@ -15,7 +15,9 @@ export function EvidenceReference({ workspace, id, revision }: { workspace: stri
   }
   return <div className="evidence-reference"><button className="secondary" disabled={busy} onClick={()=>void open()}>Open evidence revision {revision}</button>
     {error&&<p role="alert" className="error">{error}</p>}
-    {result&&(result.entry ? <div><div className="eyebrow">{result.entry.kind} · {result.entry.mode} · revision {result.entry.revision}</div>
+    {result&&(result.entry ? <div><div className="eyebrow">{result.entry.kind} · {result.entry.mode === "human" || result.entry.kind === "testimony" || result.entry.kind === "exhibit" ? "human-authored" : result.entry.mode} · revision {result.entry.revision}</div>
+      {(result.entry.kind === "testimony" || result.entry.kind === "exhibit") && result.entry.mode !== "human" && <p>Human-recorded content. Historical provider attribution refers to upstream suggestions.</p>}
+      {result.entry.kind === "question" && result.entry.mode === "human" && <p>No model generated this question.</p>}
       <p>{result.historical?"Historical revision; a newer correction exists.":"Saved source revision."} · {result.validity.replaceAll("_"," ")}</p>
       <p>{result.entry.details.speaker??""}</p><blockquote>{result.entry.text||result.entry.details.response}</blockquote>
       {result.entry.kind==="observation"&&<p>Uncertainty: {result.entry.details.uncertainty??"Not recorded."}</p>}

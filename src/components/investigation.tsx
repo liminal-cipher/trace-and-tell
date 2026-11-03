@@ -77,10 +77,12 @@ export function Investigation({ workspace }: {
             const corrected = action.action === "review" && action.decision === "corrected"
                 ? next.document.entries.find((entry) => entry.id === action.id && entry.kind === "observation") : undefined;
             setNotice(corrected ? `Observation revision ${corrected.revision} saved to your private collection.` : "Saved to your private collection.");
+            return true;
         }
         catch (e) {
             fail(e);
             setNotice("Save not confirmed. Reload to check the saved state before retrying.");
+            return false;
         }
         finally {
             inFlight.current = false;
@@ -101,11 +103,13 @@ export function Investigation({ workspace }: {
             })}{entry.parents.map((p)=><EvidenceReference key={`${p.id}-${p.revision}-${entry.evidence_validity}`} workspace={workspace} id={p.id} revision={p.revision}/>)}</div>;
     }
     function review(entry: Entry, decision: string, text?: string, uncertainty?: string) { return mutate({ action: "review", id: entry.id, entry_revision: entry.revision, decision, ...(text ? { text } : {}), ...(uncertainty !== undefined ? { uncertainty } : {}) }); }
-    function entryHeader(entry: Entry) { return <><div className="eyebrow">{entry.kind} · {entry.mode} · revision {entry.revision}</div><p className="entry-status">{entry.review_state.replaceAll("_", " ")} · {entry.evidence_validity.replaceAll("_", " ")}</p></>; }
+    function entryHeader(entry: Entry) { return <><div className="eyebrow">{entry.kind} · {entry.mode === "human" || entry.kind === "testimony" || entry.kind === "exhibit" ? "human-authored" : entry.mode} · revision {entry.revision}</div><p className="entry-status">{entry.review_state.replaceAll("_", " ")} · {entry.evidence_validity.replaceAll("_", " ")}</p>
+      {(entry.kind === "testimony" || entry.kind === "exhibit") && entry.mode !== "human" && <p className="muted">Human-recorded content. The historical {entry.mode} attribution refers to upstream suggestions, not authorship of these words.</p>}
+      {entry.kind === "question" && <p className="muted">{entry.mode === "human" ? `Written by signed-in record keeper (${entry.details.recorder}). No model generated this question.` : `Question supplied by ${entry.mode === "fixture" ? "the authored fixture" : entry.mode === "replay" ? "a saved model response" : entry.model}.`}</p>}</>; }
     function correction(entry: Entry) {
         const observation = entry.kind === "observation";
         const originalUncertainty = entry.details.original_uncertainty !== undefined ? entry.details.original_uncertainty : entry.details.uncertainty;
-        return <details><summary>Compare original suggestion and correct</summary><blockquote className="model-original">Original suggestion: {entry.original_text}</blockquote>
+        return <details><summary>{entry.mode === "human" ? "Compare original question and correct" : "Compare original suggestion and correct"}</summary><blockquote className="model-original">{entry.mode === "human" ? "Original question" : "Original suggestion"}: {entry.original_text}</blockquote>
     {observation && <blockquote className="model-original">Original uncertainty: {originalUncertainty ?? "Not recorded."}</blockquote>}
     <form className="stack" key={`${entry.id}-${entry.revision}`} onSubmit={(e) => {
         e.preventDefault();
@@ -117,7 +121,7 @@ export function Investigation({ workspace }: {
       <label>Corrected {entry.kind}<textarea name="text" defaultValue={entry.text} required maxLength={2000}/></label>
       {observation && <label>Current uncertainty explanation<textarea name="uncertainty" defaultValue={entry.details.uncertainty ?? ""} required={entry.details.uncertainty !== undefined} maxLength={2000}/></label>}
       <button disabled={busy || entry.review_state === "rejected"}>Save correction</button></form>
-    {observation && entry.revision > 1 && <details><summary>Previous observation revisions</summary>{Array.from({ length: entry.revision - 1 }, (_, index) => <EvidenceReference key={`${index + 1}-${entry.revision}-${entry.evidence_validity}`} workspace={workspace} id={entry.id} revision={index + 1}/>)}</details>}</details>;
+    {(observation || entry.kind === "question") && entry.revision > 1 && <details><summary>Previous {entry.kind} revisions</summary>{Array.from({ length: entry.revision - 1 }, (_, index) => <EvidenceReference key={`${index + 1}-${entry.revision}-${entry.evidence_validity}`} workspace={workspace} id={entry.id} revision={index + 1}/>)}</details>}</details>;
     }
     return <div className="investigation">
     <div className="research-toolbar"><label>Suggestion provider<select value={mode} onChange={(e) => setMode(e.target.value as ProviderMode)} disabled={busy}><option value="fixture">FIXTURE · authored examples</option><option value="replay">REPLAY · saved live response</option><option value="meta-live">META-LIVE · approval required</option></select></label>
@@ -143,9 +147,13 @@ export function Investigation({ workspace }: {
       <section className="investigation-section"><div className="section-line"><h2>02 / A question worth asking</h2><span>A selected hypothesis remains a hypothesis.</span></div>
         {entries.filter((e) => e.kind === "hypothesis").map((entry) => <article className="evidence-card" key={entry.id}>{entryHeader(entry)}<h3>{entry.details.outcome === "no_connection" ? "No supported connection" : "Connection hypothesis"}</h3><p>{entry.text}</p>
           <div className="evidence-columns"><div><h4>Supporting evidence</h4>{entry.details.supports?.length ? entry.details.supports.map((s, i) => <p key={i}>{s.detail}</p>) : <p>None supplied.</p>}</div><div><h4>Contrary evidence</h4>{entry.details.contradicts?.length ? entry.details.contradicts.map((s, i) => <p key={i}>{s.detail}</p>) : <p>None supplied. This does not establish the hypothesis.</p>}</div><div><h4>Still unknown</h4>{entry.details.unknowns?.map((s) => <p key={s}>{s}</p>)}</div></div>
-          {sourceLinks(entry)}{correction(entry)}<div className="actions"><button disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "accepted_for_inquiry")}>Use for inquiry</button><button className="secondary" disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "rejected")}>Reject hypothesis</button></div>
+          {sourceLinks(entry)}{correction(entry)}<div className="actions"><button disabled={busy || entry.review_state === "rejected" || (entry.review_state === "accepted_for_inquiry" && entry.evidence_validity === "current")} onClick={() => void review(entry, "accepted_for_inquiry")}>Use for inquiry</button><button className="secondary" disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "rejected")}>Reject hypothesis</button></div>
+          {!entries.some((q) => q.kind === "question" && q.mode !== "human" && q.parents.some((p) => p.id === entry.id)) && <p className="muted">No questions were supplied with this hypothesis.</p>}
+          {entry.review_state === "accepted_for_inquiry" && entry.evidence_validity === "current"
+            ? <HumanQuestionForm key={`${entry.id}-${entry.revision}`} entry={entry} busy={busy} save={mutate}/>
+            : entry.review_state !== "rejected" && <p className="muted">Choose Use for inquiry after reviewing the evidence to write your own question.</p>}
         </article>)}
-        {entries.filter((e) => e.kind === "question").map((entry) => <article className="question-card" key={entry.id}>{entryHeader(entry)}<h3>{entry.text}</h3>{correction(entry)}<button disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "selected")}>Select question</button>
+        {entries.filter((e) => e.kind === "question").map((entry) => <article className="question-card" key={entry.id}>{entryHeader(entry)}<h3>{entry.text}</h3>{sourceLinks(entry)}{correction(entry)}<button disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "selected")}>Select question</button>
           {entry.review_state === "selected" && <TestimonyForm entry={entry} busy={busy} save={mutate}/>}
         </article>)}
       </section>
@@ -159,11 +167,27 @@ export function Investigation({ workspace }: {
     </>}
   </div>;
 }
+function HumanQuestionForm({ entry, busy, save }: {
+    entry: Entry;
+    busy: boolean;
+    save: (action: Record<string, unknown>) => Promise<boolean | undefined>;
+}) {
+    const [text, setText] = useState("");
+    return <form className="panel stack" onSubmit={async (event) => {
+        event.preventDefault();
+        if (await save({ action: "ask", hypothesis_id: entry.id, hypothesis_revision: entry.revision, text }))
+            setText("");
+    }}>
+      <label>Your question<textarea value={text} onChange={(event) => setText(event.target.value)} required maxLength={2000} disabled={busy}/></label>
+      <p className="muted">Ask an open question without assuming a person, date, event or connection. Your words will be labelled as human-authored.</p>
+      <button disabled={busy || !text.trim()}>Save my question</button>
+    </form>;
+}
 function TestimonyForm({ entry, previous, busy, save }: {
     entry: Entry;
     previous?: Entry;
     busy: boolean;
-    save: (action: Record<string, unknown>) => Promise<void>;
+    save: (action: Record<string, unknown>) => Promise<unknown>;
 }) {
     if (!entry)
         return <p className="error">The source question is missing.</p>;

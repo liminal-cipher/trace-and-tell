@@ -88,6 +88,7 @@ test("fixture UI to PGlite: observation, inquiry, testimony, exhibit and broken 
         await page.getByRole("checkbox", { name: "Synthetic speaker B · unknown" }).check();
         await page.getByRole("button", { name: "Save exhibit", exact: true }).click();
         await expect(page.locator(".exhibit-card")).toContainText("Does not remember.");
+        await expect(page.locator(".exhibit-card")).toContainText("exhibit · human-authored");
         await page.locator(".exhibit-card").getByRole("button",{name:"Open evidence revision 1"}).first().click();
         await expect(page.locator(".exhibit-card .evidence-reference").first()).toContainText("I remember a blue ticket");
         await page.screenshot({ path: `test-results/investigation-exhibit-${test.info().project.name}.png`, fullPage: true });

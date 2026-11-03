@@ -32,3 +32,17 @@ it("passes an uncertainty-only correction through validation without trusting or
     expect(response.status).toBe(200);
     expect(mocks.execute.mock.calls[0][2]).toEqual({ action: "review", key: actor, workspace_id: actor, expected_revision: 2, id: actor, entry_revision: 2, decision: "corrected", uncertainty: "The cause is unknown." });
 });
+it("authenticates human questions and strips client-supplied authorship, source and model fields", async () => {
+    const command = { action: "ask", key: actor, workspace_id: actor, expected_revision: 2, hypothesis_id: actor, hypothesis_revision: 2, text: "What do you notice about these records?" };
+    const send = (body: object, origin = "https://archive.example.test") => POST(new Request("https://archive.example.test/api/investigation", {
+        method: "POST", headers: { Origin: origin, "Content-Type": "application/json" }, body: JSON.stringify(body),
+    }));
+    expect((await send({ ...command, actor: "forged", sources: [], mode: "meta-live", run_id: actor, details: { recorder: "forged" } })).status).toBe(200);
+    expect(mocks.execute).toHaveBeenLastCalledWith({}, actor, command);
+    mocks.execute.mockClear();
+    expect((await send({ ...command, text: " " })).status).toBe(400);
+    expect((await send(command, "https://evil.example.test")).status).toBe(403);
+    mocks.auth.mockRejectedValue(new AppError(401, "Session expired"));
+    expect((await send(command)).status).toBe(401);
+    expect(mocks.execute).not.toHaveBeenCalled();
+});

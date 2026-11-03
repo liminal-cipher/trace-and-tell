@@ -1,5 +1,5 @@
 import { AppError } from "./errors";
-import { analysisIdentity, analysisSchema, type Entry, type InvestigationCommand, type InvestigationDocument, type ModelInput, type RunResult, type Source } from "./investigation-contracts";
+import { analysisIdentity, analysisSchema, type Entry, type InvestigationCommand, type InvestigationDocument, type ModelInput, type ProviderMode, type RunResult, type Source } from "./investigation-contracts";
 import type { Asset, Revision } from "./contracts";
 export interface EvidenceContext {
     workspace_id: string;
@@ -37,7 +37,7 @@ export function modelInput(operation: ModelInput["operation"], sources: Source[]
     validateSources(sources, context);
     if (sources.length !== (operation === "observe" ? 1 : 2))
         throw new AppError(400, "Choose one record to observe or two to compare.");
-    const observations = operation === "compare" ? document.entries.filter((e) => e.kind === "observation" && e.evidence_validity === "current" && e.review_state !== "rejected" && e.sources.every((s) => sources.some((x) => x.asset_id === s.asset_id && x.revision === s.revision))) : [];
+    const observations = operation === "compare" ? document.entries.filter((e): e is Entry & { mode: ProviderMode } => e.kind === "observation" && e.mode !== "human" && e.evidence_validity === "current" && e.review_state !== "rejected" && e.sources.every((s) => sources.some((x) => x.asset_id === s.asset_id && x.revision === s.revision))) : [];
     return { operation, sources: sources.map((s) => ({ ...s, content: context.revisions.find((r) => r.asset_id === s.asset_id && r.revision === s.revision)!.content })),
         observations: observations.map((e) => ({ id: e.id, revision: e.revision, text: e.text, sources: e.sources, review_state:e.review_state, mode:e.mode })) };
 }
@@ -95,7 +95,25 @@ export function applyReview(document: InvestigationDocument, command: Exclude<In
         if (e.evidence_validity !== "current" || e.review_state === "rejected")
             throw new AppError(409, "Review the changed or rejected evidence before continuing.");
     };
-    if (command.action === "review") {
+    if (command.action === "ask") {
+        const parent = get(command.hypothesis_id, "hypothesis");
+        if (parent.revision !== command.hypothesis_revision)
+            throw new AppError(409, "This hypothesis changed. Reload before writing a question.");
+        usable(parent);
+        if (parent.review_state !== "accepted_for_inquiry")
+            throw new AppError(409, "Choose the hypothesis for inquiry first.");
+        // Inherit evidence, never model authorship. Actor comes from online Auth.
+        next.entries.push({
+            id: crypto.randomUUID(), kind: "question", revision: 1,
+            text: command.text, original_text: command.text,
+            review_state: "unreviewed", evidence_validity: "current",
+            sources: structuredClone(parent.sources),
+            parents: [{ id: parent.id, revision: parent.revision }],
+            mode: "human", model: null, run_id: null,
+            created_at: new Date().toISOString(), details: { recorder: actor },
+        });
+    }
+    else if (command.action === "review") {
         const e = get(command.id);
         if (e.revision !== command.entry_revision)
             throw new AppError(409, "This suggestion changed. Reload before saving.");
@@ -157,7 +175,8 @@ export function applyReview(document: InvestigationDocument, command: Exclude<In
         const text = command.action === "testify" ? command.text : parents.map((e) => `${e.details.speaker}: ${e.details.response === "unknown" ? "Does not remember." : e.details.response === "declined" ? "Chose not to answer." : e.text}`).join("\n\n");
         const entry: Entry = { id: old?.id ?? crypto.randomUUID(), kind, revision: (old?.revision ?? 0) + 1, text, original_text: old?.original_text ?? text,
             review_state: "recorded", evidence_validity: "current", sources, parents: parents.map((e) => ({ id: e.id, revision: e.revision })),
-            mode: parents[0].mode, model: parents[0].model, run_id: parents[0].run_id, created_at: old?.created_at ?? new Date().toISOString(),
+            // Testimony and curation are human work; model provenance lives in parents.
+            mode: "human", model: null, run_id: null, created_at: old?.created_at ?? new Date().toISOString(),
             details: command.action === "testify" ? { speaker: command.speaker, recorder: actor, response: command.response, source_mode: command.source_mode } : { title: command.title } };
         if (old)
             next.entries[next.entries.indexOf(old)] = entry;

@@ -27,8 +27,10 @@ it("persists the three fixture slices, keeping hypothesis, original reading and 
     const testimonies = s.document.entries.filter((e) => e.kind === "testimony");
     expect(testimonies).toHaveLength(4);
     expect(testimonies.every((e) => e.details.recorder === owner)).toBe(true);
+    expect(testimonies.every((e) => e.mode === "human" && e.model === null && e.run_id === null)).toBe(true);
     s = await send({ action: "exhibit", title: "An open question", testimony_ids: testimonies.map((t) => t.id) });
     expect(s.document.entries.at(-1)?.text).toContain("Chose not to answer");
+    expect(s.document.entries.at(-1)).toMatchObject({ mode: "human", model: null, run_id: null });
     expect((await repo.db.query("select * from investigation_versions")).rows.length).toBe(s.revision);
 });
 it("marks descendants for review after a correction without overwriting earlier versions", async () => {

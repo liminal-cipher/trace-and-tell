@@ -60,9 +60,9 @@ export interface Entry {
         id: string;
         revision: number;
     }[];
-    mode: ProviderMode;
-    model: string;
-    run_id: string;
+    mode: ProviderMode | "human";
+    model: string | null;
+    run_id: string | null;
     created_at: string;
     details: {
         locator?: string;
@@ -106,6 +106,8 @@ export interface InvestigationSnapshot {
 }
 const envelope = { key: z.uuid(), workspace_id: z.uuid(), expected_revision: z.number().int().nonnegative() };
 export const investigationCommandSchema = z.discriminatedUnion("action", [
+    z.object({ ...envelope, action: z.literal("ask"), hypothesis_id: z.uuid(),
+        hypothesis_revision: z.number().int().positive(), text }),
     z.object({ ...envelope, action: z.literal("analyse"), operation: z.enum(["observe", "compare"]),
         sources: z.array(sourceSchema).min(1).max(2), mode: providerMode, replay_id: z.uuid().optional() }),
     z.object({ ...envelope, action: z.literal("review"), id: z.uuid(), entry_revision: z.number().int().positive(),
