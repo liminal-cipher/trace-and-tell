@@ -124,6 +124,17 @@ These are content hashes, not full inference request hashes.
 
 ## E. Readiness Checklist
 
+The [real-world evaluation preparation](real-world-evaluation.md) contains 23
+photographic candidates, 12 comparisons and an offline review tool. Actual
+real-photo Meta calls and human-scored responses remain zero. The revised
+lossless input pipeline passes all 23 images and 35 request payloads offline; 18 images and eight comparisons pass the scoped rights review.
+The earlier 16/23 size rejection is preserved as a historical preflight finding.
+Neither preprocessing success nor provider-payload validation measures model
+accuracy; the ten-request paid proposal still requires separate approval. Four
+historical synthetic successes must not be described as broad photographic
+accuracy. The demo explicitly retains the unsupported uncertainty
+explanation and missing comparison questions.
+
 Items below are preparation gates, not invented official mandatory fields.
 
 - [x] Prepare an anonymous synthetic walkthrough and description/architecture/script.

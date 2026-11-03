@@ -1,5 +1,18 @@
 # M1 Stabilisation and M2 Preparation
 
+## Real-world input validation follow-up — 3 November 2026
+
+The shared image pipeline now prepares bounded, metadata-free, lossless PNGs
+(up to 2048px and 8 MiB) instead of imposing the old 512 KiB experiment cap.
+Originals, source revisions, prior runs and budget rules remain unchanged.
+All 23 preview editions and 35 payloads pass offline preparation; 23/23 retain
+normalised decoded pixels. Rights review excludes five images, leaving 18
+images/eight pairs eligible. None has been sent to Meta or human-scored.
+See [the evaluation report](real-world-evaluation.md) for licence decisions,
+remaining legibility limits, the ten-request approval proposal and fresh tests.
+The previous M2-A unsupported compression explanation and M2-B empty questions
+remain documented failures; no general real-photo accuracy claim is supported.
+
 ## Submission readiness sprint — 3 November 2026
 
 The inherited human-question implementation and completed hosted acceptance
