@@ -1,5 +1,285 @@
 # M1 Stabilisation and M2 Preparation
 
+## Submission readiness sprint — 3 November 2026
+
+The inherited human-question implementation and completed hosted acceptance
+below were reviewed and retained. No hosted acceptance or cleanup was rerun.
+The public `/demo` now presents sources → actual Meta excerpts → human question
+→ invented testimony → gallery, with static source/revision links and explicit
+labels. M2-A observation/correction and M2-B comparison are separate runs.
+Public aliases replace private identifiers. The new [submission packet](submission-readiness.md)
+contains the description, architecture, shot list, evidence and release gates.
+
+### Defects corrected in this sprint
+
+- The main navigation could prefetch the private archive while displaying the
+  public demo. Archive prefetch is now disabled; the public browser journey
+  checks for private/API/external requests and writes.
+- The browser test environment cleared Supabase but could inherit live-model
+  credentials/approval. It now explicitly blanks the key/allowance and sets
+  live approval to `no`. An optional validated local port keeps tests away
+  from an existing development server; the first run correctly refused busy
+  port 3000, and subsequent runs used 3100 without stopping that server.
+- Testimony/exhibits following an AI/fixture question inherited the parent's
+  provider attribution. A new assertion reproduced the failure before the
+  fix. New saves now have human origin and null model/run fields, retaining
+  exact parent provenance. Legacy stored entries remain untouched; current
+  and historical UI labels explain human authorship and inherited metadata.
+  This is a local fix, not a new remote acceptance claim.
+
+### Fresh verification in this sprint
+
+| Check | Result / evidence boundary |
+| --- | --- |
+| `npm test` | PASS: final 91 tests / 15 files. Earlier sprint run passed 90 before adding the test-port boundary case. |
+| Focused defect/human/security regression | PASS: 28 tests after the reproduced testimony-attribution failure was fixed. |
+| `npm run typecheck` | PASS after final application changes. |
+| `npm run lint` | PASS: zero errors; two pre-existing warnings in protected `.local` files, left unchanged. |
+| `npm run build` | PASS with Supabase/model credentials blank and live disabled in the build process; `/demo` prerendered static. |
+| `PLAYWRIGHT_PORT=3100`, `RUN_LOCAL_SUPABASE_E2E=0`, `npm run test:e2e` | PASS: final 10 desktop/mobile tests; 2 local Supabase tests deliberately SKIPPED. Includes human questions, existing Investigation, server/PGlite restart, public journey and API boundary checks. |
+| Public browser checks | PASS: direct route/hash access, reload, image decode, labels, keyboard anchor/Enter disclosure, all source targets, no horizontal overflow, no page errors and no private/API/external/write requests during the tested journey. |
+| Visible UI | Assistant inspected desktop/mobile full-page captures and mobile opening/gallery captures. This is not user acceptance or a full screen-reader audit. |
+| Build/private scan | PASS: 788 build/public files checked against 3 existing configured secret values; no matches. Public module/page and generated demo HTML/RSC contained no UUID/private-project URL/token pattern matches. This is a bounded scan, not proof against every possible secret. |
+| Protected local inventory | PASS: all 89 inventoried files in PLAN.md, .env.local, .local and evaluation-results retained SHA-256 hashes. CURRENT_TASK.md was intentionally updated separately. Prior private chat outputs were only read, not staged. |
+| `git diff --check` | PASS. |
+
+Tests ran against the local production build and disposable PGlite. HTTP Auth
+is mocked in Investigation browser flows; unconfigured anonymous API browser
+requests return 503 rather than exercising a live signed-out Supabase session.
+Route unit tests separately exercise 401 denial. These facts do not replace
+the previous real single-user Supabase evidence or prove real A/B security.
+
+### Security review and deployment decision
+
+| Scope | Current conclusion |
+| --- | --- |
+| Anonymous / foreign workspace or source | Local route/SQL tests pass; caller comes from online Auth, reads require ownership/RLS, command functions recheck it. Real two-user hosted isolation remains BLOCKED on approved accounts/environment. |
+| Forged author/model/run/source input | Command parsing strips untrusted provenance; human questions derive actor and references server-side. Unit/route/SQL regression passes. |
+| Old revisions / deletion / concurrency | Existing local tests reject stale/deleted sources and stale saves, preserve snapshots, deduplicate identical receipts and reject altered retries. Source changes propagate `needs_review`/`invalidated`. |
+| Failed model request / allowance | Provider tests use mocked transport and temporary test ledgers. Failure/unknown outcome blocks further use without fixture substitution. Existing real ledgers were not modified. |
+| Cookies/cache/headers | Code uses HttpOnly, Lax, HTTPS-dependent Secure cookies, online `getUser`, private/no-store API responses and security headers. Local assertions pass. Real HTTPS/CDN and old token/capability replay remain BLOCKED; no production security claim. |
+| RLS / privileged code | Inspected existing migrations: RLS and explicit grants; service-only invoker commands; private session helper with fixed search path and auth.sessions check. No user-editable metadata authorisation found. No migration or remote policy change. |
+| Public disclosure | Demo imports only curated static evidence and local image. Private archive prefetch removed. Runtime request checks and bounded output scan pass. |
+| Hosted storage/failure paths | Existing interrupted-upload, capability replay and patch-level confirmation gates remain open. No remote cleanup or adversarial test was run. |
+
+Current [Supabase SSR guidance](https://supabase.com/docs/guides/auth/server-side/creating-a-client?queryGroups=framework&framework=nextjs)
+and [RLS guidance](https://supabase.com/docs/guides/database/postgres/row-level-security)
+were consulted for the review. Local tests are not a hosted security audit.
+Prefer a separately reviewed, credential-free synthetic demo deployment for the
+deadline. Do not expose the complete private app before the remaining gates;
+Meta Live also needs an approved durable ledger design on serverless hosting.
+Neither candidate was deployed. No new Meta call, paid request, remote data
+mutation, Auth change, submission or repository visibility change occurred.
+
+
+## Human-authored questions — hosted acceptance, 3 November 2026
+
+The separately authorised Edge user journey passed against the existing M2-B
+workspace and hosted Supabase at 18:24–18:27 KST. Local main and freshly fetched
+origin/main both remained `5a1d14092a7148df486a5a1443dfb7af4a12371d`.
+The uncommitted implementation was rebuilt and served locally with Meta live
+approval disabled. No analysis, replay, new Model Run or migration occurred.
+
+Exactly five successful user saves were performed, without retries:
+
+| Save | Investigation revision | Result |
+| --- | --- | --- |
+| Use for inquiry | 1 → 2 | Existing candidate accepted; hypothesis revision 2 |
+| Save my question | 2 → 3 | One human-authored question, revision 1 |
+| Select question | 3 → 4 | Question revision 2, selected |
+| Save testimony | 4 → 5 | One explicitly invented acceptance-test response |
+| Save exhibit | 5 → 6 | One exhibit citing that testimony revision 1 |
+
+Question `866026f8-19a6-43f6-9427-2062bed50581` asks “What do you know about
+the markings ORBIT 47 and BLUE TICKET?” Its recorder matches the authenticated
+account and workspace owner recorded in the five command receipts. It has
+`mode=human`, `model=null`, `run_id=null`, and points to hypothesis
+`f9207ecb-a391-458d-9c8e-ce49441de027` REV2 and both original Source REV1s.
+The original model's empty question list is still honestly displayed.
+
+Testimony `964a05dc-2e45-4203-b9dd-2578e7245fbb` uses speaker label
+“Synthetic acceptance speaker” and explicitly says it is invented, not a real
+person's testimony. The form's default `heard_directly` value is retained;
+the synthetic label and words define the test context. Exhibit
+`1a720e9f-044e-49ad-8550-44279ddca47c` cites only that testimony REV1.
+Both new entries have human origin and null model/run attribution.
+
+Browser refresh and an owned local app-server stop/start retained all entries.
+The UI reopened the exact parent hypothesis REV2, original human question REV1,
+both source references, and the exhibit's testimony REV1. Database requery
+confirmed Investigation REV1–REV6 and five additional receipts. All earlier
+version rows remain unchanged. The hypothesis changed only its review state
+and revision; wording, evidence, uncertainty and model provenance are intact.
+The original Meta Run, including its saved response, is unchanged.
+
+One separately authorised **Retry file cleanup** action changed only expired
+intent `12d7d6d0-3cc3-4a5e-957e-33cc3efc554d` from cleanup pending to done.
+All six intents now have cleanup done; pending cleanup and staging objects are
+zero. All three original objects remain, with identical metadata and downloaded
+SHA-256 hashes before and after. Workspaces, assets, Source revisions, other
+Investigations and the inspected Auth account identity records are unchanged.
+The 106 protected local files, including environment, plan, handoff, allowance,
+ledger and prior acceptance artefacts, retained their hashes.
+
+This is new hosted single-user integration evidence, separate from the prior
+90 local tests and desktop/mobile Playwright results below; those suites were
+not rerun here. The current production build passed. No additional A/B user
+isolation, adversarial security, failure-path or model-quality claim follows
+from this acceptance. Existing limitations remain open. M2-C, Git publication
+and deployment were not performed. The earlier hosted procedure below is the
+historical proposal fulfilled by this separately approved acceptance.
+
+## Human-authored questions — local follow-up, 2 November 2026
+
+The preceding, separately approved M2-B live comparison succeeded with
+`muse-spark-1.3` Standard and returned a grounded shared-wording candidate,
+valid references to both REV1 sources, and `questions=[]`. Run
+`e5276e0b-40bc-4bcd-aeb7-cc2dbb802bf6` belongs to workspace
+`1b1becf7-123c-4251-b0e5-8f6745c69334`. That prior live result is the
+motivation for this change, not a live verification of the new feature.
+No remote data or Model Run was changed by this local follow-up.
+
+After reviewing a current hypothesis and choosing **Use for inquiry**, the
+record keeper can write **Your question**, save it, and choose **Select
+question** to record text testimony and compose an exhibit. The hypothesis
+continues to display **No questions were supplied with this hypothesis**
+when the original response supplied none; adding a human question does not
+rewrite that history. The flow also permits an accepted `no_connection`
+hypothesis without turning it into a supported connection.
+
+### Provenance and storage
+
+- The new `ask` command contains hypothesis ID, exact hypothesis revision
+  and trimmed question text (1–2,000 characters), plus the existing workspace,
+  expected Investigation revision and retry key.
+- The server derives the actor from online Auth. Client-supplied sources,
+  author, model, mode, run ID and document are discarded by command parsing.
+- The domain requires a current, accepted hypothesis and active, current
+  sources in the same workspace. It copies the exact source references and
+  links the question to the accepted hypothesis revision.
+- A new question has `mode=human`, `model=null`, `run_id=null` and
+  `details.recorder` set to the authenticated actor. It starts unreviewed.
+  The UI and historical evidence viewer label it **human-authored** and
+  explicitly state that no model generated it. Its parent remains the route
+  to the original model provenance.
+- Human is an entry origin, not a provider mode. The model selector,
+  `analysisSchema`, prompt, provider requests and Model Run table remain
+  unchanged. Existing fixture/replay/meta-live entries remain readable.
+- The existing non-analysis save path stores the new JSONB entry through
+  `investigation_command`. It performs no provider call and creates no Run.
+  SQL rechecks workspace ownership, source revisions and the expected
+  Investigation revision under the existing lock. It stores the current
+  document, an immutable version and an idempotent receipt in one transaction.
+- Repeated identical request keys return the receipt without another version;
+  changed payloads and competing stale revisions are rejected. A new key
+  deliberately creates a new question; this is request idempotency, not
+  semantic deduplication of differently submitted questions.
+- Correction preserves the human question's first wording and recorder.
+  Previous question revisions can be reopened. Selection explicitly binds
+  a reviewed current parent revision. Corrections or rejection of the
+  hypothesis mark dependent questions/testimony/exhibits for review;
+  unavailable originals invalidate them. Source revision changes are not
+  silently rebound. Existing AI question correction and testimony/exhibit
+  flows remain available.
+
+No new dependency, SQL migration, table, RLS policy or RPC definition is
+required. This uses the existing JSONB document and revision mechanism;
+PostgreSQL supports structured querying and storage within JSONB
+([Supabase JSON guide](https://supabase.com/docs/guides/database/json)).
+
+### Why no model question appeared
+
+`SYSTEM_PROMPT` says that questions must be open and avoid unverified
+assumptions, but does not explicitly require at least one comparison question.
+`analysisSchema.questions` has `.max(3)` and no minimum.
+`validateAnalysis` requires a comparison connection and no observations;
+it does not reject an empty question list. `importAnalysis` only imports
+questions actually returned, so the former UI had no question to select.
+These are verified code-level conditions allowing the observed result.
+They do not establish the model's internal reason for choosing an empty list.
+The actual result ended with `finish_reason=stop`, so it was not reported
+as a truncated completion. No prompt/schema change or paid experiment was
+performed to test an alternative.
+
+### Local verification and limits
+
+Initial local main and fetched origin/main both pointed to
+`5a1d14092a7148df486a5a1443dfb7af4a12371d`; only the existing untracked
+`PLAN.md` was present. That plan, prior allowances/ledgers, environment
+file and acceptance/evaluation artefacts are preserved.
+
+| Check | Result |
+| --- | --- |
+| Focused domain, SQL, route and correction suites | 28 tests passed |
+| Full unit suite | 90 tests across 15 files passed |
+| Human question contracts and provenance | Empty/oversized text, stale/wrong-kind/unaccepted parents and forged provenance tested |
+| Ownership and conflicts | Foreign workspace/source, wrong actor, stale sources, stale Investigation revision, identical receipt replay and changed payload rejected or deduplicated as appropriate |
+| Local history and model preservation | Earlier documents retained; original synthetic Run unchanged; no new Run for human question |
+| Parent/source changes | Correction/rejection marks descendants for review; source deletion invalidates; stale sources rejected |
+| Playwright desktop/mobile | 4 tests passed: new human-question journey plus existing AI-question/correction/testimony/exhibit regression |
+| Persistence | Browser reload, on-disk PGlite close/reopen and an owned local Next.js process restart retained question, testimony, exhibit and original Run; enhanced desktop/mobile tests both passed |
+| Typecheck and production build | Passed with live gate off and remote/model credentials blank in the build process |
+| Full lint | Final rerun: no errors, only the two pre-existing warnings in ignored local files |
+| Final changed-file lint | No warnings or errors |
+
+The Playwright tests use the real production UI, domain rules and existing
+SQL/RPC in disposable local PGlite, replacing the authenticated HTTP boundary.
+The Meta-labelled unit fixture is authored test data, not new model evidence.
+The first server-restart test harness incorrectly probed the redirecting
+root URL while refusing redirects. Changing its readiness probe to the
+local `/demo` page resolved the failure; both enhanced tests then passed.
+GoTrue/PostgREST/Storage integration, an actual hosted write, and an app-server
+process restart against hosted Supabase were not tested by this follow-up.
+The owned Next.js process restart used only local fixture data. Existing two-user
+isolation, token replay, HTTPS, hosted Storage patch/failure-path and general
+model-quality limitations remain open. No M2-C experiment ran.
+
+### Minimum hosted acceptance — requires separate write approval
+
+Keep live mode disabled and inspect the existing M2-B workspace, Run,
+hypothesis `f9207ecb-a391-458d-9c8e-ce49441de027`, both source revisions,
+Investigation revision, previous versions and local ledger hashes first.
+Do not press any analysis or replay button.
+
+1. With the current hypothesis reviewed, choose **Use for inquiry**.
+2. Save exactly one human question, for example: “What, if anything, do you
+   know about these records?”
+3. Select that question. Confirm human authorship, null model/run ID,
+   exact parent revision and both original Source REV1 references.
+4. Save one explicitly synthetic text testimony from a synthetic speaker.
+   Save one exhibit containing only that testimony.
+5. Refresh and, if included in the separate approval, restart the local app;
+   reopen parent/question history and both originals. Compare pre/post
+   snapshots, Model Run and ledger hashes.
+
+If the historical REV1 baseline is still current, these are five writes:
+Investigation REV1 → REV6, hypothesis REV1 → REV2, question REV1 → REV2,
+one testimony REV1 and one exhibit REV1. Expect five new version snapshots
+and receipts, zero new Model Runs, and no changed Source revisions.
+Re-read current state rather than assuming those revision numbers.
+Source edits/rejection/deletion and cleanup are outside this minimum proposal.
+
+### M2-C no_connection preparation proposal — not approved
+
+Use a separate synthetic pair to avoid reanalysing the accepted M2-B sources:
+the existing `01.png` fixture and a proposed UTF-8 note containing
+`MAPLE 82\nGREEN BENCH` (one LF, no trailing newline). The note is proposed
+test data only; no new asset or workspace was created.
+After separate preparation approval, register at most one new workspace and
+two sources through the app, verify bytes/IDs/REV1 and no existing analysis,
+then calculate the complete actual image-inclusive `compare` input hash
+with `observations=[]`. Reconfirm current model, official price and limits
+before requesting a fresh, short-lived one-request allowance; never reuse
+any earlier ledger. No full ModelInput hash can be fixed before source IDs
+and app-prepared bytes are established.
+
+Evaluate whether lack of shared specific evidence is expressed honestly,
+without treating missing details as contradictions or inventing a connection.
+Do not force `no_connection`: evaluate whichever conclusion is returned.
+Record open questions separately; the human-question path remains available
+even when the next model output again supplies none. Actual M2-C inference,
+new remote records and any cleanup each need their own explicit scope.
+
 ## Observation correction remote acceptance — 1 November 2026, 16:22 KST
 
 Separately authorised hosted acceptance passed through the official Edge
