@@ -4,7 +4,10 @@ export const photoStories = [
     "id": "photo-02",
     "label": "A meal together",
     "exhibitTitle": "A place at the table",
-    "practiceAnswer": "The small cups remind me of weekend meals. I don’t remember the date. This is an invented practice answer.",
+    "practiceAnswers": [
+      "Jars like these remind me of keeping leftovers after a shared meal. I cannot remember what was in them that day. This is an invented practice memory.",
+      "Those baked items remind me of making bread together. I cannot remember the recipe. This is an invented practice answer."
+    ],
     "alt": "Historical colour photograph of four people around a checked table with plates, cups and glass jars.",
     "image": "/demo/photo-02.jpg",
     "width": 1600,
@@ -25,7 +28,10 @@ export const photoStories = [
     "id": "photo-01",
     "label": "A room full of details",
     "exhibitTitle": "A room remembered",
-    "practiceAnswer": "A picture like that always made the room feel familiar. I don’t remember where it came from. This is an invented practice answer.",
+    "practiceAnswers": [
+      "A picture like that made a room feel familiar. I don’t remember where it came from. This is an invented practice answer.",
+      "Cloths like these remind me of covering shelves at home. I cannot remember how these particular cloths were used. This is an invented practice answer."
+    ],
     "alt": "Historical colour photograph of seven people seated indoors with a framed picture, wall calendar and patterned fabrics behind them.",
     "image": "/demo/photo-01.jpg",
     "width": 1024,
@@ -46,7 +52,10 @@ export const photoStories = [
     "id": "photo-03",
     "label": "A quilt and its story",
     "exhibitTitle": "Patterns worth remembering",
-    "practiceAnswer": "A quilt like this brings back memories of mending things together. I don’t know its maker. This is an invented practice answer.",
+    "practiceAnswers": [
+      "A quilt like this reminds me of keeping warm on winter evenings. I do not remember where this one was kept. This is an invented practice answer.",
+      "The many squares bring back memories of mending things together. I don’t know who assembled this quilt. This is an invented practice answer."
+    ],
     "alt": "Historical colour photograph of a person standing outdoors beside a large quilt with a grid of patterned squares.",
     "image": "/demo/photo-03.jpg",
     "width": 500,
@@ -67,5 +76,5 @@ export const photoStories = [
 export const photoEvaluation = {
   "scope": "This photo pilot made 17 actual requests across three historical photographs and four comparison cases: three observations, eight comparisons and six clue-based inquiries. All returned structurally valid responses. Human quality review is pending for all 17; this is not an accuracy score.",
   "limitations": "The photographs come from one historical collection. One is a 500-pixel preview with largely unreadable small lettering. Names, kinship, capture dates and the truth of remembered stories are not established by this test.",
-  "improvement": "The first questions often repeated visible details or reassurance. A revised instruction produced shorter questions about missing context. An initial comparison also treated different scenes as contradictory evidence; the revised result placed missing links under uncertainty. These are assistant-reviewed examples, not human-confirmed quality scores."
+  "improvement": "The first questions often repeated visible details or reassurance. A revised instruction produced shorter questions about missing context. An initial comparison also treated different scenes as contradictory evidence; the revised result placed missing links under uncertainty. A remaining comparison still called the people different without establishing their identities. That claim is unverified and is retained as an error for review. These are assistant-reviewed examples, not human-confirmed quality scores."
 } as const;

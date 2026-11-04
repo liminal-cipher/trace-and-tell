@@ -18,6 +18,7 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await expect(page.locator("details blockquote")).toHaveText(original);
  await page.getByRole("button",{name:"Choose this question",exact:true}).click();
  await page.getByRole("button",{name:"Use an invented practice answer",exact:true}).click();
+ await expect(page.getByLabel("Fictional practice answer",{exact:true})).toHaveValue(/Jars like these/);
  await page.getByRole("button",{name:"Create sample exhibit",exact:true}).click();
  const exhibit=page.locator(".photo-exhibit");
  await expect(exhibit).toContainText("Fictional practice speaker");
@@ -38,6 +39,10 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await expect(page.getByLabel("Your question",{exact:true})).toHaveCount(0);
  await page.getByRole("button",{name:"Use this clue for a question",exact:true}).click();
  await expect(page.getByLabel("Your question",{exact:true})).toHaveValue("Do you remember where this quilt was kept or how it was used?");
+ await page.getByRole("radio",{name:"Do you remember anything about how the many small squares came together?",exact:true}).check();
+ await page.getByRole("button",{name:"Choose this question",exact:true}).click();
+ await page.getByRole("button",{name:"Use an invented practice answer",exact:true}).click();
+ await expect(page.getByLabel("Fictional practice answer",{exact:true})).toHaveValue(/many squares/);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.screenshot({path:`test-results/photo-journey-${test.info().project.name}.png`,fullPage:true});
  await page.reload();

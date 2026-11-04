@@ -60,7 +60,8 @@ function PhotoJourney({ story }: { story: typeof photoStories[number] }) {
     {step > 1 && <section className="photo-step" aria-labelledby="answer-heading">
       <div className="section-line"><h2 id="answer-heading" tabIndex={-1}>03 / Let the person supply the memory</h2><span>Fictional practice · no historical testimony</span></div>
       <p>In your collection, you would ask someone who might remember. Here, try an invented answer or leave the memory unknown. Please use fictional wording only.</p>
-      <div className="actions"><button className="secondary" onClick={() => { setUnknown(false); setAnswer(story.practiceAnswer); }}>Use an invented practice answer</button><button className="secondary" onClick={() => { setUnknown(true); setAnswer(""); }}>They do not remember</button></div>
+      <div className="actions"><button className="secondary" onClick={() => { setUnknown(false); setAnswer(story.practiceAnswers[story.questions.findIndex(text => text === originalQuestion)]); }}>Use an invented practice answer</button><button className="secondary" onClick={() => { setUnknown(true); setAnswer(""); }}>They do not remember</button></div>
+      <p className="muted">The example is prewritten for the selected suggestion. If you changed the question, check that the answer still fits.</p>
       <label htmlFor="sample-answer">Fictional practice answer</label><textarea id="sample-answer" value={answer} onChange={event => { setAnswer(event.target.value); setUnknown(false); }} disabled={unknown} placeholder="Write a fictional answer for this practice…" maxLength={4000} rows={3}/>
       {unknown && <p role="status">Does not remember. No answer will be invented to fill the gap.</p>}
       <button disabled={!question.trim() || (!unknown && !answer.trim())} onClick={() => { setExhibit({ question, answer, unknown }); setStep(3); }}>{exhibit ? "Update sample exhibit" : "Create sample exhibit"}</button>
