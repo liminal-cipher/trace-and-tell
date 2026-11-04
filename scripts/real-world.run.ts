@@ -33,8 +33,10 @@ test("prepares an offline real-world review packet without authorising calls", a
     const batch=batchProposal(manifest,prepared.photos,cases,rights);
     save("batch-proposal.json",batch);
     writeFileSync(join(directory,"batch-proposal.sha256"),hash(JSON.stringify(batch,null,2)+"\n")+"\n",{flag:"wx"});
-    save("plan.json", { status:"BLOCKED — no paid approval", live_calls:0, dataset_sha256:hash(raw), prompt_version:prepared.prompt_version, prompt_sha256:prepared.prompt_sha256, schema_version:prepared.schema_version,
-      model:"muse-spark-1.3", route:"Standard", retries:0, max_completion_tokens:1200,
+    save("plan.json", { status:records.length?"OFFLINE REVIEW IMPORT — no new calls authorised":"BLOCKED — no paid approval", provider_calls_this_command:0, imported_live_attempts:summary.attempted_live, execution_authority:"Historical proposal only; imported execution authorisation and journal are separate evidence.", dataset_sha256:hash(raw), prompt_version:prepared.prompt_version, prompt_sha256:prepared.prompt_sha256, schema_version:prepared.schema_version,
+      model:"muse-spark-1.3", route:"Standard", retries:0,
+      historical_baseline_preflight:{reasoning_effort:"minimal",max_completion_tokens:1200,timeout_ms:45000,request_hashes:"Baseline preparation only; not the settings of imported executions."},
+      imported_execution_settings:records.length?"Consult the separate execution journal and request hashes; output-only records do not establish effort, token limits or timeout.":null,
       approved_at:null, expires_at:batch.expires_at,
       catalogue_and_prices:"See batch-proposal.json for dated public verification; no paid approval",
       existing_guard:{max_requests:20,max_usd:5,reservation_per_call_usd:1.32},

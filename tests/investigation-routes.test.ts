@@ -7,13 +7,15 @@ vi.mock("@/lib/investigation", () => ({ executeInvestigation: mocks.execute, rea
 const actor = "11111111-1111-4111-8111-111111111111";
 beforeEach(() => { vi.stubEnv("APP_ORIGIN", "https://archive.example.test"); mocks.auth.mockResolvedValue({ client: {}, user: { id: actor } }); mocks.execute.mockResolvedValue({ revision: 1 }); });
 afterEach(() => { vi.resetAllMocks(); vi.unstubAllEnvs(); });
-function request(origin = "https://archive.example.test") { return new Request("https://archive.example.test/api/investigation", { method: "POST", headers: { Origin: origin, "Content-Type": "application/json" }, body: JSON.stringify({ action: "analyse", key: actor, workspace_id: actor, expected_revision: 0, operation: "observe", sources: [{ asset_id: actor, revision: 1 }], mode: "fixture", actor: "forged", document: {}, role: "service_role" }) }); }
+function request(origin = "https://archive.example.test") { return new Request("https://archive.example.test/api/investigation", { method: "POST", headers: { Origin: origin, "Content-Type": "application/json" }, body: JSON.stringify({ action: "analyse", key: actor, workspace_id: actor, expected_revision: 0, operation: "observe", sources: [{ asset_id: actor, revision: 1 }], mode: "fixture", actor: "forged", document: {}, role: "service_role", profile: "high", reasoning_effort: "high" }) }); }
 it("derives actor from online Auth and rejects client-supplied state and roles", async () => {
     const response = await POST(request());
     expect(response.status).toBe(200);
     expect(mocks.execute.mock.calls[0][1]).toBe(actor);
     expect(mocks.execute.mock.calls[0][2]).not.toHaveProperty("actor");
     expect(mocks.execute.mock.calls[0][2]).not.toHaveProperty("document");
+    expect(mocks.execute.mock.calls[0][2]).not.toHaveProperty("profile");
+    expect(mocks.execute.mock.calls[0][2]).not.toHaveProperty("reasoning_effort");
     expect(response.headers.get("cache-control")).toContain("no-store");
 });
 it("denies anonymous reads, expired-session writes and cross-origin mutations before work", async () => {

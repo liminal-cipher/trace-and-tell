@@ -31,6 +31,7 @@ export interface ModelInput {
     }[];
 }
 export interface RunResult {
+    inference?: import("./model-settings").InferenceEvidence;
     id: string;
     mode: ProviderMode;
     model: string;

@@ -9,6 +9,10 @@ import { AppError, databaseError } from "./errors";
 import { emptyDocument, analysisIdentity, withoutImages, type InvestigationCommand, type InvestigationDocument, type RunResult } from "./investigation-contracts";
 import { applyReview, importAnalysis, modelInput, reconcile, type EvidenceContext } from "./investigation-domain";
 import { generateAnalysis, ProviderFailure, PROMPT_VERSION, SCHEMA_VERSION } from "./model-provider";
+import { inferenceSettings } from "./model-settings";
+// Keep the app preference separate from historical evaluation request defaults.
+const APP_INFERENCE_PROFILE = "medium";
+const RUN_STALE_AFTER_MS = inferenceSettings(APP_INFERENCE_PROFILE).timeout_ms + 60_000;
 async function context(client: SupabaseClient, workspace: string) {
     const archive = await listArchive(client, workspace);
     return { archive, evidence: { workspace_id: workspace, assets: archive.assets, revisions: archive.revisions } as EvidenceContext };
@@ -21,7 +25,7 @@ export async function readInvestigation(client: SupabaseClient, workspace: strin
     ]);
     databaseError(saved.error);
     const document = reconcile((saved.data?.document ?? emptyDocument()) as InvestigationDocument, evidence);
-    const visibleRuns = runs.map((run) => run.status === "running" && Date.now() - Date.parse(run.created_at) > 120000
+    const visibleRuns = runs.map((run) => run.status === "running" && Date.now() - Date.parse(run.created_at) > RUN_STALE_AFTER_MS
         ? { ...run, status: "unknown_outcome", error: "No confirmed result. Inspect the allowance and saved run before starting another request." } : run);
     return { workspace_id: workspace, revision: saved.data?.revision ?? 0, document, runs: visibleRuns, archive };
 }
@@ -92,7 +96,7 @@ export async function executeInvestigation(client: SupabaseClient, actor: string
                 databaseError(result.error);
                 replay = result.data?.record;
             }
-            run = await generateAnalysis(input, command.mode, { id: begun.id, replay });
+            run = await generateAnalysis(input, command.mode, { id: begun.id, replay, profile: APP_INFERENCE_PROFILE });
             // Refresh Auth and source state after external work. SQL repeats source
             // and document checks under the same lock as Archive writes/deletion.
             const auth = await client.auth.getUser();

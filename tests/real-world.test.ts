@@ -57,6 +57,10 @@ it("prepares the exact app image recipe offline, hides reference answers, and re
   const html=reviewHtml(m,directory,prepared.cases,[]);
   expect(html).toContain("Content-Security-Policy");expect(html).not.toContain("<script");
   expect(html).toContain("0 live calls");expect(html).toContain("AUTHORED FALSE CONTROL");
+  const imported=reviewHtml(m,directory,prepared.cases,[{...record(),case_id:prepared.cases[0].id,input_sha256:prepared.cases[0].input_sha256,review:{...review(),kind:"assistant"}}]);
+  expect(imported).toContain("Pending human review of recorded live attempts: observe-rw-01</p>");
+  expect(imported).toContain("Not run live: observe-rw-02");
+  expect(imported).not.toContain("paid execution still blocked");
   const rights=JSON.parse(readFileSync("tests/fixtures/real-world/rights-review.json","utf8"));
   expect(()=>initialBatch(m,prepared.photos,prepared.cases,rights)).toThrow("not eligible");
   expect(batchProposal(m,prepared.photos,prepared.cases,rights)).toMatchObject({max_requests:0,requests:[],allowances:[],approved_at:null});
