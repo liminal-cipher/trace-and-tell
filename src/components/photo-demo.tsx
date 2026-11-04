@@ -28,6 +28,7 @@ export function PhotoDemo() {
     <section className="notice photo-limits" aria-labelledby="limits-heading"><h2 id="limits-heading">What this demonstration proves — and what it does not</h2>
       <p>These are licensed historical photographs, not AI-generated family pictures. The observations and questions are excerpts from recorded Meta Standard Medium requests. The practice answer is fictional; it is never attributed to the photographed people.</p>
       <p>{photoEvaluation.scope}</p><p>{photoEvaluation.limitations}</p>
+      <p>{photoEvaluation.tuning}</p>
       <details><summary>What needed improvement?</summary><p>{photoEvaluation.improvement}</p><p>Earlier results are retained, including errors and unhelpful questions. The same small set was reused to inspect a prompt revision; this is not an independent accuracy benchmark.</p></details>
       <p>This page uses local sample state only. Refreshing clears your edits. You may explicitly download a text copy; nothing is uploaded or saved by the service. It does not read private collections or call a model. The authenticated app has a separately tested save, revision and source-review workflow.</p>
       <div className="actions"><Link href="/demo">Read the synthetic comparison and correction study</Link>{process.env.NEXT_PUBLIC_DEMO_ONLY !== "true" && <Link href="/archive" prefetch={false}>Open your private archive</Link>}</div>

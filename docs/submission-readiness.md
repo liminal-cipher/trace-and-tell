@@ -1,7 +1,8 @@
 # Submission Readiness — 5 November 2026
 
-Status: local submission candidate; two explanatory three-minute drafts rendered locally;
-a higher-resolution screen-recorded revision is still required. **Not deployed or submitted.**
+Status: local submission candidate; a verified three-minute recording of actual
+application interactions is ready. YouTube upload remains incomplete.
+**Not deployed or submitted.**
 Use this packet with [implementation evidence](m1b-m2-implementation.md) and
 [M1a security limits](m1a-implementation.md). It does not grant external approval.
 
@@ -57,6 +58,14 @@ accuracy gain; human quality review remains pending for all 17 responses.
 One revised comparison still asserted “different people” without establishing
 identity. That error is retained and disclosed; face matching is not a capability
 claimed by this project.
+
+A separate follow-up ran 33 additional requests on those photos and one storefront,
+comparing High/Max and two prompt strategies with a Medium cross-check. Some
+unsupported detail disappeared, but omissions and weak questions remained.
+Assistant comparison did not establish a consistent improvement, so Medium
+remains the application default. These 33 responses also await human scoring;
+the [evaluation report](real-world-evaluation.md#highmax-and-prompt-comparison--5-november-2026)
+retains all versions rather than publishing a best-case accuracy claim.
 
 Earlier authenticated synthetic runs also remain available. One comparison found
 shared ticket/note markings but returned no questions. A person could still write
@@ -115,31 +124,49 @@ hosting candidate; the resulting artifact still requires approval and HTTPS chec
 ## C. Demo Script and Shot List
 
 Required length: **three minutes**, confirmed in the participant guide and form.
-Two explanatory drafts have been rendered from actual application screenshots.
-The second is 180 seconds, 1920×1080 at 30fps, with local synthetic narration
-and aligned captions. It has not been uploaded or accepted as final. User review
-identified soft enlarged screenshots and insufficient continuous interaction
-footage. The next version must show actual operation at higher capture resolution
-and repeat both application-flow and encoded-video checks before upload.
+The current film is an actual isolated-browser recording with captions, replacing
+the rejected screenshot drafts. The local delivery file is
+`.local/videos/trace-and-tell-demo/renders/recorded-v3.mp4`: exactly 180 seconds,
+1920×1080/30fps, H.264 with AAC 48kHz audio. Actual interaction occupies 142 seconds;
+the opening, evidence card and completed-exhibit payoff complete the film.
 
-Current draft narration (to be aligned with the new recording):
+The flow selects a real photo clue, edits a recorded Meta question, downloads
+conversation notes, records unknown memory, enters a visibly fictional practice
+answer, creates an exhibit, follows its evidence and updates it after a correction.
+A separate real storefront photo shows both readable lettering and an overclaim
+in the same response. ORBIT is not shown. No private profile, remote write or live
+model request was used during recording. The film's 17-request Medium pilot is a
+specific historical cohort; later quality tuning is reported separately.
+
+All flow assertions and final composition checks passed. Encoded frames and
+typing/ending sequences were inspected; a fresh sheet reviewer found no remaining
+P0/P1 issues after corrections. Encoded narration measures -16.1LUFS with zero
+clipping. It uses on-device Kokoro, not Meta speech generation. Sound was measured
+and transcribed, not heard; full human playback acceptance remains pending.
+YouTube upload has not occurred because the browser-control attempt stopped
+when the native browser URL could not be verified. No alternate control bypass
+was used. The final file is ready for the authorised upload when access is usable.
+
+Current recorded narration:
 
 | Time | Narration |
 | --- | --- |
-| 0:00–0:18 | An old photograph can outlive the people who know its story. For a family record keeper, the missing piece is often a question worth asking. Trace and Tell turns a visible detail into a conversation, then keeps the answer beside its source. |
-| 0:18–0:38 | This public sample uses a Library of Congress photograph. The observation comes from an actual recorded Meta request. It notices cups, plates, and glass jars, but leaves their exact contents uncertain. A visible clue does not establish a name, relationship, or date. |
-| 0:38–0:58 | Choose the clue. Meta suggests asking what was kept in the jars. A person can make that question more natural, or write a different one. The edited wording is labelled as human edited, while the original model question stays available for comparison. |
-| 0:58–1:18 | Take the question into a conversation with a downloadable note sheet. Ask permission, listen, and keep the person's own words. Here, the answer is clearly fictional. Not remembering remains valid; we leave that gap open instead of inventing a family story. |
-| 1:18–1:38 | Return with those words and create an illustrated exhibit. The photograph, question, response, and evidence stay connected. You can download a text copy. Private collections save exact revisions; this public practice keeps edits in the page and uploads nothing. |
-| 1:38–1:58 | A story should stay open to correction. When the question changes, the existing exhibit is marked for review and keeps its previous wording until updated. The private workflow also preserves earlier revisions, so changing a record does not silently rewrite the evidence behind it. |
-| 1:58–2:20 | Meta can also compare two records. Shared markings support a tentative connection, not a shared history. An earlier synthetic comparison returned no questions; a person wrote one instead. Another response blamed image compression without evidence. Its original wording and correction remain visible. |
-| 2:20–2:42 | The photo pilot made seventeen Medium requests on three photographs. Human accuracy review is pending, and one comparison still asserts different people without evidence. During the hackathon, we built the archive, reviewed inquiry, testimony, and source-linked gallery. Real two-user security checks remain open. |
-| 2:42–3:00 | Trace and Tell is built for the person preserving a family's records. Meta helps them notice and ask. People provide the memory, and the gallery keeps its sources. It does not identify faces or infer kinship. Keep the record, and leave room for the unknown. |
+| 0:00–0:12 | An old photograph can outlive the people who know its story. Trace and Tell helps a family record keeper turn a visible detail into a conversation worth preserving. |
+| 0:12–0:24 | This is an actual Library of Congress photograph. A recorded Meta observation points to cups and jars, while leaving their contents uncertain. |
+| 0:24–0:44 | Choose the clue to see Meta's recorded questions. Here, I make one more open: what, if anything, do these jars remind you of? The app labels my wording as human edited and keeps the original question visible. |
+| 0:44–0:56 | Next, download conversation notes. They carry the question and source, with reminders to ask permission, keep the person's own words, and leave room for uncertainty. |
+| 0:56–1:05 | If someone does not remember, record that. There is no need to fill a gap with an invented answer. |
+| 1:05–1:29 | For this public practice, I use a clearly fictional response. It is not testimony from anyone in the photograph. Creating the exhibit brings the photograph, question, and attributed response together. This is the record we want to keep, without treating someone's memory as verified history. |
+| 1:29–1:44 | Open the evidence trail, then download the exhibit text. The photograph and source stay linked. This public practice uploads nothing; the authenticated app separately stores records and their exact revisions. |
+| 1:44–2:12 | Now I change the question. The earlier exhibit keeps its original wording, shows that it needs review, and blocks export. Only after I update it does the new question appear. In the private workflow, previous revisions remain available. A correction should not silently rewrite the evidence behind a story. |
+| 2:12–2:34 | Photographs may also contain readable text. In this historical storefront, Meta read stevensons. But it also called tiny figures mannequins in dresses without enough evidence. We keep both the useful observation and the overclaim visible. Human quality review is still pending. |
+| 2:34–2:48 | During the hackathon, we built the private archive, reviewed inquiry, testimony, and source linked gallery. Seventeen pilot requests covered three photos. Real two user security checks remain open. |
+| 2:48–3:00 | Meta helps people notice and ask. People supply the memory. Trace and Tell keeps the photograph, words, and sources together, with room for the unknown. |
 
-Record only cleared public/test material in a clean browser. Hide account tabs,
-credentials and private URLs. Label recorded model excerpts, local sample state
-and any Fixture/PGlite proof separately. Do not present the public sample as a
-hosted save or the fictional response as historical testimony.
+Recording, original media, captions, script and review evidence remain in the
+ignored local video folder. Only cleared public/test material appears. Fictional
+answers are not testimony by the photographed people, and the public sample is
+not a demonstration of a hosted private save.
 
 ## D. Evidence Summary and Public Excerpt Selection
 
@@ -194,7 +221,8 @@ Items below are preparation gates, not invented official mandatory fields.
 - [ ] Confirm final project name, Indie track and Build for Your World selection.
 - [ ] Approve a concrete demo-only hosting proposal; verify the resulting HTTPS URL and all deep links from an unauthenticated browser. No deployment approved here.
 - [ ] Audit repository history and obtain authorisation to make a clean submission repository public; private access alone does not satisfy the guide.
-- [ ] Replace the explanatory draft with a verified screen-recorded three-minute video and host it with only cleared public photos and labelled fictional practice material; check playback without the author's account.
+- [x] Produce and locally verify a screen-recorded three-minute video using cleared photos and labelled fictional practice material.
+- [ ] Upload the authorised final video and verify full playback without the author's account; human listening remains pending.
 - [ ] Populate exact required links and text; verify saved fields and previews. No live URL or video URL exists in this packet.
 - [ ] User reviews and explicitly authorises final submission; retain confirmation/receipt and timestamp before the deadline.
 

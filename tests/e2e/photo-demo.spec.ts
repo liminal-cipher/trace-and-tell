@@ -62,6 +62,8 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await page.reload();
  await expect(page.getByLabel("Your question",{exact:true})).toHaveCount(0);
  await expect(page.locator(".photo-limits")).toContainText("Human quality review is pending for all 17");
+ await expect(page.locator(".photo-limits")).toContainText("33 new requests");
+ await expect(page.locator(".photo-limits")).toContainText("app still defaults to Medium");
  const textStudy=page.locator("#photo-text-study");
  await expect(textStudy).toContainText("Storefront fascia bears the text 'stevensons'");
  await expect.poll(()=>textStudy.locator("img").evaluate((image:HTMLImageElement)=>image.naturalWidth)).toBe(330);

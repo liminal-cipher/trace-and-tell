@@ -599,4 +599,87 @@ replacement by a higher-resolution image was used to illustrate model quality.
 
 No new inference was needed for this curation. The ORBIT example remains an
 explicit historical synthetic study and is excluded from the new photo-first
-recorded walkthrough. The new video is still being reviewed, not yet uploaded.
+recorded walkthrough. The screen-recorded video has now passed local flow and
+encoded-media checks; it has not been uploaded or accepted by a human viewer.
+
+## High/Max and prompt comparison — 5 November 2026
+
+The user authorised higher-effort and prompt experiments on the same photographs.
+The [official reasoning guide](https://dev.meta.ai/docs/reasoning) was retrieved
+before execution and lists `max` as the highest supported effort. High and Max
+were tested; xhigh was not separately tested. The model remained
+`muse-spark-1.3`, Standard, with an 8,192-token output cap, 180-second timeout
+and **zero retries**. Sources, image bytes, source order and reference facts
+were held fixed; each changed prompt/profile received new request hashes and
+fresh allowances. No Supabase records were created or modified.
+
+| New phase | Requests | Input / output tokens | Calculated USD |
+| --- | ---: | ---: | ---: |
+| High, unchanged prompts | 10 | 31,745 / 21,597 | 0.1314685 |
+| Max, unchanged prompts plus six prompt trials | 17 | 48,681 / 47,146 | 0.26122175 |
+| Separate Medium prompt cross-check | 6 | 19,937 / 10,038 | 0.06758275 |
+| New total | **33 succeeded, 0 failed, 0 retried** | **100,363 / 78,781** | **0.460273** |
+
+Eleven earlier Medium responses and one exact High storefront response were
+reused as comparators, without new requests. The review packet therefore has
+45 responses but only **four distinct photographs**. It is not a 45-photo
+benchmark. Summed new provider latency was 904,407ms. Conservative reservations
+were $36.45 for the first 27 and $8.10 for the separate six; these are ceilings,
+not charges. Cost above uses reported tokens and the verified Standard rates
+of $1.25/M input and $4.25/M output. Actual billing remains unverified.
+
+### Findings and default decision
+
+**Keep Medium and the current production prompts.** Assistant comparison found
+local improvements but no consistent gain in the complete photo-to-question
+task. This is a provisional engineering choice, not a human quality score.
+
+- High and Max avoided the previous Medium comparison's unsupported assertion
+  of different identities. Both preserved two tentative description matches and
+  two `no_connection` outcomes. This small result does not establish face matching
+  or prove the pictured histories unrelated.
+- Max still asserted patterned dresses in the small storefront windows and
+  embroidery in the low-resolution quilt. Higher effort did not repair the
+  underlying absence of clear visual evidence.
+- Observation V3 removed those subtype/technique guesses while retaining the
+  readable store name. A Medium cross-check reproduced these improvements and
+  removed the group-row simplification. But it omitted cups, small jars and the
+  checked tabletop from the meal scene, reducing the useful clues available for
+  the next question, and retained a questionable exact food count.
+- Observation V4 retained more detail but added an unconfirmed tiny border-number
+  transcription. Inquiry V3/V4 became shorter without consistently becoming more
+  useful: repeated association prompts, obvious cup-use questions and assumed
+  routines/familiarity remained. Empty comparison questions were preserved.
+
+All schemas and referenced Source/Revision membership passed automatic checking.
+That is distinct from semantic citation accuracy. **Human-completed reviews:
+0/33 new, 0/45 in the comparative packet.** No accuracy percentage is calculated.
+The same images were used for development; a new holdout and record-keeper
+feedback are required before claiming general improvement.
+
+The bounded runner now accepts explicitly approved High/Max profiles. Four new
+observation/inquiry prompt versions remain opt-in evaluation variants; old prompt
+bytes, replay identities and the application's Medium preference are preserved.
+The public page keeps its original excerpts and adds the mixed follow-up result
+instead of selecting only the improved outputs.
+
+Private review packet: `.local/quality-tuning-2026-11-05/review/`. It contains
+`review.html` with original/prepared images, hashes and provisional references;
+all 45 raw outputs and source-file hashes; per-field JSON/CSV templates; and
+`assistant-notes.md` with the qualitative comparison. The separate six-call
+programme is under `.local/quality-validation-2026-11-05/`. Both programmes are
+closed, Live is disabled, and 981 pre-existing protected-file hashes plus all
+completed phase receipts were verified unchanged. Earlier cohorts and ledgers
+remain separate. Human reviewers must inspect original pixels, split compound
+claims and record omissions/question utility without treating these notes as
+completed human scoring.
+
+Fresh software verification: 149 unit/PGlite tests passed, followed by the
+12-test report regression after a small observation-selection fix. Typecheck,
+ESLint, production build, the isolated static build and diff checks passed.
+Desktop/mobile Playwright passed 14 tests; two real Supabase tests stayed skipped.
+The first typecheck caught an optional temporary-directory type in the new test;
+it was corrected and typecheck passed again. The offline comparative worksheet
+also loaded all eight original/input images at desktop and mobile widths, retained
+full-size inspection and made no external requests. These checks do not replace
+human image scoring, remote two-user security acceptance or a billing check.

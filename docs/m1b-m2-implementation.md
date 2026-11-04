@@ -17,6 +17,16 @@ public-domain historical photographs, with all human quality reviews pending.
 See [the full evaluation distinction](real-world-evaluation.md#photo-inquiry-pilot--5-november-2026).
 No hosted Supabase acceptance or cleanup was repeated.
 
+A subsequent quality comparison added 33 live requests on the same three photos
+plus the storefront: High 10, Max 17 and a separate Medium 6 cross-check. Maximum
+effort and four explicitly versioned observation/inquiry prompt variants are
+available to the bounded evaluation runner. They are not silently selected by
+the app. Local assistant comparison found mixed improvements, new omissions and
+remaining overclaims, so the app retains Medium and its existing production
+prompts. All 33 new human reviews remain PENDING. See the
+[effort and prompt results](real-world-evaluation.md#highmax-and-prompt-comparison--5-november-2026).
+The public sample discloses this result without replacing the earlier excerpts.
+
 `/demo/photo` is a public interactive sample: recorded Meta clue/question →
 editable question → fictional answer or unknown memory → illustrated exhibit.
 Changed answers/questions mark the existing exhibit for review. No sample state
