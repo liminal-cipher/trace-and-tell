@@ -1,7 +1,7 @@
 # Submission Readiness — 5 November 2026
 
-Status: local submission candidate; first three-minute video rendered locally;
-final revision in progress. **Not deployed or submitted.**
+Status: local submission candidate; two explanatory three-minute drafts rendered locally;
+a higher-resolution screen-recorded revision is still required. **Not deployed or submitted.**
 Use this packet with [implementation evidence](m1b-m2-implementation.md) and
 [M1a security limits](m1a-implementation.md). It does not grant external approval.
 
@@ -115,22 +115,31 @@ hosting candidate; the resulting artifact still requires approval and HTTPS chec
 ## C. Demo Script and Shot List
 
 Required length: **three minutes**, confirmed in the participant guide and form.
-Record only the public photo/synthetic demos in a clean browser. Hide account tabs, developer
-consoles, environment files and private URLs. This is a script; no video was
-recorded yet. Use the time-coded shots below and verify the final export duration.
+Two explanatory drafts have been rendered from actual application screenshots.
+The second is 180 seconds, 1920×1080 at 30fps, with local synthetic narration
+and aligned captions. It has not been uploaded or accepted as final. User review
+identified soft enlarged screenshots and insufficient continuous interaction
+footage. The next version must show actual operation at higher capture resolution
+and repeat both application-flow and encoded-video checks before upload.
 
-| Screen | Narration / action |
+Current draft narration (to be aligned with the new recording):
+
+| Time | Narration |
 | --- | --- |
-| 0:00–0:20 / photo opening | “A photograph can survive after its story is lost. Trace & Tell helps us find the question worth asking, and keep the answer with its evidence.” Show Interactive sample / nothing saved. |
-| 0:20–0:55 / meal photograph | “This is a public-domain Library of Congress photograph. Meta noticed the glass jars and table objects. It did not establish identities or family relationships.” Show photo, credit, recorded observation and uncertainty. |
-| 0:55–1:30 / clue and question | Select the clue. “Meta asks what these jars were used for. The point is to invite context, not repeat what we can already see.” Edit the question; show human-edited attribution and preserved original wording. |
-| 1:30–1:55 / answer | “A person supplies the memory. This practice answer is invented; it is not testimony from the photographed people.” Try the answer, then show that not remembering is also a valid outcome. |
-| 1:55–2:30 / exhibit and revision | Create the photo exhibit, follow its evidence, edit the question and show Needs review until updated. “The private app saves exact source and parent revisions. This public sample saves nothing.” |
-| 2:30–2:45 / retained failure | Open the synthetic study: “Earlier Meta outputs included an unsupported explanation and an empty question list. We preserve those limitations and provide a human correction and question route.” |
-| 2:45–3:00 / scope | “Built during the hackathon: private archive, reviewed inquiry, testimony and source-linked exhibits. Three historical photos were used for a 17-request prompt pilot; human accuracy review is still pending.” End on the gallery and credit. Verify the work-period claim against Git before recording. |
+| 0:00–0:18 | An old photograph can outlive the people who know its story. For a family record keeper, the missing piece is often a question worth asking. Trace and Tell turns a visible detail into a conversation, then keeps the answer beside its source. |
+| 0:18–0:38 | This public sample uses a Library of Congress photograph. The observation comes from an actual recorded Meta request. It notices cups, plates, and glass jars, but leaves their exact contents uncertain. A visible clue does not establish a name, relationship, or date. |
+| 0:38–0:58 | Choose the clue. Meta suggests asking what was kept in the jars. A person can make that question more natural, or write a different one. The edited wording is labelled as human edited, while the original model question stays available for comparison. |
+| 0:58–1:18 | Take the question into a conversation with a downloadable note sheet. Ask permission, listen, and keep the person's own words. Here, the answer is clearly fictional. Not remembering remains valid; we leave that gap open instead of inventing a family story. |
+| 1:18–1:38 | Return with those words and create an illustrated exhibit. The photograph, question, response, and evidence stay connected. You can download a text copy. Private collections save exact revisions; this public practice keeps edits in the page and uploads nothing. |
+| 1:38–1:58 | A story should stay open to correction. When the question changes, the existing exhibit is marked for review and keeps its previous wording until updated. The private workflow also preserves earlier revisions, so changing a record does not silently rewrite the evidence behind it. |
+| 1:58–2:20 | Meta can also compare two records. Shared markings support a tentative connection, not a shared history. An earlier synthetic comparison returned no questions; a person wrote one instead. Another response blamed image compression without evidence. Its original wording and correction remain visible. |
+| 2:20–2:42 | The photo pilot made seventeen Medium requests on three photographs. Human accuracy review is pending, and one comparison still asserts different people without evidence. During the hackathon, we built the archive, reviewed inquiry, testimony, and source-linked gallery. Real two-user security checks remain open. |
+| 2:42–3:00 | Trace and Tell is built for the person preserving a family's records. Meta helps them notice and ask. People provide the memory, and the gallery keeps its sources. It does not identify faces or infer kinship. Keep the record, and leave room for the unknown. |
 
-Optional authenticated footage requires a separate safe capture plan. Do not
-present this interactive sample as a hosted write demonstration.
+Record only cleared public/test material in a clean browser. Hide account tabs,
+credentials and private URLs. Label recorded model excerpts, local sample state
+and any Fixture/PGlite proof separately. Do not present the public sample as a
+hosted save or the fictional response as historical testimony.
 
 ## D. Evidence Summary and Public Excerpt Selection
 
@@ -185,7 +194,7 @@ Items below are preparation gates, not invented official mandatory fields.
 - [ ] Confirm final project name, Indie track and Build for Your World selection.
 - [ ] Approve a concrete demo-only hosting proposal; verify the resulting HTTPS URL and all deep links from an unauthenticated browser. No deployment approved here.
 - [ ] Audit repository history and obtain authorisation to make a clean submission repository public; private access alone does not satisfy the guide.
-- [ ] Record, review and host the three-minute video with only cleared public photos and labelled fictional practice material; check playback without the author's account.
+- [ ] Replace the explanatory draft with a verified screen-recorded three-minute video and host it with only cleared public photos and labelled fictional practice material; check playback without the author's account.
 - [ ] Populate exact required links and text; verify saved fields and previews. No live URL or video URL exists in this packet.
 - [ ] User reviews and explicitly authorises final submission; retain confirmation/receipt and timestamp before the deadline.
 
