@@ -11,22 +11,32 @@ import { fixtureAnalysis } from "@/lib/model-fixture";
 import type { ModelInput } from "@/lib/investigation-contracts";
 const roots:string[]=[];
 afterEach(()=>{vi.unstubAllEnvs();for(const root of roots.splice(0))if(root.startsWith(join(tmpdir(),"trace-photo-programme-")))rmSync(root,{recursive:true,force:true});});
-function setup(max=3) {
+function setup(max=3,profile:"medium"|"high"|"max"="medium") {
   const root=mkdtempSync(join(tmpdir(),"trace-photo-programme-"));roots.push(root);
   const input:ModelInput={operation:"observe",sources:[{asset_id:crypto.randomUUID(),revision:1,content:"Synthetic test text"}],observations:[]};
   const now=new Date().toISOString();
   durableJson(join(root,"rights.json"),{synthetic:true});
   const authority:PhotoAuthority={user_instruction:"Synthetic test approval, no real API authorised",approved_at:now,expires_at:new Date(Date.now()+600000).toISOString(),catalogue_verified_at:now,pricing_verified_at:now,rights_verified_at:now,
-    model:"muse-spark-1.3",mode:"Standard",profile:"medium",max_requests:max,max_usd:max*135/100,max_completion_tokens:8192,timeout_ms:180000,retries:0,input_usd_per_million:1.25,output_usd_per_million:4.25,
+    model:"muse-spark-1.3",mode:"Standard",profile,max_requests:max,max_usd:max*135/100,max_completion_tokens:8192,timeout_ms:180000,retries:0,input_usd_per_million:1.25,output_usd_per_million:4.25,
     sources:[{...input.sources[0],revision:1,image_sha256:null,external_standard_use:"cleared",privacy:"screened"}],references:[{path:"rights.json",sha256:hash(readFileSync(join(root,"rights.json")))}]};
   durableJson(join(root,"authorization.json"),authority);
-  const request=(id:string,value=input)=>{const identity=inferenceIdentity(metaRequest(value,"muse-spark-1.3","medium"),"medium");return {id,input:value,input_sha256:hash(JSON.stringify(value)),request_sha256:identity.request_sha256,execution_sha256:identity.execution_sha256};};
+  const request=(id:string,value=input)=>{const identity=inferenceIdentity(metaRequest(value,"muse-spark-1.3",profile),profile);return {id,input:value,input_sha256:hash(JSON.stringify(value)),request_sha256:identity.request_sha256,execution_sha256:identity.execution_sha256};};
   const phase:PhotoPhase={authority_sha256:hash(readFileSync(join(root,"authorization.json"))),requests:[request("observe")],references:[]};
   durableJson(join(root,"plan.json"),phase);
   const fetcher=vi.fn(async()=>Response.json({model:"muse-spark-1.3",choices:[{finish_reason:"stop",message:{content:JSON.stringify(fixtureAnalysis(input))}}],usage:{prompt_tokens:100,completion_tokens:50}}));
   const key=()=>{vi.stubEnv("MODEL_API_KEY","synthetic-mock-key");vi.stubEnv("VERCEL","");};
   return {root,input,authority,phase,request,fetcher,key};
 }
+it.each(["high","max"] as const)("binds %s effort to new authority and refuses changed settings",async(profile)=>{
+  const s=setup(1,profile);s.key();
+  expect(()=>verifyPhotoPhase(s.root,{...s.authority,profile:"medium"},s.phase)).toThrow("hash mismatch");
+  await runPhotoPhase(s.root,join(s.root,"plan.json"),s.fetcher);
+  const result=JSON.parse(readFileSync(join(s.root,"phase-01","observe.result.json"),"utf8"));
+  expect(result.run.inference).toMatchObject({profile,reasoning_effort:profile,max_completion_tokens:8192});
+  expect(s.fetcher).toHaveBeenCalledTimes(1);
+  expect(completedPhotoPhases(s.root).attempts).toBe(1);
+  expect(process.env.META_LIVE_APPROVED).toBe("no");
+});
 it("persists actual dispatch once, keeps previous evidence immutable and rejects replay in a new phase",async()=>{
   const s=setup();s.key();await runPhotoPhase(s.root,join(s.root,"plan.json"),s.fetcher);
   expect(s.fetcher).toHaveBeenCalledTimes(1);

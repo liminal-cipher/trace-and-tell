@@ -25,10 +25,22 @@ const COMPARISON_V3 = `${SYSTEM_PROMPT}
 Compare the supplied records, without inventing shared provenance. A text description matching a photograph can support a tentative visual match, but cannot prove it was written about that photograph, the same event, the same object or the same people. State this distinction clearly.
 Use contradicts only for mutually incompatible details in an asserted match, such as a note claiming an empty table when food is visible. Different people, settings or activities in separate photographs are not by themselves contradictory evidence against a historical relationship; put the absence of a linking clue in unknowns. no_connection means insufficient evidence to propose a connection, not proof the records are unrelated.
 If useful, ask one or two short, open memory questions grounded in specific visible objects or activities, seeking context missing from the records. Do not merely ask the person to read text already provided or list visible details again. Do not presume familiarity, ownership, presence at an event, identity or kinship. Empty questions remain valid when there is no useful inquiry.`;
+const OBSERVATION_V3 = `${SYSTEM_PROMPT}
+Prefer a few useful, directly visible clues over an exhaustive description. Keep each claim short and independently checkable. Name ambiguous details by their visible appearance, not a guessed material, substance, manufacture technique, purpose or object subtype. A claim must itself be supportable: placing a specific guess in claim and a caveat in uncertainty does not make the guess acceptable. Omit details too small to distinguish, but preserve legible text and useful scene-level clues. Do not complete cropped text from familiarity.`;
+const OBSERVATION_V4 = `${SYSTEM_PROMPT}
+Before returning the answer, check each proposed claim against the supplied pixels. Separate what is visible from what familiarity suggests. Retain useful coverage of the main scene, conspicuous objects and genuinely readable text; remove unsupported fine detail. Use neutral visual descriptions where material, contents, function, technique or object subtype cannot be distinguished. Check counts and positions rather than assuming a typical arrangement. Quote only visible letters; do not complete cropped or blurred text. Uncertainty must constrain the claim itself, not excuse an unsupported assertion. Return only the required analysis JSON, without the internal checking process.`;
+const INQUIRY_V3 = `${INQUIRY_V2}
+Return at most two questions, each asking one thing in at most twenty words. Invite any knowledge or association the respondent may have with the visible clue. Avoid wording that assumes a repeated routine, ownership, participation or that a memory exists. Do not ask why something happened unless that event is established. Prefer an open invitation over a yes/no question. Do not supply a suggested answer.`;
+const INQUIRY_V4 = `${INQUIRY_V2}
+Check each proposed question for assumptions before returning it. Remove implied ownership, attendance, repeated habits, known causes and unverified details inherited from the observation. Keep at most two distinct, natural questions, each with one focus and at most twenty words. A useful question connects a concrete visible clue to context or associations the person may know; it does not merely request visual description. If there is no context they can contribute, not knowing is a valid answer. Return only the required analysis JSON, without the internal checking process.`;
 export const promptVersion = (input: ModelInput) => input.guidance ?? (input.operation === "inquire" ? "archive-inquiry-v1" : PROMPT_VERSION);
 export function systemPrompt(input: ModelInput) {
     if (input.guidance === "archive-inquiry-v2" && input.operation === "inquire") return INQUIRY_V2;
     if (input.guidance === "archive-comparison-v3" && input.operation === "compare") return COMPARISON_V3;
+    if (input.guidance === "archive-observation-v3" && input.operation === "observe") return OBSERVATION_V3;
+    if (input.guidance === "archive-observation-v4" && input.operation === "observe") return OBSERVATION_V4;
+    if (input.guidance === "archive-inquiry-v3" && input.operation === "inquire") return INQUIRY_V3;
+    if (input.guidance === "archive-inquiry-v4" && input.operation === "inquire") return INQUIRY_V4;
     if (input.guidance) throw new AppError(400, "Guidance does not match the selected operation.");
     return input.operation === "inquire" ? INQUIRY_PROMPT : SYSTEM_PROMPT;
 }

@@ -61,6 +61,11 @@ it("prepares the exact app image recipe offline, hides reference answers, and re
   expect(imported).toContain("Pending human review of recorded live attempts: observe-rw-01</p>");
   expect(imported).toContain("Not run live: observe-rw-02");
   expect(imported).not.toContain("paid execution still blocked");
+  const variantCases = prepared.cases.map(c => ({ ...c, id: c.id + "-max-v3" }));
+  const variants = reviewHtml(m,directory,variantCases,[{...record(),case_id:variantCases[0].id,input_sha256:variantCases[0].input_sha256}]);
+  expect(variants).toContain("observe-rw-01-max-v3");
+  expect(variants).toContain("Semantic model evaluation: see response below");
+  expect(() => reviewHtml(m,directory!,variantCases.slice(1),[])).toThrow("No prepared observation input");
   const rights=JSON.parse(readFileSync("tests/fixtures/real-world/rights-review.json","utf8"));
   expect(()=>initialBatch(m,prepared.photos,prepared.cases,rights)).toThrow("not eligible");
   expect(batchProposal(m,prepared.photos,prepared.cases,rights)).toMatchObject({max_requests:0,requests:[],allowances:[],approved_at:null});

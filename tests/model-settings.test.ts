@@ -28,16 +28,19 @@ afterEach(() => {
     vi.unstubAllEnvs(); vi.restoreAllMocks();
     if (directory.startsWith(join(tmpdir(), "trace-profile-test-"))) rmSync(directory, { recursive: true, force: true });
 });
-it("keeps baseline request bytes and changes only the intended medium/high API controls", () => {
+it("keeps baseline request bytes and changes only the intended effort controls", () => {
     const baseline = metaRequest(input, "muse-spark-1.3");
     expect(baseline).toMatchObject({ reasoning_effort: "minimal", max_completion_tokens: 1200 });
     expect(metaRequest(input, "muse-spark-1.3", "baseline")).toEqual(baseline);
     const medium = metaRequest(input, "muse-spark-1.3", "medium"), high = metaRequest(input, "muse-spark-1.3", "high");
     expect(medium).toEqual({ ...baseline, reasoning_effort: "medium", max_completion_tokens: 8192 });
     expect(high).toEqual({ ...medium, reasoning_effort: "high" });
+    expect(metaRequest(input, "muse-spark-1.3", "max")).toEqual({ ...high, reasoning_effort: "max" });
+    expect(identity("max").execution_sha256).not.toBe(identity("high").execution_sha256);
     expect(identity("high").request_sha256).not.toBe(identity("medium").request_sha256);
     expect(inferenceSettings("medium").timeout_ms).toBe(180000);
     expect(reservationUsd("baseline")).toBe(1.32); expect(reservationUsd("high")).toBe(1.35);
+    expect(reservationUsd("max")).toBe(1.35);
     expect(() => inferenceSettings("none" as InferenceProfile)).toThrow();
 });
 it("blocks upgraded inference with a legacy allowance without sending or reserving", async () => {

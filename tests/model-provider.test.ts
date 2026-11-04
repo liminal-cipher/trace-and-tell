@@ -3,7 +3,8 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { mkdtempSync, writeFileSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { generateAnalysis, metaRequest, ProviderFailure, SYSTEM_PROMPT } from "@/lib/model-provider";
+import { generateAnalysis, metaRequest, ProviderFailure, SYSTEM_PROMPT, promptVersion } from "@/lib/model-provider";
+import { inferenceIdentity } from "@/lib/model-settings";
 import { inputHash, reserveModelRequest } from "@/lib/model-budget";
 import { fixtureAnalysis } from "@/lib/model-fixture";
 import type { ModelInput } from "@/lib/investigation-contracts";
@@ -96,4 +97,22 @@ it("separates evaluation ground truth from model inputs and fixed heldout cases"
         split: string;
     }) => c.split === "heldout")).toHaveLength(2);
     expect(JSON.stringify(metaRequest(input, "muse-spark-1.3"))).not.toContain("ground-truth");
+});
+it("binds experimental prompt versions to their operation and fresh request identities", () => {
+    const variants = ["archive-observation-v3", "archive-observation-v4", "archive-inquiry-v3", "archive-inquiry-v4"] as const;
+    const identities = variants.map(guidance => {
+        const operation = guidance.startsWith("archive-observation") ? "observe" : "inquire";
+        const selected: ModelInput = { ...input, operation, guidance };
+        const request = metaRequest(selected, "muse-spark-1.3", "max");
+        expect(promptVersion(selected)).toBe(guidance);
+        expect(request.reasoning_effort).toBe("max");
+        expect(request.max_completion_tokens).toBe(8192);
+        expect(() => metaRequest({ ...selected, operation: "compare" }, "muse-spark-1.3", "max")).toThrow("Guidance");
+        expect(inputHash(selected)).not.toBe(inputHash(input));
+        return inferenceIdentity(request, "max").execution_sha256;
+    });
+    expect(new Set(identities).size).toBe(variants.length);
+    const original = metaRequest(input, "muse-spark-1.3");
+    expect(original.messages[0].content).toBe(SYSTEM_PROMPT);
+    expect(original.reasoning_effort).toBe("minimal");
 });

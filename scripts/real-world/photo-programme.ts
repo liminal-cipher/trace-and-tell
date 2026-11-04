@@ -13,7 +13,7 @@ const sha = z.string().regex(/^[a-f0-9]{64}$/);
 export const photoAuthoritySchema = z.object({
   user_instruction: z.string().min(20), approved_at: z.iso.datetime(), expires_at: z.iso.datetime(),
   catalogue_verified_at: z.iso.datetime(), pricing_verified_at: z.iso.datetime(), rights_verified_at: z.iso.datetime(),
-  model: z.literal("muse-spark-1.3"), mode: z.literal("Standard"), profile: z.literal("medium"),
+  model: z.literal("muse-spark-1.3"), mode: z.literal("Standard"), profile: z.enum(["medium", "high", "max"]),
   max_requests: z.number().int().min(1).max(20), max_usd: z.number().positive().max(27),
   max_completion_tokens: z.literal(8192), timeout_ms: z.literal(180000), retries: z.literal(0),
   input_usd_per_million: z.literal(1.25), output_usd_per_million: z.literal(4.25),
@@ -72,7 +72,7 @@ export function verifyPhotoPhase(root: string, authority: PhotoAuthority, phase:
       const imageHash = source.image ? hash(Buffer.from(source.image.split(",")[1], "base64")) : null;
       if (!allowed || source.content !== allowed.content || imageHash !== allowed.image_sha256) throw new Error("Source bytes or scoped permission mismatch");
     }
-    const identity = inferenceIdentity(metaRequest(r.input, authority.model, "medium"), "medium");
+    const identity = inferenceIdentity(metaRequest(r.input, authority.model, authority.profile), authority.profile);
     if (inputHash(r.input) !== r.input_sha256 || identity.request_sha256 !== r.request_sha256 || identity.execution_sha256 !== r.execution_sha256) throw new Error("Input or execution hash mismatch");
     if (history.executions.includes(r.execution_sha256)) throw new Error("Retries across phases are forbidden");
   }
@@ -111,7 +111,7 @@ export async function runPhotoPhase(root: string, planPath: string, fetcher: typ
         const group = phase.requests.slice(i, i + 3), path = join(directory, `approval-${i / 3}.json`);
         durableJson(path, { id:randomUUID(),model:authority.model,approved_at:authority.approved_at,expires_at:authority.expires_at,catalogue_verified_at:authority.catalogue_verified_at,pricing_verified_at:authority.pricing_verified_at,
           max_requests:group.length,max_usd:group.length*135/100,input_usd_per_million:1.25,output_usd_per_million:4.25,allowed_input_sha256:group.map(r=>r.input_sha256),
-          request_bindings:group.map(r=>({input_sha256:r.input_sha256,request_sha256:r.request_sha256,execution_sha256:r.execution_sha256,profile:"medium"})) });
+          request_bindings:group.map(r=>({input_sha256:r.input_sha256,request_sha256:r.request_sha256,execution_sha256:r.execution_sha256,profile:authority.profile})) });
         allowances.push(path); completed.push([]);
       }
       const allowanceHashes = allowances.map(fileHash);
@@ -123,7 +123,7 @@ export async function runPhotoPhase(root: string, planPath: string, fetcher: typ
           if ((history.attempts+i+1)>authority.max_requests || (history.attempts+i+1)*135>Math.round(authority.max_usd*100)) throw new Error("Cumulative cap exceeded");
           journal.begin(r.id,r.input_sha256,r.request_sha256);
           process.env.META_APPROVAL_FILE=allowances[Math.floor(i/3)];process.env.META_LIVE_APPROVED="yes";
-          const run=await generateAnalysis(r.input,"meta-live",{profile:"medium",fetcher:async(url,options)=>{
+          const run=await generateAnalysis(r.input,"meta-live",{profile:authority.profile,fetcher:async(url,options)=>{
             current();
             if(url!==META_ENDPOINT||options?.method!=="POST")throw new Error("Unexpected request");
             journal!.dispatch(r.id,String(options.body));sent=true;dispatched++;

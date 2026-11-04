@@ -17,7 +17,7 @@ export const analysisSchema = z.object({
 export type Analysis = z.infer<typeof analysisSchema>;
 export interface ModelInput {
     operation: "observe" | "compare" | "inquire";
-    guidance?: "archive-inquiry-v2" | "archive-comparison-v3";
+    guidance?: "archive-inquiry-v2" | "archive-comparison-v3" | "archive-observation-v3" | "archive-observation-v4" | "archive-inquiry-v3" | "archive-inquiry-v4";
     sources: (Source & {
         content: string | null;
         image?: string;

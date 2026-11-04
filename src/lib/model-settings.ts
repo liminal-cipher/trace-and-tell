@@ -1,13 +1,14 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
 
-export const inferenceProfileSchema = z.enum(["baseline", "medium", "high"]);
+export const inferenceProfileSchema = z.enum(["baseline", "medium", "high", "max"]);
 export type InferenceProfile = z.infer<typeof inferenceProfileSchema>;
 export const META_ENDPOINT = "https://api.meta.ai/v1/chat/completions";
 export const INFERENCE_PROFILES = {
     baseline: { reasoning_effort: "minimal", max_completion_tokens: 1200, timeout_ms: 45000, response_byte_limit: 262144 },
     medium: { reasoning_effort: "medium", max_completion_tokens: 8192, timeout_ms: 180000, response_byte_limit: 524288 },
     high: { reasoning_effort: "high", max_completion_tokens: 8192, timeout_ms: 180000, response_byte_limit: 524288 },
+    max: { reasoning_effort: "max", max_completion_tokens: 8192, timeout_ms: 180000, response_byte_limit: 524288 },
 } as const;
 
 export function inferenceSettings(profile: InferenceProfile = "baseline") {

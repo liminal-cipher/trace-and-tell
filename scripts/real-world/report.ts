@@ -4,9 +4,10 @@ import { type Manifest, type RecordedCase, type PhotoCheck, outputFields, hash }
 import type { Analysis } from "../../src/lib/investigation-contracts";
 
 const escape = (value: unknown) => String(value).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]!);
-export function reviewHtml(m: Pick<Manifest, "photos" | "pairs">, root: string, cases: {id:string;input:{sources:{image?:string}[]};input_sha256:string;blockers:string[]}[], records: RecordedCase[], checks:PhotoCheck[]=[]) {
+export function reviewHtml(m: Pick<Manifest, "photos" | "pairs">, root: string, cases: {id:string;input:{sources:{image?:string}[]};input_sha256:string;blockers:string[];photo_ids?:string[]}[], records: RecordedCase[], checks:PhotoCheck[]=[]) {
   const photos = m.photos.map(p => {
-    const c = cases.find(c => c.id === `observe-${p.id}`)!;
+    const c = cases.find(c => c.id === `observe-${p.id}`) ?? cases.find(c => c.id.startsWith("observe-") && c.photo_ids?.[0] === p.id && c.input.sources.length === 1);
+    if (!c) throw new Error(`No prepared observation input for ${p.id}`);
     const check=checks.find(v=>v.id===p.id);
     const original = `data:image/jpeg;base64,${readFileSync(resolve(root,p.file)).toString("base64")}`;
     return `<article id="${escape(p.id)}"><h2>${escape(p.id)} · ${escape(p.title)}</h2><p>${escape(p.tags.join(" / "))}</p>
