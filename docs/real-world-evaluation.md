@@ -1,9 +1,12 @@
-# Real-World Vision Evaluation — Input Readiness
+# Real-World Vision Evaluation — Input Readiness and Effort Comparison
 
-Status, 3 November 2026: **23/23 images prepared and 35/35 provider payloads
-validated offline; zero real-photo Meta calls and zero human-scored responses.**
-Eighteen images and eight comparisons pass the scoped rights/privacy assessment.
-A separate ten-request paid proposal is prepared, not authorised or executed.
+Status, 4 November 2026: the initial ten Minimal requests and the later twenty
+Medium/High requests completed **30/30 Standard responses and schema checks,
+with no retries**. These repeat ten cases across nine unique photo editions.
+Assistant review coverage is described separately for each batch; **human
+reviewed: 0/30, semantic accuracy NOT MEASURED**. The app now defaults to Medium.
+The 3 November offline preparation remains 23/23 images and 35/35 payloads;
+18 images and eight comparisons pass the scoped rights/privacy assessment.
 
 ## Cause and Image Strategy
 
@@ -40,7 +43,7 @@ pixels and was already within the new bounded payload policy, so lossy fallback
 was unnecessary. Reproducibility is within the recorded Sharp/libvips profile;
 a changed runtime/profile must regenerate hashes and receive new approval.
 
-## Actual Offline Result
+## Offline Result — 3 November 2026, Before Paid Execution
 
 | Evidence | Earlier preparation | Current pipeline |
 | --- | --- | --- |
@@ -157,7 +160,11 @@ human rates. Reports expose denominators for transport/attempts, schema/transpor
 grounded/reviewed claims, omissions/annotated facts and useful/reviewed questions.
 **Zero denominator means NOT MEASURED**, never 0% or 100% accuracy.
 
-## Initial Paid Proposal — BLOCKED Until Separate Approval
+## Historical Initial Paid Proposal — 3 November 2026
+
+This section preserves the original proposal. It was subsequently approved,
+then renewed only for expiry and executed as recorded below; it grants no
+remaining calls.
 
 Public [model](https://dev.meta.ai/docs/models) and
 [price](https://dev.meta.ai/docs/pricing-rate-limits) verification: 3 November
@@ -177,7 +184,8 @@ Proposed expiry: **4 November 2026 03:00 UTC / 12:00 KST**. No retries; at most
 The budget guard is unchanged: US$5 maximum per allowance, US$1.32 reserved per
 request. Four new allowances of **3 + 3 + 3 + 1** calls would have caps of
 **US$3.96 + 3.96 + 3.96 + 1.32 = US$13.20 total**. Existing four exhausted,
-expired allowances and their records remain untouched. No new allowance exists.
+expired allowances and their records remain untouched. At this preparation
+stage no new allowance existed.
 
 A planning assumption of 2,000–8,000 input tokens and all 1,200 output tokens per
 request gives **US$0.076–0.151** for ten calls. This is not token measurement,
@@ -203,7 +211,9 @@ unsupported compression explanation (severity 2; 1/2 inspected synthetic image
 observations). M2-B returned no questions (product shortfall; 1/1 inspected
 comparisons). These selected denominators are not real-photo error estimates.
 The public demo preserves the correction, empty-question result and human
-question path, and explicitly says no real-photo model evaluation has run.
+question path. At that preparation stage, no real-photo evaluation had run.
+The public demo was not edited or supplied any evaluation photograph in this
+paid batch session.
 
 The earlier preparation reported 102 unit/DB tests, 10 browser passes/2 skips
 and the 16/23 image-size failure. These are historical results. This sprint's
@@ -236,3 +246,264 @@ cleanup were not rerun; no local mock closes A/B, HTTPS or token-replay gates.
 
 The packet, original source evidence and protected ledgers are local-only.
 No new Meta request, Supabase mutation, deployment or submission was performed.
+
+## First Paid Batch Preflight — 4 November 2026
+
+The user approved the fixed ten-request scope, but its original expiry was
+4 November 12:00 KST. At the 15:38 KST check it had expired, so no request was
+sent and no active allowance was created. An expiry-only renewal was requested;
+the user subsequently extended it to 5 November 09:00 KST. The fixed proposal
+and inputs remain unchanged; the completed execution is recorded below.
+
+Fresh checks matched all ten ModelInput/request hashes and the exact input
+bytes, source order/revisions, MIME and preparation profile. The nine selected
+source pages retain the same licensing text; the private Standard-use assessment
+is unchanged. Reference annotations and the scoring rubric were frozen before
+any model output. Nine selected photo annotations remain human-review pending.
+
+An exclusive durable batch journal now supplements the unchanged per-allowance
+guard. It rejects duplicates, an eleventh request, stale approval, changed hashes
+and unresolved outcomes; a known-cost provider validation failure also stops all
+later groups. The default runner is offline and needs explicit execution plus a
+current expiry-renewal authorisation to enable live use. At this preflight stage,
+the code was local and uncommitted; later Git authorisation is separate.
+
+Fresh verification: 120 unit/PGlite tests in 18 files passed, including five new
+journal tests; focused Provider/evaluation/journal checks passed 24 tests.
+Typecheck, scoped ESLint and fixed-input offline preflight passed. The 271
+pre-existing protected files retained their hashes. No production UI changed,
+so browser tests and hosted acceptance were not rerun.
+
+Pre-renewal snapshot: attempts/successes/failures/not-run **0/0/0/10**; no tokens
+or calculated cost at that time. This is historical, not the final batch result.
+Local preflight evidence and the expiry amendment are under
+`.local/real-photo-batch-2026-11-04/`. Historical synthetic findings are separate.
+
+## First Real-Photo Execution — 4 November 2026
+
+The user renewed only the expiry to **5 November 09:00 KST**. The fixed original
+proposal, ten input/request hashes, order, nine photograph editions, local source
+IDs/REV1, model and limits were unchanged. Fresh official model/price verification
+was at 06:38:22 UTC; nine licensing texts matched the retained source-page review.
+Frozen provisional references and the rubric predate every response.
+
+| Evidence | Result |
+| --- | --- |
+| Model / mode | `muse-spark-1.3` / Standard |
+| Actual requests / success / failure / unrun within approved ten | **10 / 10 / 0 / 0** |
+| Retries / additional probes | **0 / 0** |
+| Structural validation and permitted Source/Revision references | **10/10**; not a semantic-correctness score |
+| Prompt / completion tokens | **22,293 / 6,491**, provider-reported; completion includes reasoning tokens |
+| Calculated usage cost | **US$0.055453**, using US$1.25/M input and US$4.25/M output |
+| Reservation ceiling | **US$13.20**; four fresh allowances 3+3+3+1, all request quotas consumed |
+| Account invoice | **Not checked**; calculated cost is not confirmed billing |
+| First dispatch to final response | **15:59:40–16:02:10 KST**, 150.045 seconds; summed provider latency 97.274 seconds |
+| Human responses scored | **0/10**; all PENDING, accuracy NOT MEASURED |
+
+The assistant compared all nine downloaded JPEG editions and their exact PNG
+inputs. It recorded 194 separate judgements across claims, locators and
+uncertainty fields; these are not independent trials or human-scored accuracy.
+All results, including defects, remain in the private packet:
+
+| Case | Assistant preliminary finding; human confirmation pending |
+| --- | --- |
+| `rw-01` | Main Korean/English station names, codes, arrow and coloured light grounded; Chinese `首尔诙` misreads visible `首尔站` |
+| `rw-07` | Karaoke/Please, printed song titles and layout supported; `AGAS` appears to misread handwritten `ACAS`, despite a caveat |
+| `rw-08` | Title, visible date/time and most line names supported; dark X marks called red, printed date labels included in “handwritten”; small parentheticals unresolved; bottom Loop Elevated X omitted |
+| `rw-14` | NO STANDING, bus/accessibility icons and double-headed arrow supported; blanket timetable illegibility misses visible QM16; “parked” is not established from the still alone |
+| `rw-16` | Correctly abstains from transcribing worn stone; no invented name/date |
+| `rw-20` | Store lettering and facade layout supported; trim material and mannequin/person distinction unresolved at 330px; no catalogue history promoted to visual fact |
+| `pair-01` | Both Seoul/P313 sources cited correctly; tentative topic link with time/location unknown |
+| `pair-05`, `pair-09` | `no_connection` is consistent with visible unrelated subjects; no evidence-array entries, limiting citation detail |
+| `pair-10` | Correctly contrasts photographed LANE CLOSED with authored false LANE OPEN; does not assert a different historical event |
+
+**All four comparison responses returned zero questions.** This repeats the
+M2-B product shortfall; question usefulness has denominator zero. Empty questions
+in the six observe responses are required by the existing contract. No forced
+identity/date/kinship link was found in this assistant review; nine selected
+public preview editions do not establish broad real-photo reliability.
+
+Reference erratum: frozen `rw-14-f1` says “right arrow”, but the image and model
+show a double-headed arrow. The frozen file was not edited. Its omission grade
+is uncertain and a separate erratum requires human adjudication before scoring.
+Do not penalise the model for that reference defect. Small OCR, colour, overly
+broad legibility claims and unresolved materials require review before any claim
+of reliable transcription. Human-authored questions remain the available product
+path; future prompt experiments need new hashes and separate paid approval.
+
+The retained four synthetic successes and their M2-A unsupported compression
+explanation / M2-B empty questions remain a separate cohort. This batch added no
+Supabase, persistence, security or deployment acceptance evidence.
+
+Local evidence: `.local/real-photo-batch-2026-11-04/` contains authorisation,
+40 chained journal events, four fresh ledgers, ten original provider responses,
+usage, frozen criteria, assistant findings, reference erratum and `batch-report.md`.
+The refreshed offline packet is
+`evaluation-results/real-world-2026-11-04T07-12-12.085Z-25fe9875-c3fd-4cbb-8fc7-4894120061fd/`.
+It imports ten actual results; the other 25 dataset cases are NOT RUN. Its
+historical proposal is not new execution authority. `review.html` separates the
+ten human-pending responses from unrun cases and exports JSON/CSV judgements.
+
+Post-execution checks: all 271 pre-existing protected files unchanged; all ten
+result hashes, request identities, raw model payloads and ledger settlements
+match the journal. Live is disabled and no call quota remains. Offline import
+passed; 17 focused journal/evaluator tests passed after report-label corrections;
+typecheck, scoped ESLint and diff check passed. The worksheet loaded all 46 images
+at 1280px/390px, keyboard zoom worked, no page overflow or HTTP request occurred.
+The earlier 120-test full suite is the pre-execution run from this session;
+production build/application E2E remain the separately dated 3 November results.
+No Git stage/commit/push, deployment or submission was performed.
+
+## Medium/High Comparison — 4 November 2026
+
+The user authorised local preparation for higher effort and less restrictive
+limits. Named `medium` and `high` profiles now use **8,192 completion tokens,
+180-second timeout and a 512 KiB raw-response bound**. Both preserve Standard
+mode, the same image pipeline, prompt and schema. During comparison preparation
+the app remained at baseline minimal/1,200/45s; the later Medium app decision is
+recorded below. Historical evaluation requests remain reproducible. The profiles
+are server-side options, not a public UI control.
+
+New settings require fresh approvals bound to the **ModelInput hash, complete
+request hash and execution-settings hash**. Legacy allowances cannot enable
+them. The conservative reservation is US$1.35 per higher-effort request; the
+US$5 per-allowance ceiling and fail-closed unknown-cost behaviour remain intact.
+An already attempted bound execution cannot be repeated from its allowance.
+The journal supports a distinct fixed twenty-request policy with a US$27 ceiling.
+
+The local proposal at `.local/effort-comparison-2026-11-04/batch-approval.md`
+fixed the same ten cases, medium then high for each, **20 requests maximum**,
+zero retries and expiry **5 November 09:00 KST**. Seven fresh allowance groups
+contained 3+3+3+3+3+3+2 requests. Planning usage was approximately US$0.752
+if earlier prompt usage repeats and every request consumes all 8,192 completion
+tokens; that is not a guaranteed invoice or the US$27 reservation ceiling.
+The later explicit user approval authorised this exact proposal; its original
+planning file was preserved and the execution authority was recorded separately.
+
+The paired medium/high comparison changes only effort. The earlier minimal
+batch also had a smaller output/time cap, so improvement over that historical
+batch cannot be attributed solely to effort. One sample per case/setting is
+exploratory; human review and the disclosed reference erratum remain pending.
+Increasing effort is not evidence that OCR or question generation improves.
+
+Fresh verification: **128 tests / 20 files passed**, including a fully mocked
+twenty-request run through the real runner, budget guard and journal. Typecheck,
+scoped ESLint, production build and offline proposal generation passed. The
+offline proposal regenerated the original 23 photo preparations and matched all
+ten baseline inputs/request hashes. All **406 pre-existing protected files**
+retained their hashes. The first batch journal source was separately archived
+before extending its policies; its previous execution records are unchanged.
+No application UI changed, so application browser tests were not repeated.
+Those 128 tests and build checks were completed before the following paid run.
+
+### Actual execution and preliminary findings
+
+All **20/20 requests** succeeded at HTTP, response-schema and source/revision-ID
+validation; failures 0, not run 0, retries 0. Each original case ran medium then
+high with identical inputs and the same 8,192-token/180-second limits. Public
+model/pricing information and all nine selected Commons licence-page summaries
+were rechecked before dispatch. No extra probe or substitute inference ran.
+
+| Setting | Requests | Input tokens | Completion tokens (including reasoning) | Calculated USD | Mean provider latency |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Earlier minimal | 10 | 22,293 | 6,491 | 0.055453 | 9.7s |
+| Medium | 10 | 22,293 | 19,910 | 0.11248375 | 21.1s |
+| High | 10 | 22,293 | 25,461 | 0.13607550 | 25.7s |
+
+The new run used 44,586 input and 45,371 completion tokens, including 37,151
+reasoning tokens. Calculated usage was **US$0.24855925**, distinct from the US$27
+maximum reservation. No unknown settlements remain; the actual invoice/balance
+was not checked. First dispatch to last response took 725.783 seconds
+(17:49:26–18:01:32 KST); the runner including local guards took 751.91 seconds.
+
+Assistant visual comparison found both settings transcribed the Seoul sign's
+Chinese `首尔站`, correcting the earlier minimal substitution. High read the
+karaoke handwriting as `ACAS`, while medium retained `AGAS`; human adjudication
+is pending. High also introduced a small printed-header substitution (`Pecana`
+for apparent `Pecena`) and misplaced orange marks. On the elevator board, medium
+declined an uncertain parenthetical word; high wrote `Midway` without sufficient
+visual support. Both missed the dark Loop Elevated X; high additionally said
+the other boxes were blank. This is a potentially material status error, flagged
+as an exploratory finding rather than inserted into the frozen recall denominator.
+Medium overidentified small shop-window figures as mannequins in dresses;
+high used the less specific “display figures”. Weathered stone lettering remained
+untranscribed, and no identity/kinship/history invention was found in this limited
+assistant review. These are selected findings, not a complete atomic claim grade.
+
+All four comparison outcomes were unchanged across settings: one related
+candidate and three `no_connection` results, including detection of the authored
+LANE OPEN/CLOSED contradiction. Comparisons containing a question were 0/4 for
+earlier minimal, 1/4 for medium and 2/4 for high; new total questions were 1 and 2.
+Both asked an open context question for the station pair. High's extra question,
+“What is visible in the second record?”, poorly fits an already supplied text
+memo. More effort did not guarantee useful questions or eliminate transcription
+errors. Empty observe questions remain required by the contract.
+
+Human review is **0/20 for this new run**; all twenty remain PENDING. The earlier
+ten remain separately pending (30 outputs over the same nine unique photos, not
+30 independent photos). Semantic accuracy and human question-usefulness rates
+are not measured. The selected assistant flags have field/quote references and
+severity but deliberately do not claim exhaustive review or Human PASS.
+
+Evidence is in `.local/effort-comparison-2026-11-04/`: `comparison.html` presents
+all three settings and original/submitted images, `batch-report.md` explains the
+results, `execution/` retains all raw responses and seven new ledgers, and
+`assistant-preliminary.json`/CSV and `targeted-flags.json` retain provisional
+findings. `review-packets.json` links two new imports into the existing evaluator;
+each contains ten actual outputs, 25 NOT RUN cases and bound human-review
+templates. Historical baseline preflight settings are labelled separately from
+the imported executions' actual settings. Original frozen references and the
+double-headed-arrow erratum are preserved.
+
+Post-run audit verified all twenty request/result identities, the complete
+journal chain and settlements; **406 pre-existing protected files** and all
+twelve approved runtime files retained their hashes. Both offline imports passed
+with network calls disabled. Six local browser checks (three views at 1280px and
+390px) loaded all expected images, supported keyboard controls, had no page
+overflow, script errors or HTTP requests. Typecheck, scoped ESLint and diff check
+passed after the import-metadata clarification. No further production build or
+application E2E was needed for these report-only changes; the pre-run results
+above remain separately identified. Live is disabled, all request quotas are
+consumed, and Git stage/commit/push, Supabase writes, deployment and submission
+were not performed.
+
+At batch completion, medium was a reasonable provisional default candidate for
+further review, not a demonstrated accuracy winner; the app had not yet changed.
+Prioritise human adjudication of OCR/status flags, then a separately
+approved prompt experiment on uncertain text and questions appropriate to each
+source type. Preserve the working human-correction/question route for submission.
+
+### Subsequent app default decision — 4 November 2026
+
+After reviewing the batch, the user selected **Medium as the application default**.
+The app now passes the medium profile explicitly: 8,192 completion tokens and a
+180-second provider timeout. Historical evaluation defaults, approved request
+bytes and all existing ledgers remain unchanged. High remains an explicit future
+choice; no automatic escalation or extra inference is enabled. App runs are only
+marked as having an unknown outcome after the provider timeout plus a 60-second
+preparation/processing grace, avoiding the old two-minute premature status.
+
+This is a local configuration change, not a new live execution or deployment.
+It grants no new allowance. The product priority is photo clues → useful memory
+questions → human testimony with sources; OCR is a supporting capability whose
+errors matter most when they change a place, date or relationship claim. The
+proposed acceptance criteria and the sign-heavy sample's limits are documented
+in [the product brief](product.md#사진-중심의-우선순위--4-november-2026).
+
+Verification for this subsequent change: 21 focused tests passed, then the full
+132-test/21-file suite, typecheck, scoped ESLint, production build and diff check
+passed. The new app-boundary tests used mocked HTTP/Auth/storage, verified the
+actual Medium request body and saved inference metadata, rejected legacy
+unbound approval before sending, and checked the longer pending-status window.
+They are local configuration evidence, not new Meta or hosted Supabase evidence.
+No application browser test was repeated for this server configuration change.
+The subsequent whole-repository lint also exited successfully with zero errors;
+three warnings were confined to ignored local verification scripts, outside the
+commit scope. Code, tests and sanitised documentation were later authorised for
+Git publication; raw packets, private files and allowance ledgers stay local.
+
+The retained `real-world-batch` and `real-world-effort` runners are historical,
+fixed-batch audit implementations. They require private local packets and pin
+the originally approved Git baseline; they intentionally refuse a later checkout
+and do not authorise reruns. A future photo cohort needs a new fixed proposal and
+approval rather than editing old authorisations or journals.
