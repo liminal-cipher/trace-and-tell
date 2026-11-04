@@ -717,11 +717,38 @@ code {
 .question-card h3 { font-style:italic; }
 .exhibit-card { padding:32px; }
 .exhibit-card blockquote { font-family:Georgia,serif; font-size:23px; line-height:1.65; }
+.exhibit-photographs figure { margin:0 0 24px; }
+.exhibit-photographs img { display:block; width:100%; max-height:480px; object-fit:contain; background:var(--paper); }
+.exhibit-photographs figcaption { margin-top:8px; font-size:13px; }
+.clue-inquiry { border-top:1px solid var(--line); padding-top:18px; }
 .run-register { margin-top:28px; font-size:12px; }
 @media(max-width:900px) { .research-grid { grid-template-columns:1fr; } .evidence-columns { grid-template-columns:1fr; gap:8px; } }
 @media(max-width:600px) { .source-grid,.exhibit-grid { grid-template-columns:1fr; } .source-desk { padding:18px; } .research-toolbar { align-items:stretch; flex-direction:column; } .evidence-card,.question-card { padding:18px; } }
 
 /* The public story uses only local, curated synthetic material. */
+.photo-intro { display:grid; grid-template-columns:1.5fr 1fr; gap:48px; align-items:end; margin:32px 0; }
+.photo-intro > p { max-width:390px; font-size:18px; }
+.photo-choice { display:flex; flex-wrap:wrap; gap:10px; margin:30px 0; }
+.photo-workbench { display:grid; grid-template-columns:1.35fr 1fr; gap:32px; align-items:start; }
+.photo-workbench figure { margin:0; }
+.photo-workbench figcaption { margin:12px 0 24px; color:var(--muted); font-size:12px; line-height:1.8; }
+.photo-clue { background:var(--panel); padding:28px; border:1px solid var(--line); }
+.photo-clue > *, .photo-step > *, .photo-limits > *, .photo-exhibit > div > * { margin-bottom:18px; }
+.recorded-clue { padding:20px 0; border-block:1px solid var(--line); }
+.recorded-clue blockquote { margin:14px 0; font-family:Georgia,serif; font-size:20px; line-height:1.6; }
+.photo-step { margin-top:48px; scroll-margin-top:24px; }
+.question-options { border:1px solid var(--line); padding:20px; background:var(--panel); }
+.question-options label { padding:12px 0; font-size:17px; }
+.photo-question-edit textarea { font-family:Georgia,serif; font-size:23px; }
+.authorship { font-size:13px; color:var(--accent); }
+.photo-exhibit { display:grid; grid-template-columns:1.2fr 1fr; gap:32px; padding:28px; background:var(--panel); border:1px solid var(--line); align-items:start; }
+.photo-exhibit h3 { font-size:38px; }
+.photo-exhibit blockquote { font-family:Georgia,serif; font-size:25px; line-height:1.6; margin:24px 0; }
+.photo-demo details summary { padding:10px 0; cursor:pointer; text-decoration:underline; }
+.photo-status { color:var(--muted); margin:24px 0; }
+.photo-limits { margin-top:64px; }
+@media(max-width:900px) { .photo-workbench,.photo-intro { grid-template-columns:1fr; gap:24px; } .photo-intro > p { max-width:650px; } }
+@media(max-width:650px) { .photo-exhibit { grid-template-columns:1fr; padding:20px; } .photo-clue { padding:20px; } .photo-intro h1 { font-size:44px; } }
 .demo-story section, .demo-story article, .demo-story details { scroll-margin-top: 24px; }
 .demo-story .hero p { max-width: 640px; }
 .demo-story .hero .button { margin-top: 24px; }

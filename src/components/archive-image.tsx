@@ -19,12 +19,17 @@ export function PrivateImage({
   assetId,
   title,
   className,
+  revision,
+  zoom = false,
 }: {
   assetId: string;
   title: string;
   className?: string;
+  revision?: number;
+  zoom?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
+  const source = `/api/archive/assets/${assetId}/file${revision ? `?revision=${revision}` : ""}`;
   return (
     <>
       {failed && (
@@ -34,12 +39,13 @@ export function PrivateImage({
       )}
       <img
         className={className}
-        src={`/api/archive/assets/${assetId}/file`}
+        src={source}
         alt={title}
         loading="lazy"
         onError={() => setFailed(true)}
         onLoad={() => setFailed(false)}
       />
+      {zoom && <a href={source} target="_blank" rel="noopener noreferrer">Open full original{revision ? ` · revision ${revision}` : ""} (new tab)</a>}
     </>
   );
 }

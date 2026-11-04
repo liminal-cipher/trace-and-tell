@@ -17,10 +17,10 @@ export default function RootLayout({
             Trace <span>&</span> Tell
           </Link>
           <nav aria-label="Main navigation">
-            <Link href="/demo">Explore the demo</Link>
-            <Link href="/archive" prefetch={false}>
+            <Link href="/demo/photo">Explore the demo</Link>
+            {process.env.NEXT_PUBLIC_DEMO_ONLY !== "true" && <Link href="/archive" prefetch={false}>
               Private archive <span aria-hidden="true">↗</span>
-            </Link>
+            </Link>}
           </nav>
         </header>
         {children}

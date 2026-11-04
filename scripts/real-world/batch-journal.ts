@@ -7,12 +7,14 @@ const digest=z.string().regex(/^[a-f0-9]{64}$/);
 const configSchema=z.object({
   proposal_sha256:digest, authorization_sha256:digest,
   approved_at:z.iso.datetime(),expires_at:z.iso.datetime(),
-  policy:z.literal("effort-comparison").optional(),
-  cases:z.array(z.object({id:z.string().min(1),input_sha256:digest,request_sha256:digest})).min(10).max(20),
+  policy:z.enum(["effort-comparison","photo-inquiry"]).optional(),
+  cases:z.array(z.object({id:z.string().min(1),input_sha256:digest,request_sha256:digest})).min(1).max(20),
 }).strict();
 export type BatchConfig=z.infer<typeof configSchema>;
 type Event={sequence:number;previous_sha256:string|null;config_sha256:string;kind:"intent"|"dispatch_started"|"response_received"|"success"|"stopped";case_id:string;at:string;detail:Record<string,unknown>};
-const policy=(config:BatchConfig)=>config.policy==="effort-comparison"
+const policy=(config:BatchConfig)=>config.policy==="photo-inquiry"
+  ?{count:config.cases.length,limits:Array.from({length:Math.ceil(config.cases.length/3)},(_,i)=>Math.min(3,config.cases.length-i*3)),reservedCents:135,maxCents:2700}
+  :config.policy==="effort-comparison"
   ?{count:20,limits:[3,3,3,3,3,3,2],reservedCents:135,maxCents:2700}
   :{count:10,limits:[3,3,3,1],reservedCents:132,maxCents:1320};
 

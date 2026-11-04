@@ -1,6 +1,8 @@
 import type { Analysis, ModelInput } from "./investigation-contracts";
 // Deliberately authored examples, never represented as OCR or model inference.
 export function fixtureAnalysis(input: ModelInput): Analysis {
+    if (input.operation === "inquire")
+        return { observations: [], connection: null, questions: ["What, if anything, do you remember about the detail you selected?"] };
     if (input.operation === "observe")
         return { observations: input.sources.map((s) => ({ asset_id: s.asset_id, revision: s.revision,
                 claim: s.content ? `The typed note says: ${s.content.slice(0, 500)}` : "No automatic image reading is performed in fixture mode. Add your own reading after comparing the original.",

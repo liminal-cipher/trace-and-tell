@@ -5,7 +5,7 @@ import { PrivateImage } from "./archive-image";
 import { EvidenceReference } from "./evidence-reference";
 import { createRetryKeys } from "@/lib/retry-keys";
 import type { Asset, Revision } from "@/lib/contracts";
-import type { Entry, InvestigationSnapshot, ProviderMode } from "@/lib/investigation-contracts";
+import { analysisIdentity, type Entry, type InvestigationSnapshot, type ProviderMode } from "@/lib/investigation-contracts";
 type Snapshot = InvestigationSnapshot & {
     archive: {
         assets: Asset[];
@@ -68,7 +68,7 @@ export function Investigation({ workspace }: {
         inFlight.current = true;
         setBusy(true);
         setError("");
-        setNotice("Saving…");
+        setNotice(action.action === "analyse" ? action.operation === "inquire" ? "Preparing questions from the selected clue…" : "Examining the selected records…" : "Saving…");
         const payload = { ...action, workspace_id: workspace, expected_revision: snapshot.revision };
         try {
             const next = await request("/api/investigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload, key: keys.current.forPayload(payload) }) });
@@ -93,12 +93,14 @@ export function Investigation({ workspace }: {
     const assets = snapshot?.archive.assets.filter((a) => a.deletion_state === "active") ?? [];
     const currentRevision = (id: string) => snapshot?.archive.revisions.find((r) => r.asset_id === id && r.revision === assets.find((a) => a.id === id)?.active_revision);
     const analyse = (operation: "observe" | "compare") => mutate({ action: "analyse", operation, mode, ...(mode === "replay" ? { replay_id: replayId } : {}), sources: selected.map((id) => ({ asset_id: id, revision: assets.find((a) => a.id === id)!.active_revision })) });
+    const inquire = (entry: Entry) => mutate({ action: "analyse", operation: "inquire", mode, ...(mode === "replay" ? { replay_id: replayId } : {}), sources: entry.sources, clue_id: entry.id, clue_revision: entry.revision });
+    const alreadyInquired = (entry: Entry) => snapshot?.document.analysed.includes(analysisIdentity({ operation: "inquire", sources: entry.sources.map((s) => ({ ...s, content: null })), observations: [{ id: entry.id, revision: entry.revision, text: entry.text, sources: entry.sources, review_state: entry.review_state, mode: entry.mode === "human" ? "fixture" : entry.mode }] }));
     function sourceLinks(entry: Entry) {
         return <div className="source-links" aria-label="Evidence sources">{entry.sources.map((s) => {
                 const revision = snapshot?.archive.revisions.find((r) => r.asset_id === s.asset_id && r.revision === s.revision);
                 const active = assets.some((a) => a.id === s.asset_id);
                 return active && revision ? <details key={s.asset_id}><summary>Source: {revision.title} · revision {s.revision}</summary>
-        <p className="muted">{s.asset_id}</p>{revision.content !== null ? <blockquote>{revision.content}</blockquote> : <PrivateImage assetId={s.asset_id} title={revision.title} className="original"/>}
+        <p className="muted">{s.asset_id}</p>{revision.content !== null ? <blockquote>{revision.content}</blockquote> : <PrivateImage assetId={s.asset_id} revision={s.revision} title={revision.title} className="original" zoom/>}
         <p>{revision.source_note}</p></details> : <p className="error" key={s.asset_id}>Broken source · record deleted or unavailable · revision {s.revision}</p>;
             })}{entry.parents.map((p)=><EvidenceReference key={`${p.id}-${p.revision}-${entry.evidence_validity}`} workspace={workspace} id={p.id} revision={p.revision}/>)}</div>;
     }
@@ -136,16 +138,22 @@ export function Investigation({ workspace }: {
                 const r = currentRevision(asset.id);
                 return <article className={`source-card ${selected.includes(asset.id) ? "is-selected" : ""}`} key={asset.id}>
           <label className="source-choice"><input type="checkbox" checked={selected.includes(asset.id)} disabled={busy || (!selected.includes(asset.id) && selected.length === 2)} onChange={(e) => setSelected((old) => e.target.checked ? [...old, asset.id] : old.filter((id) => id !== asset.id))}/>{r?.title ?? "Untitled record"}</label>
-          {r?.content !== null && r?.content !== undefined ? <blockquote>{r.content}</blockquote> : <PrivateImage assetId={asset.id} title={r?.title ?? "Source original"} className="original"/>}<p className="muted">Original · revision {asset.active_revision}</p>
+          {r?.content !== null && r?.content !== undefined ? <blockquote>{r.content}</blockquote> : <PrivateImage assetId={asset.id} revision={asset.active_revision} title={r?.title ?? "Source original"} className="original" zoom/>}<p className="muted">Original · revision {asset.active_revision}</p>
         </article>;
             })}</div>
         {!assets.length && <p>Add a photograph or typed note in Archive to begin.</p>}
         {mode === "meta-live" && <p className="muted">The original stays unchanged. A separate image is oriented, stripped of metadata and fitted within 2048 pixels without enlargement, using lossless PNG encoding. Review small lettering against the original. Images exceeding the app’s 8 MiB prepared-input limit are rejected before any model call.</p>}
         <div className="actions"><button disabled={busy || selected.length !== 1} onClick={() => void analyse("observe")}>Suggest observations</button><button disabled={busy || selected.length !== 2} onClick={() => void analyse("compare")}>Compare selected records</button></div>
       </section><section className="evidence-desk"><h2>Observation notebook</h2><p>Compare every reading with its original.</p>
-        {entries.filter((e) => e.kind === "observation").map((entry) => <article className="evidence-card" key={entry.id}>{entryHeader(entry)}<p>{entry.text}</p><p className="muted">{entry.details.locator} · {entry.details.uncertainty}</p>{sourceLinks(entry)}{correction(entry)}<button className="secondary" disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "rejected")}>Reject observation</button></article>)}
+        {entries.filter((e) => e.kind === "observation").map((entry) => <article className="evidence-card" key={entry.id}>{entryHeader(entry)}<p>{entry.text}</p><p className="muted">{entry.details.locator} · {entry.details.uncertainty}</p>{sourceLinks(entry)}{correction(entry)}
+          <div className="actions"><button disabled={busy || entry.review_state === "rejected" || entry.evidence_validity !== "current" || entry.review_state === "accepted_for_inquiry"} onClick={() => void review(entry, "accepted_for_inquiry")}>Ask about this clue</button><button className="secondary" disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "rejected")}>Reject observation</button></div>
+          {entry.review_state === "accepted_for_inquiry" && entry.evidence_validity === "current" && <div className="clue-inquiry"><p>This clue is a starting point, not confirmed history. Ask about it without assuming who, when or why.</p>
+            <button disabled={busy || alreadyInquired(entry)} onClick={() => void inquire(entry)}>Suggest questions about this clue</button>
+            {alreadyInquired(entry) && <p className="muted">Question request saved for this clue revision. An empty result is valid; you can write your own question below.</p>}
+            <HumanQuestionForm key={`${entry.id}-${entry.revision}`} entry={entry} busy={busy} save={mutate}/></div>}
+        </article>)}
       </section></div>
-      <section className="investigation-section"><div className="section-line"><h2>02 / A question worth asking</h2><span>A selected hypothesis remains a hypothesis.</span></div>
+      <section className="investigation-section"><div className="section-line"><h2>02 / A question worth asking</h2><span>Start from one visible clue or a tentative connection.</span></div>
         {entries.filter((e) => e.kind === "hypothesis").map((entry) => <article className="evidence-card" key={entry.id}>{entryHeader(entry)}<h3>{entry.details.outcome === "no_connection" ? "No supported connection" : "Connection hypothesis"}</h3><p>{entry.text}</p>
           <div className="evidence-columns"><div><h4>Supporting evidence</h4>{entry.details.supports?.length ? entry.details.supports.map((s, i) => <p key={i}>{s.detail}</p>) : <p>None supplied.</p>}</div><div><h4>Contrary evidence</h4>{entry.details.contradicts?.length ? entry.details.contradicts.map((s, i) => <p key={i}>{s.detail}</p>) : <p>None supplied. This does not establish the hypothesis.</p>}</div><div><h4>Still unknown</h4>{entry.details.unknowns?.map((s) => <p key={s}>{s}</p>)}</div></div>
           {sourceLinks(entry)}{correction(entry)}<div className="actions"><button disabled={busy || entry.review_state === "rejected" || (entry.review_state === "accepted_for_inquiry" && entry.evidence_validity === "current")} onClick={() => void review(entry, "accepted_for_inquiry")}>Use for inquiry</button><button className="secondary" disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "rejected")}>Reject hypothesis</button></div>
@@ -162,7 +170,12 @@ export function Investigation({ workspace }: {
         {entries.filter((e) => e.kind === "testimony").map((entry) => <article className="evidence-card" key={entry.id}>{entryHeader(entry)}<h3>{entry.details.speaker}</h3><p>{entry.details.response?.replaceAll("_", " ")} · {entry.details.source_mode?.replaceAll("_", " ")}</p><blockquote>{entry.text || "No answer recorded."}</blockquote><p className="muted">Recorder: signed-in record keeper ({entry.details.recorder})</p>{sourceLinks(entry)}<details><summary>Correct testimony</summary><TestimonyForm entry={entries.find((e) => e.id === entry.parents[0]?.id)!} previous={entry} busy={busy} save={mutate}/></details></article>)}
         <form className="panel stack" onSubmit={(e) => { e.preventDefault(); const data = new FormData(e.currentTarget); void mutate({ action: "exhibit", title: data.get("title"), testimony_ids: data.getAll("testimony") }); }}><h3>Compose a small exhibit</h3><label>Exhibit title<input name="title" required maxLength={160}/></label>
           {entries.filter((e) => e.kind === "testimony").map((entry) => <label className="source-choice" key={entry.id}><input type="checkbox" name="testimony" value={entry.id} disabled={entry.evidence_validity !== "current"}/>{entry.details.speaker} · {entry.details.response}</label>)}<button disabled={busy}>Save exhibit</button></form>
-        <div className="exhibit-grid">{entries.filter((e) => e.kind === "exhibit").map((entry) => <article className="exhibit-card" key={entry.id}>{entryHeader(entry)}<h2>{entry.details.title}</h2><blockquote>{entry.text}</blockquote><p className="muted">A collection of attributed words. Connections remain open to review.</p>{sourceLinks(entry)}<details><summary>Testimony sources</summary>{entry.parents.map((p) => { const t = entries.find((e) => e.id === p.id); return <p key={p.id}>{t?.details.speaker ?? "Missing testimony"} · quoted revision {p.revision} · {t?.mode ?? "unavailable"}</p>; })}</details></article>)}</div>
+        <div className="exhibit-grid">{entries.filter((e) => e.kind === "exhibit").map((entry) => <article className="exhibit-card" key={entry.id}>{entryHeader(entry)}<h2>{entry.details.title}</h2>
+          <div className="exhibit-photographs">{entry.sources.map((s) => {
+            const r = snapshot.archive.revisions.find((r) => r.asset_id === s.asset_id && r.revision === s.revision);
+            return r?.content === null && assets.some((a) => a.id === s.asset_id) ? <figure key={s.asset_id}><PrivateImage assetId={s.asset_id} revision={s.revision} title={r.title} className="original" zoom/><figcaption>{r.title} · source revision {s.revision}</figcaption></figure> : null;
+          })}</div>
+          <blockquote>{entry.text}</blockquote><p className="muted">A collection of attributed words. Connections remain open to review.</p>{sourceLinks(entry)}<details><summary>Testimony sources</summary>{entry.parents.map((p) => { const t = entries.find((e) => e.id === p.id); return <p key={p.id}>{t?.details.speaker ?? "Missing testimony"} · quoted revision {p.revision} · {t?.mode ?? "unavailable"}</p>; })}</details></article>)}</div>
       </section>
       <details className="run-register"><summary>Analysis run register</summary>{snapshot.runs.map((run) => <p key={run.id}>{run.mode} · {run.model} · {run.status} · {run.error ?? run.created_at} <code>{run.id}</code></p>)}</details>
     </>}
@@ -176,7 +189,7 @@ function HumanQuestionForm({ entry, busy, save }: {
     const [text, setText] = useState("");
     return <form className="panel stack" onSubmit={async (event) => {
         event.preventDefault();
-        if (await save({ action: "ask", hypothesis_id: entry.id, hypothesis_revision: entry.revision, text }))
+        if (await save(entry.kind === "observation" ? { action: "ask_clue", clue_id: entry.id, clue_revision: entry.revision, text } : { action: "ask", hypothesis_id: entry.id, hypothesis_revision: entry.revision, text }))
             setText("");
     }}>
       <label>Your question<textarea value={text} onChange={(event) => setText(event.target.value)} required maxLength={2000} disabled={busy}/></label>

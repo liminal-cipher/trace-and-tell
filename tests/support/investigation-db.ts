@@ -58,7 +58,7 @@ export function fixtureRepository(db: PGlite, workspace: string) {
         if (command.action === "analyse") {
             if (command.mode !== "fixture")
                 throw new Error("This browser fixture cannot make model calls.");
-            const input = modelInput(command.operation, command.sources, snap.document, evidence);
+            const input = modelInput(command.operation, command.sources, snap.document, evidence, command);
             const begun = await rpc({ ...command, op: "begin_run", request: command, sources: command.sources, model: "authored-fixture-v1" });
             if (begun.existing)
                 throw new Error("Analysis already started");

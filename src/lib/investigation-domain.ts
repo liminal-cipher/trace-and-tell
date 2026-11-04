@@ -33,13 +33,20 @@ export function reconcile(document: InvestigationDocument, context: EvidenceCont
     }
     return result;
 }
-export function modelInput(operation: ModelInput["operation"], sources: Source[], document: InvestigationDocument, context: EvidenceContext): ModelInput {
+export function modelInput(operation: ModelInput["operation"], sources: Source[], document: InvestigationDocument, context: EvidenceContext, clue?: { clue_id?: string; clue_revision?: number }): ModelInput {
     validateSources(sources, context);
-    if (sources.length !== (operation === "observe" ? 1 : 2))
+    if (sources.length !== (operation === "compare" ? 2 : 1))
         throw new AppError(400, "Choose one record to observe or two to compare.");
-    const observations = operation === "compare" ? document.entries.filter((e): e is Entry & { mode: ProviderMode } => e.kind === "observation" && e.mode !== "human" && e.evidence_validity === "current" && e.review_state !== "rejected" && e.sources.every((s) => sources.some((x) => x.asset_id === s.asset_id && x.revision === s.revision))) : [];
+    let observations = operation === "compare" ? document.entries.filter((e): e is Entry & { mode: ProviderMode } => e.kind === "observation" && e.mode !== "human" && e.evidence_validity === "current" && e.review_state !== "rejected" && e.sources.every((s) => sources.some((x) => x.asset_id === s.asset_id && x.revision === s.revision))) : [];
+    if (operation === "inquire") {
+        const selected = reconcile(document, context).entries.find((e) => e.id === clue?.clue_id && e.kind === "observation" && e.mode !== "human");
+        if (!selected || selected.revision !== clue?.clue_revision || selected.evidence_validity !== "current" || selected.review_state !== "accepted_for_inquiry" || selected.sources.length !== 1 || !selected.sources.every((s) => sources.some((x) => x.asset_id === s.asset_id && x.revision === s.revision)))
+            throw new AppError(409, "Choose a current observation for inquiry first.");
+        observations = [selected as Entry & { mode: ProviderMode }];
+    }
     return { operation, sources: sources.map((s) => ({ ...s, content: context.revisions.find((r) => r.asset_id === s.asset_id && r.revision === s.revision)!.content })),
-        observations: observations.map((e) => ({ id: e.id, revision: e.revision, text: e.text, sources: e.sources, review_state:e.review_state, mode:e.mode })) };
+        observations: observations.map((e) => ({ id: e.id, revision: e.revision, text: e.text, sources: e.sources, review_state:e.review_state, mode:e.mode,
+            ...(operation === "inquire" ? { locator: e.details.locator, uncertainty: e.details.uncertainty } : {}) })) };
 }
 export function validateAnalysis(raw: unknown, input: ModelInput) {
     const result = analysisSchema.parse(raw);
@@ -51,12 +58,20 @@ export function validateAnalysis(raw: unknown, input: ModelInput) {
         throw new AppError(422, "Unexpected comparison in an observation response.");
     if (input.operation === "compare" && (!result.connection || result.observations.length))
         throw new AppError(422, "The comparison response is incomplete.");
+    if (input.operation === "inquire" && (result.connection || result.observations.length || input.observations.length !== 1 || input.sources.length !== 1))
+        throw new AppError(422, "An inquiry must contain only questions about its selected clue.");
     if (result.connection?.outcome === "candidate" && new Set(result.connection.supports.map((s) => s.asset_id)).size !== 2)
         throw new AppError(422, "A connection needs support from both selected records.");
     return result;
 }
 export function importAnalysis(document: InvestigationDocument, run: RunResult, context: EvidenceContext): InvestigationDocument {
     validateSources(run.input.sources, context);
+    if (run.input.operation === "inquire") {
+        const ref = run.input.observations[0];
+        const current = modelInput("inquire", run.input.sources, document, context, { clue_id: ref?.id, clue_revision: ref?.revision });
+        if (JSON.stringify(current.observations) !== JSON.stringify(run.input.observations))
+            throw new AppError(409, "The selected clue changed during inquiry.");
+    }
     const output = validateAnalysis(run.output, run.input);
     const identity = analysisIdentity(run.input);
     // Re-running another provider cannot silently restore rejected evidence.
@@ -71,6 +86,9 @@ export function importAnalysis(document: InvestigationDocument, run: RunResult, 
     };
     for (const observation of output.observations)
         add("observation", observation.claim, [{ asset_id: observation.asset_id, revision: observation.revision }], [], { locator: observation.locator, uncertainty: observation.uncertainty, original_uncertainty: observation.uncertainty });
+    if (run.input.operation === "inquire")
+        for (const question of output.questions)
+            add("question", question, run.input.sources.map(({ asset_id, revision }) => ({ asset_id, revision })), run.input.observations.map(({ id, revision }) => ({ id, revision })), {});
     if (output.connection) {
         const sources = run.input.sources.map(({ asset_id, revision }) => ({ asset_id, revision }));
         const hypothesis = add("hypothesis", output.connection.statement, sources, run.input.observations.map(({ id, revision }) => ({ id, revision })), output.connection);
@@ -95,13 +113,13 @@ export function applyReview(document: InvestigationDocument, command: Exclude<In
         if (e.evidence_validity !== "current" || e.review_state === "rejected")
             throw new AppError(409, "Review the changed or rejected evidence before continuing.");
     };
-    if (command.action === "ask") {
-        const parent = get(command.hypothesis_id, "hypothesis");
-        if (parent.revision !== command.hypothesis_revision)
-            throw new AppError(409, "This hypothesis changed. Reload before writing a question.");
+    if (command.action === "ask" || command.action === "ask_clue") {
+        const parent = command.action === "ask" ? get(command.hypothesis_id, "hypothesis") : get(command.clue_id, "observation");
+        if (parent.revision !== (command.action === "ask" ? command.hypothesis_revision : command.clue_revision))
+            throw new AppError(409, "This evidence changed. Reload before writing a question.");
         usable(parent);
         if (parent.review_state !== "accepted_for_inquiry")
-            throw new AppError(409, "Choose the hypothesis for inquiry first.");
+            throw new AppError(409, command.action === "ask" ? "Choose the hypothesis for inquiry first." : "Choose the observation for inquiry first.");
         // Inherit evidence, never model authorship. Actor comes from online Auth.
         next.entries.push({
             id: crypto.randomUUID(), kind: "question", revision: 1,
@@ -122,8 +140,8 @@ export function applyReview(document: InvestigationDocument, command: Exclude<In
         if (e.review_state === "rejected")
             throw new AppError(409, "Rejected suggestions remain rejected for these source revisions.");
         validateSources(e.sources, context);
-        if (command.decision === "accepted_for_inquiry" && e.kind !== "hypothesis")
-            throw new AppError(400, "Only hypotheses can be selected for inquiry.");
+        if (command.decision === "accepted_for_inquiry" && !["hypothesis", "observation"].includes(e.kind))
+            throw new AppError(400, "Only observations or hypotheses can be selected for inquiry.");
         if (command.decision === "selected" && e.kind !== "question")
             throw new AppError(400, "Select a question.");
         if (e.kind === "question" && command.decision !== "rejected") {

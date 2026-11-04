@@ -4,7 +4,7 @@ import { type Manifest, type RecordedCase, type PhotoCheck, outputFields, hash }
 import type { Analysis } from "../../src/lib/investigation-contracts";
 
 const escape = (value: unknown) => String(value).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]!);
-export function reviewHtml(m: Manifest, root: string, cases: {id:string;input:{sources:{image?:string}[]};input_sha256:string;blockers:string[]}[], records: RecordedCase[], checks:PhotoCheck[]=[]) {
+export function reviewHtml(m: Pick<Manifest, "photos" | "pairs">, root: string, cases: {id:string;input:{sources:{image?:string}[]};input_sha256:string;blockers:string[]}[], records: RecordedCase[], checks:PhotoCheck[]=[]) {
   const photos = m.photos.map(p => {
     const c = cases.find(c => c.id === `observe-${p.id}`)!;
     const check=checks.find(v=>v.id===p.id);
@@ -16,7 +16,7 @@ export function reviewHtml(m: Manifest, root: string, cases: {id:string;input:{s
       <p><a href="${escape(p.page_url)}">Source and original-resolution download</a> · ${escape(p.author)} · <a href="${escape(p.license_url)}">${escape(p.license)}</a></p>
       <p>${escape(p.rights_note)} ${escape(p.edition)}</p><p>File SHA-256: <code>${p.sha256}</code></p>
       <p>Prepared SHA-256: <code>${escape(check?.prepared_sha256??"See plan.json")}</code></p>
-      <p>Rights for Standard inference: ${escape(p.rights_status)}. Public redistribution: separate attribution/licence review; no publication authorised.</p>
+      <p>Rights for Standard inference: ${escape(p.rights_status)}. Public redistribution: check the separate attribution/licence assessment; this worksheet does not authorise publication.</p>
       <p>Decoded pixels equal after orientation/sRGB: ${escape(check?.decoded_pixels_equal??"NOT CHECKED")}. Human visual review: PENDING. Semantic model evaluation: ${records.some(r=>r.case_id===c.id&&r.mode==="meta-live")?"see response below":"NOT RUN"}.</p>
       <details><summary>Input dimensions, conversion and safety checks</summary><pre>${escape(JSON.stringify(check?.preparation??check?.error??null,null,2))}</pre></details>
       <h3>Provisional reference facts — confirm before scoring</h3><ul>${p.facts.map(f=>`<li>${escape(f.id)}: ${escape(f.text)} (${escape(f.locator)})</li>`).join("")}</ul>
@@ -25,7 +25,7 @@ export function reviewHtml(m: Manifest, root: string, cases: {id:string;input:{s
       <p>Source uncertainty: ${escape(p.source_uncertainties?.join(" ")??"Not yet annotated")}</p>
       <p>Unknown: ${escape(p.unknowns.join(" "))}</p><p>Preflight: ${escape(c.blockers.join("; ") || "structurally ready; this worksheet does not authorise paid calls")}</p></article>`;
   }).join("");
-  const pairs = m.pairs.map(p => `<article><h2>${escape(p.id)} · ${escape(p.category)}</h2><p>${p.photo_ids.map(id=>`<a href="#${id}">${id}</a>`).join(" + ")}</p>${p.text_control ? `<pre>AUTHORED FALSE CONTROL — NOT A HISTORICAL RECORD\n${escape(p.text_control)}</pre>`:""}<p>${escape(p.expectation)}</p></article>`).join("");
+  const pairs = m.pairs.map(p => `<article><h2>${escape(p.id)} · ${escape(p.category)}</h2><p>${p.photo_ids.map(id=>`<a href="#${id}">${id}</a>`).join(" + ")}</p>${p.text_control ? `<pre>${p.category === "contradictory-control" ? "AUTHORED FALSE CONTROL" : "AUTHORED CONTROL"} — NOT A HISTORICAL RECORD\n${escape(p.text_control)}</pre>`:""}<p>${escape(p.expectation)}</p></article>`).join("");
   const results = cases.map(c=>{
     const r=records.find(r=>r.case_id===c.id);
     return `<article><h2>${escape(c.id)} · ${r?escape(`${r.mode} / ${r.transport}`):"NOT RUN"}</h2><p>Review: ${r?.review?escape(r.review.kind+" completed; verify original evidence"):"PENDING"}</p><h3>Unedited model output</h3><pre>${escape(JSON.stringify(r?.output ?? null,null,2))}</pre><h3>Separate reviewer judgement</h3><pre>${escape(JSON.stringify(r?.review ?? {status:"pending"},null,2))}</pre></article>`;

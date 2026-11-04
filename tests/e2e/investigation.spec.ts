@@ -16,7 +16,7 @@ test("fixture UI to PGlite: observation, inquiry, testimony, exhibit and broken 
         // Seed an immutable synthetic original; Storage HTTP remains out of scope.
         await repo.db.query("update assets set kind='photo' where id=$1", [photo]);
         await repo.db.query("update asset_revisions set content=null,storage_key='synthetic/01.png',content_type='image/png',size=$2,width=640,height=480 where asset_id=$1", [photo, image.length]);
-        await page.route(`**/api/archive/assets/${photo}/file`, async (route) => { await route.fulfill({ contentType: "image/png", body: image, headers: { "Cache-Control": "private, no-store" } }); });
+        await page.route(`**/api/archive/assets/${photo}/file*`, async (route) => { await route.fulfill({ contentType: "image/png", body: image, headers: { "Cache-Control": "private, no-store" } }); });
         // Only this test's authenticated API boundary is replaced. The real UI,
         // domain reducer and production SQL migrations/RPC execute below. This is
         // not GoTrue, PostgREST, Storage or a production route-handler E2E.

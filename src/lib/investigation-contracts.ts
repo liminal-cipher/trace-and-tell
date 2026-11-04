@@ -16,7 +16,8 @@ export const analysisSchema = z.object({
 }).strict();
 export type Analysis = z.infer<typeof analysisSchema>;
 export interface ModelInput {
-    operation: "observe" | "compare";
+    operation: "observe" | "compare" | "inquire";
+    guidance?: "archive-inquiry-v2" | "archive-comparison-v3";
     sources: (Source & {
         content: string | null;
         image?: string;
@@ -28,6 +29,8 @@ export interface ModelInput {
         sources: Source[];
         review_state: Entry["review_state"];
         mode: ProviderMode;
+        locator?: string;
+        uncertainty?: string;
     }[];
 }
 export interface RunResult {
@@ -109,7 +112,9 @@ const envelope = { key: z.uuid(), workspace_id: z.uuid(), expected_revision: z.n
 export const investigationCommandSchema = z.discriminatedUnion("action", [
     z.object({ ...envelope, action: z.literal("ask"), hypothesis_id: z.uuid(),
         hypothesis_revision: z.number().int().positive(), text }),
-    z.object({ ...envelope, action: z.literal("analyse"), operation: z.enum(["observe", "compare"]),
+    z.object({ ...envelope, action: z.literal("ask_clue"), clue_id: z.uuid(), clue_revision: z.number().int().positive(), text }),
+    z.object({ ...envelope, action: z.literal("analyse"), operation: z.enum(["observe", "compare", "inquire"]),
+        clue_id: z.uuid().optional(), clue_revision: z.number().int().positive().optional(),
         sources: z.array(sourceSchema).min(1).max(2), mode: providerMode, replay_id: z.uuid().optional() }),
     z.object({ ...envelope, action: z.literal("review"), id: z.uuid(), entry_revision: z.number().int().positive(),
         decision: z.enum(["corrected", "rejected", "accepted_for_inquiry", "selected"]), text: text.optional(), uncertainty: text.optional() }),

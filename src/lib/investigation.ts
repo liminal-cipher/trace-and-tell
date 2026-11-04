@@ -8,7 +8,7 @@ import { allRows } from "./pagination";
 import { AppError, databaseError } from "./errors";
 import { emptyDocument, analysisIdentity, withoutImages, type InvestigationCommand, type InvestigationDocument, type RunResult } from "./investigation-contracts";
 import { applyReview, importAnalysis, modelInput, reconcile, type EvidenceContext } from "./investigation-domain";
-import { generateAnalysis, ProviderFailure, PROMPT_VERSION, SCHEMA_VERSION } from "./model-provider";
+import { generateAnalysis, ProviderFailure, promptVersion, SCHEMA_VERSION } from "./model-provider";
 import { inferenceSettings } from "./model-settings";
 // Keep the app preference separate from historical evaluation request defaults.
 const APP_INFERENCE_PROFILE = "medium";
@@ -65,11 +65,13 @@ export async function executeInvestigation(client: SupabaseClient, actor: string
     const evidence: EvidenceContext = { workspace_id: command.workspace_id, assets: snapshot.archive.assets, revisions: snapshot.archive.revisions };
     let document: InvestigationDocument, run: RunResult | undefined;
     if (command.action === "analyse") {
-        const input = modelInput(command.operation, command.sources, snapshot.document, evidence);
+        const input = modelInput(command.operation, command.sources, snapshot.document, evidence, command);
+        if (command.mode === "meta-live" && command.operation !== "observe")
+            input.guidance = command.operation === "inquire" ? "archive-inquiry-v2" : "archive-comparison-v3";
         if (snapshot.document.analysed.includes(analysisIdentity(input)))
             throw new AppError(409, "These source revisions already have saved suggestions. Review them instead.");
         const imagePreparations: { asset_id: string; revision: number; evidence: Awaited<ReturnType<typeof prepareModelImage>>["evidence"] }[] = [];
-        const runMetadata = { image_preparations: imagePreparations, mode: command.mode, input: withoutImages(input), prompt_version: PROMPT_VERSION, schema_version: SCHEMA_VERSION };
+        const runMetadata = { image_preparations: imagePreparations, mode: command.mode, input: withoutImages(input), prompt_version: promptVersion(input), schema_version: SCHEMA_VERSION };
         const begun = await rpc(actor, { ...command, op: "begin_run", request: command, sources: command.sources, mode: command.mode, record: runMetadata,
             model: command.mode === "fixture" ? "authored-fixture-v1" : command.mode === "replay" ? "recorded-response" : "muse-spark-1.3" });
         if (begun.existing)
@@ -95,6 +97,7 @@ export async function executeInvestigation(client: SupabaseClient, actor: string
                 const result = await client.from("investigation_runs").select("record").eq("id", command.replay_id).eq("workspace_id", command.workspace_id).eq("status", "succeeded").eq("mode", "meta-live").maybeSingle();
                 databaseError(result.error);
                 replay = result.data?.record;
+                if (replay?.input.guidance) input.guidance = replay.input.guidance;
             }
             run = await generateAnalysis(input, command.mode, { id: begun.id, replay, profile: APP_INFERENCE_PROFILE });
             // Refresh Auth and source state after external work. SQL repeats source
