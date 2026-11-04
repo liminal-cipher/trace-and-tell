@@ -1,11 +1,12 @@
 import { test,expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
 test("anonymous photo sample keeps provenance, edits and uncertainty without private or live requests",async({page})=>{
  const unexpected:string[]=[],errors:string[]=[];
  page.on("request",request=>{const url=new URL(request.url());if(request.method()!=="GET"||url.hostname!=="127.0.0.1"||/^\/api\//.test(url.pathname))unexpected.push(request.url());});
  page.on("pageerror",error=>errors.push(error.message));
  await page.goto("/");
  await expect(page).toHaveURL(/\/demo\/photo$/);
- await expect(page.getByText("INTERACTIVE SAMPLE · NOTHING SAVED",{exact:true})).toBeVisible();
+ await expect(page.getByText("INTERACTIVE SAMPLE · NOTHING UPLOADED",{exact:true})).toBeVisible();
  await expect(page.locator("#photo-original img")).toBeVisible();
  await expect.poll(()=>page.locator("#photo-original img").evaluate((image:HTMLImageElement)=>image.naturalWidth)).toBeGreaterThan(0);
  await page.screenshot({path:`test-results/photo-opening-${test.info().project.name}.png`});
@@ -17,6 +18,12 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await page.getByText("Keep the original question in view",{exact:true}).click();
  await expect(page.locator("details blockquote")).toHaveText(original);
  await page.getByRole("button",{name:"Choose this question",exact:true}).click();
+ const notesEvent=page.waitForEvent("download");
+ await page.getByRole("button",{name:"Download conversation notes",exact:true}).click();
+ const notes=readFileSync((await (await notesEvent).path())!,"utf8");
+ expect(notes).toContain("What, if anything, does this table remind you of?");
+ expect(notes).toContain("Human-edited sample question");
+ expect(notes).toContain("FICTIONAL PUBLIC PRACTICE");
  await page.getByRole("button",{name:"Use an invented practice answer",exact:true}).click();
  await expect(page.getByLabel("Fictional practice answer",{exact:true})).toHaveValue(/Jars like these/);
  await page.getByRole("button",{name:"Create sample exhibit",exact:true}).click();
@@ -24,14 +31,21 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await expect(exhibit).toContainText("Fictional practice speaker");
  await expect(exhibit).toContainText("invented answer");
  await expect(exhibit.getByRole("img")).toHaveAttribute("src","/demo/photo-02.jpg");
+ const exhibitEvent=page.waitForEvent("download");
+ await exhibit.getByRole("button",{name:"Download exhibit text",exact:true}).click();
+ const exhibitText=readFileSync((await (await exhibitEvent).path())!,"utf8");
+ expect(exhibitText).toContain("Fictional practice speaker: Jars like these");
+ expect(exhibitText).toContain("source revision 1");
  await question.fill("A revised sample question");
  await expect(page.getByText("Needs review:",{exact:false})).toBeVisible();
+ await expect(exhibit.getByRole("button",{name:"Download exhibit text",exact:true})).toBeDisabled();
  await expect(exhibit).toContainText("What, if anything, does this table remind you of?");
  await page.getByRole("button",{name:"They do not remember",exact:true}).click();
  await page.getByRole("button",{name:"Update sample exhibit",exact:true}).click();
  await expect(exhibit).toContainText("Does not remember.");
  await expect(page.getByText("Needs review:",{exact:false})).toHaveCount(0);
  await expect(exhibit).toContainText("A revised sample question");
+ await expect(exhibit.getByRole("button",{name:"Download exhibit text",exact:true})).toBeEnabled();
  await exhibit.getByRole("link",{name:"Return to the photograph and source"}).click();
  await expect(page).toHaveURL(/#photo-original$/);
  await page.getByRole("button",{name:"A quilt and its story",exact:true}).click();

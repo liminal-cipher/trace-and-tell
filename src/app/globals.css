@@ -725,7 +725,11 @@ code {
 @media(max-width:900px) { .research-grid { grid-template-columns:1fr; } .evidence-columns { grid-template-columns:1fr; gap:8px; } }
 @media(max-width:600px) { .source-grid,.exhibit-grid { grid-template-columns:1fr; } .source-desk { padding:18px; } .research-toolbar { align-items:stretch; flex-direction:column; } .evidence-card,.question-card { padding:18px; } }
 
-/* The public story uses only local, curated synthetic material. */
+/* Public samples use curated historical photos and labelled fictional answers. */
+.conversation-guide { border-left:4px solid var(--accent); padding:20px 24px; margin:20px 0; background:var(--panel); }
+.conversation-guide > * + *, .record-download > p { margin-top:14px; }
+.conversation-guide ol { padding-left:22px; }
+.conversation-guide li { margin:8px 0; }
 .photo-intro { display:grid; grid-template-columns:1.5fr 1fr; gap:48px; align-items:end; margin:32px 0; }
 .photo-intro > p { max-width:390px; font-size:18px; }
 .photo-choice { display:flex; flex-wrap:wrap; gap:10px; margin:30px 0; }

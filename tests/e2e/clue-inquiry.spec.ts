@@ -40,6 +40,12 @@ test("one photograph → selected clue → question → testimony → illustrate
     await expect(page.locator(".question-card")).toHaveCount(2);
     await expect(page.locator(".question-card").last()).toContainText("human-authored");
     await question.getByRole("button", { name: "Select question", exact: true }).click();
+    const notesEvent = page.waitForEvent("download");
+    await question.getByRole("button", { name: "Download conversation notes", exact: true }).click();
+    const notes = readFileSync((await (await notesEvent).path())!, "utf8");
+    expect(notes).toContain("Authored fixture question");
+    expect(notes).toContain("Record A · source revision 1");
+    expect(notes).not.toContain(repo.workspace);
     await question.getByLabel("Speaker label").fill("Synthetic speaker");
     await question.getByLabel("Their words").fill("An invented demonstration answer, not a historical memory.");
     await question.getByRole("button", { name: "Save testimony" }).click();
@@ -49,6 +55,11 @@ test("one photograph → selected clue → question → testimony → illustrate
     const exhibit = page.locator(".exhibit-card");
     await expect(exhibit.getByRole("img").first()).toHaveAttribute("src", `/api/archive/assets/${photo}/file?revision=1`);
     await expect(exhibit.getByRole("link", { name: "Open full original · revision 1 (new tab)", exact: true }).first()).toHaveAttribute("href", `/api/archive/assets/${photo}/file?revision=1`);
+    const exhibitEvent = page.waitForEvent("download");
+    await exhibit.getByRole("button", { name: "Download exhibit text", exact: true }).click();
+    const textCopy = readFileSync((await (await exhibitEvent).path())!, "utf8");
+    expect(textCopy).toContain("Synthetic speaker: An invented demonstration answer");
+    expect(textCopy).not.toContain("/api/");
     await page.reload();
     await expect(exhibit).toContainText("One detail, one question");
     expect((await repo.snapshot()).document.entries.some((entry) => entry.kind === "hypothesis")).toBe(false);
@@ -58,6 +69,8 @@ test("one photograph → selected clue → question → testimony → illustrate
     await page.screenshot({ path: `test-results/clue-inquiry-${test.info().project.name}.png`, fullPage: true });
     await clue.getByRole("button", { name: "Reject observation", exact: true }).click();
     await expect(exhibit).toContainText("needs review");
+    await expect(exhibit.getByRole("button", { name: "Download exhibit text", exact: true })).toBeDisabled();
+    await expect(question.getByRole("button", { name: "Save testimony", exact: true })).toBeDisabled();
     await expect(clue.getByLabel("Your question")).toHaveCount(0);
     expect(errors).toEqual([]);
   } finally { await repo.db.close(); }

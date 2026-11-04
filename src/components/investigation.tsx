@@ -3,6 +3,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { PrivateImage } from "./archive-image";
 import { EvidenceReference } from "./evidence-reference";
+import { ConversationGuide, DownloadNotes } from "./conversation-guide";
+import { exhibitNotes } from "@/lib/record-export";
 import { createRetryKeys } from "@/lib/retry-keys";
 import type { Asset, Revision } from "@/lib/contracts";
 import { analysisIdentity, type Entry, type InvestigationSnapshot, type ProviderMode } from "@/lib/investigation-contracts";
@@ -92,6 +94,7 @@ export function Investigation({ workspace }: {
     const entries = snapshot?.document.entries ?? [];
     const assets = snapshot?.archive.assets.filter((a) => a.deletion_state === "active") ?? [];
     const currentRevision = (id: string) => snapshot?.archive.revisions.find((r) => r.asset_id === id && r.revision === assets.find((a) => a.id === id)?.active_revision);
+    const exportSources = (entry: Entry) => entry.sources.map(source => ({ title: snapshot?.archive.revisions.find(revision => revision.asset_id === source.asset_id && revision.revision === source.revision)?.title ?? "Unavailable source", revision: source.revision }));
     const analyse = (operation: "observe" | "compare") => mutate({ action: "analyse", operation, mode, ...(mode === "replay" ? { replay_id: replayId } : {}), sources: selected.map((id) => ({ asset_id: id, revision: assets.find((a) => a.id === id)!.active_revision })) });
     const inquire = (entry: Entry) => mutate({ action: "analyse", operation: "inquire", mode, ...(mode === "replay" ? { replay_id: replayId } : {}), sources: entry.sources, clue_id: entry.id, clue_revision: entry.revision });
     const alreadyInquired = (entry: Entry) => snapshot?.document.analysed.includes(analysisIdentity({ operation: "inquire", sources: entry.sources.map((s) => ({ ...s, content: null })), observations: [{ id: entry.id, revision: entry.revision, text: entry.text, sources: entry.sources, review_state: entry.review_state, mode: entry.mode === "human" ? "fixture" : entry.mode }] }));
@@ -163,7 +166,9 @@ export function Investigation({ workspace }: {
             : entry.review_state !== "rejected" && <p className="muted">Choose Use for inquiry after reviewing the evidence to write your own question.</p>}
         </article>)}
         {entries.filter((e) => e.kind === "question").map((entry) => <article className="question-card" key={entry.id}>{entryHeader(entry)}<h3>{entry.text}</h3>{sourceLinks(entry)}{correction(entry)}<button disabled={busy || entry.review_state === "rejected"} onClick={() => void review(entry, "selected")}>Select question</button>
-          {entry.review_state === "selected" && <TestimonyForm entry={entry} busy={busy} save={mutate}/>}
+          {entry.review_state === "selected" && <><ConversationGuide question={entry.text} questionRevision={entry.revision} origin={entry.mode === "human" ? "Human-authored question" : entry.mode === "fixture" ? "Authored fixture question · software example" : "Recorded model question"} sources={exportSources(entry)} disabled={busy || entry.evidence_validity !== "current"}/>
+          {entry.evidence_validity !== "current" && <p className="notice">Review the changed question and its sources before using it for a conversation or recording another response.</p>}
+          <TestimonyForm entry={entry} busy={busy || entry.evidence_validity !== "current"} save={mutate}/></>}
         </article>)}
       </section>
       <section className="investigation-section"><div className="section-line"><h2>03 / Keep the words and their sources</h2><span>Testimony is attributed, not independently verified.</span></div>
@@ -175,7 +180,9 @@ export function Investigation({ workspace }: {
             const r = snapshot.archive.revisions.find((r) => r.asset_id === s.asset_id && r.revision === s.revision);
             return r?.content === null && assets.some((a) => a.id === s.asset_id) ? <figure key={s.asset_id}><PrivateImage assetId={s.asset_id} revision={s.revision} title={r.title} className="original" zoom/><figcaption>{r.title} · source revision {s.revision}</figcaption></figure> : null;
           })}</div>
-          <blockquote>{entry.text}</blockquote><p className="muted">A collection of attributed words. Connections remain open to review.</p>{sourceLinks(entry)}<details><summary>Testimony sources</summary>{entry.parents.map((p) => { const t = entries.find((e) => e.id === p.id); return <p key={p.id}>{t?.details.speaker ?? "Missing testimony"} · quoted revision {p.revision} · {t?.mode ?? "unavailable"}</p>; })}</details></article>)}</div>
+          <blockquote>{entry.text}</blockquote><p className="muted">A collection of attributed words. Connections remain open to review.</p>{sourceLinks(entry)}<details><summary>Testimony sources</summary>{entry.parents.map((p) => { const t = entries.find((e) => e.id === p.id); return <p key={p.id}>{t?.details.speaker ?? "Missing testimony"} · quoted revision {p.revision} · {t?.mode ?? "unavailable"}</p>; })}</details>
+          <DownloadNotes filename="trace-and-tell-exhibit.txt" disabled={busy || entry.evidence_validity !== "current"} text={() => exhibitNotes({ sample: false, title: entry.details.title ?? "Untitled exhibit", text: entry.text, revision: entry.revision, sources: exportSources(entry), validity: entry.evidence_validity })}>Download exhibit text</DownloadNotes>
+          {entry.evidence_validity !== "current" && <p className="muted">Review and update the exhibit before downloading its text.</p>}</article>)}</div>
       </section>
       <details className="run-register"><summary>Analysis run register</summary>{snapshot.runs.map((run) => <p key={run.id}>{run.mode} · {run.model} · {run.status} · {run.error ?? run.created_at} <code>{run.id}</code></p>)}</details>
     </>}

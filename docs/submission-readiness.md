@@ -1,6 +1,7 @@
 # Submission Readiness — 5 November 2026
 
-Status: local submission candidate; **not deployed, filmed or submitted**.
+Status: local submission candidate; first three-minute video rendered locally;
+final revision in progress. **Not deployed or submitted.**
 Use this packet with [implementation evidence](m1b-m2-implementation.md) and
 [M1a security limits](m1a-implementation.md). It does not grant external approval.
 
@@ -21,9 +22,21 @@ were read in Edge. The following requirements supersede the earlier public-page-
 | Confirmed | Viability, theme and Meta use are pass/fail gates. Scored judging: impact 30%, Meta tooling 25%, technical execution 20%, demo 25%. The guide discourages simple image analysers; demonstrate the complete inquiry-to-exhibit workflow. |
 | Confirmed | Fields include project description, Meta product use, why Meta matters, partner feedback and subjective API/tool surveys. An optional X link is shown. No separate live-URL field was observed; the guide mentions a live product alongside video and code. |
 | Unconfirmed | Character limits and detailed video hosting/encoding restrictions were not established. Read the final rules before submission; this inspection does not accept them. |
-| Decision before submission | Public repository publication needs a sensitive-history audit and separate authorisation. Video recording/hosting, any deployment, subjective survey answers and final submission remain pending. |
+| Decision before submission | Public repository publication needs a sensitive-history audit and separate authorisation. YouTube upload is authorised; final video hosting is in progress. Deployment, subjective survey answers and final submission remain pending. |
 
 No login email was sent, agreement accepted, form saved or submission made.
+
+### Critical review against the rubric
+
+| Criterion | Concrete strength | Remaining weakness / decision |
+| --- | --- | --- |
+| Impact — 30% | A record keeper can take one photo-linked question into a conversation, preserve attributed words and leave with a sourced exhibit. Downloadable notes close the gap between a screen and that conversation. | No real-user usefulness study or retention measure. Do not substitute feature counts or model JSON success for demonstrated impact. |
+| Meta tooling — 25% | Actual observations, record comparisons and clue-grounded inquiries feed a reviewed workflow. Failure examples and human alternatives remain visible. | Small photo pilot; one revised comparison still made an unsupported identity distinction. No face matching claim. |
+| Technical execution — 20% | Exact revision references, server authorship, stale-evidence rejection, bounded live calls and separate local regression checks. | Real two-user isolation and HTTPS acceptance remain incomplete. Offer the isolated public static sample first. |
+| Demo — 25% | One visible journey reaches an illustrated exhibit, revisits evidence and visibly reacts to a changed question. | Final video, accessible repository and approved hosting are delivery gates. A local sample is not a hosted private-write demonstration. |
+
+This review does not predict a judging score. The chosen focus is a conversation
+and a usable record; automatic recognition of relatives is outside the claim.
 
 ## A. Submission Description
 
@@ -50,7 +63,10 @@ shared ticket/note markings but returned no questions. A person could still writ
 an open question, with explicit human attribution and no model/run attribution.
 
 The record keeper can review, correct or reject observations and hypotheses,
-select a question, record text testimony, and save an exhibit. Observations,
+select a question, download a conversation note sheet, record text testimony,
+and save an exhibit with an optional attributed text download. The sheet helps
+the keeper ask permission, preserve exact words and record uncertainty before
+returning to the collection. Observations,
 hypotheses, questions, testimony and exhibits remain distinct. A selected
 hypothesis is not established history, and testimony is attributed to a speaker
 and recorder. Original wording and earlier revisions remain available;
@@ -62,7 +78,8 @@ The public demonstration lets a visitor select a recorded photo clue, choose or
 edit an actual Meta question, try a clearly fictional answer or unknown memory,
 and assemble an illustrated sample exhibit. It uses public-domain historical
 photos, curated actual model excerpts and labelled fictional practice text.
-Edits exist only in the page and disappear on refresh. It does not connect to
+Edits exist only in the page and disappear on refresh; visitors may explicitly
+download a labelled practice text copy. It does not connect to
 private workspaces, persist writes or run AI requests. Private collections use
 Supabase Auth, ownership checks, RLS and
 private Storage. Single-user hosted workflows have been verified, but real

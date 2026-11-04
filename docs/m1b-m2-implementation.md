@@ -23,7 +23,13 @@ Changed answers/questions mark the existing exhibit for review. No sample state
 is persisted; refresh clears it. `/demo` retains the synthetic comparison and
 correction study. Public excerpts omit private IDs and raw execution data.
 
-New local verification: 141 unit/PGlite tests across 24 files passed; typecheck,
+The selected question now produces a downloadable conversation note sheet with
+source revisions, consent prompts and explicit unknown/declined response options.
+An exhibit can produce a text copy with its attribution and source revisions.
+Changed or invalidated evidence blocks both stale conversation use and exhibit
+export. Downloads are local user actions, not uploads or a complete archive backup.
+
+New local verification: 146 unit/PGlite tests across 25 files passed; typecheck,
 lint (zero errors/warnings) and production build passed. Fourteen desktop/mobile
 browser tests passed, with the two
 real-local-Supabase tests skipped because that environment was not enabled.
