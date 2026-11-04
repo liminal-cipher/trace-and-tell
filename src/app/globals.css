@@ -751,6 +751,13 @@ code {
 .photo-demo details summary { padding:10px 0; cursor:pointer; text-decoration:underline; }
 .photo-status { color:var(--muted); margin:24px 0; }
 .photo-limits { margin-top:64px; }
+.photo-text-study { display:grid; grid-template-columns:330px minmax(0,1fr); gap:40px; align-items:start; }
+.photo-text-study figure { margin:0; }
+.photo-text-study img { display:block; width:100%; max-width:330px; height:auto; }
+.photo-text-study figcaption { margin-top:14px; font-size:12px; line-height:1.7; color:var(--muted); }
+.photo-text-study blockquote { font-family:Georgia,serif; font-size:25px; line-height:1.6; margin:18px 0; }
+.photo-text-study p,.photo-text-study details { margin-bottom:20px; }
+@media(max-width:650px) { .photo-text-study { grid-template-columns:1fr; gap:24px; } }
 @media(max-width:900px) { .photo-workbench,.photo-intro { grid-template-columns:1fr; gap:24px; } .photo-intro > p { max-width:650px; } }
 @media(max-width:650px) { .photo-exhibit { grid-template-columns:1fr; padding:20px; } .photo-clue { padding:20px; } .photo-intro h1 { font-size:44px; } }
 .demo-story section, .demo-story article, .demo-story details { scroll-margin-top: 24px; }

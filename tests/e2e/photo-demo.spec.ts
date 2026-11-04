@@ -16,7 +16,7 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await question.fill("What, if anything, does this table remind you of?");
  await expect(page.getByText("Human-edited sample question.",{exact:false})).toBeVisible();
  await page.getByText("Keep the original question in view",{exact:true}).click();
- await expect(page.locator("details blockquote")).toHaveText(original);
+ await expect(page.locator("section[aria-labelledby='question-heading'] details blockquote")).toHaveText(original);
  await page.getByRole("button",{name:"Choose this question",exact:true}).click();
  const notesEvent=page.waitForEvent("download");
  await page.getByRole("button",{name:"Download conversation notes",exact:true}).click();
@@ -62,5 +62,13 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await page.reload();
  await expect(page.getByLabel("Your question",{exact:true})).toHaveCount(0);
  await expect(page.locator(".photo-limits")).toContainText("Human quality review is pending for all 17");
+ const textStudy=page.locator("#photo-text-study");
+ await expect(textStudy).toContainText("Storefront fascia bears the text 'stevensons'");
+ await expect.poll(()=>textStudy.locator("img").evaluate((image:HTMLImageElement)=>image.naturalWidth)).toBe(330);
+ await expect(textStudy).toContainText("Human quality review is pending");
+ const errorDetails=textStudy.getByText("Inspect the error in the same response",{exact:true});
+ await errorDetails.focus();await page.keyboard.press("Enter");
+ await expect(textStudy.getByText("The small window figures do not establish",{exact:false})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  expect(unexpected).toEqual([]);expect(errors).toEqual([]);
 });

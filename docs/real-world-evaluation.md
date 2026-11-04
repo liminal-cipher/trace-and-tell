@@ -573,3 +573,30 @@ report. Source/prepared/public-display hashes are separate in the private
 curation manifest. No raw model logs, allowances or private identifiers are
 published. The original twenty-three-photo dataset and all earlier ledgers remain
 preserved; this three-photo pilot does not replace or enlarge their denominators.
+
+### Public text-in-photo example — 5 November
+
+The photo-first demo now includes a separate storefront study from `rw-20`,
+with an exact Medium observation excerpt and the overclaim in the same response.
+The assistant verified visible `stevensons` lettering; the small window figures
+still do not establish “mannequins in dresses”. Human review remains PENDING.
+This belongs to the earlier 30-request cohort, not the 17-request photo pilot.
+
+Source: Flip Schulke / U.S. National Archives, NAID 558126. The [source licensing
+section](https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg#Licensing)
+was rechecked on 5 November and identifies the EPA photograph as public domain.
+The public asset is a metadata-free, lossless WebP copy of the evaluated 330×489
+JPEG edition. Decoded RGB pixels match exactly; no enlargement, sharpening or
+replacement by a higher-resolution image was used to illustrate model quality.
+
+- Evaluated JPEG SHA-256: `c78f126edc2bd9227cabf69b57c333e95757b9d630237175bea5236c80c9ae32`.
+- Public WebP SHA-256: `a8fbb25fb6dbf4cf6546dc1f40955e7e055a10e9098684e1eb02b4987449143b`.
+- Fresh verification: 146 unit/PGlite tests, 14 desktop/mobile browser tests,
+  typecheck, ESLint, production build and the separate static-only build passed.
+  Two real Supabase browser tests remain skipped. The first focused browser run
+  used the old production build and failed to find the new section; rebuilding
+  and rerunning the complete browser suite resolved that stale-build failure.
+
+No new inference was needed for this curation. The ORBIT example remains an
+explicit historical synthetic study and is excluded from the new photo-first
+recorded walkthrough. The new video is still being reviewed, not yet uploaded.

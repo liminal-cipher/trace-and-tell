@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { photoStories, photoEvaluation } from "@/lib/photo-demo-evidence";
+import { photoStories, photoEvaluation, photoTextStudy } from "@/lib/photo-demo-evidence";
 import { ConversationGuide, DownloadNotes } from "./conversation-guide";
 import { exhibitNotes } from "@/lib/record-export";
 
@@ -13,6 +13,18 @@ export function PhotoDemo() {
     <div className="photo-intro"><h1>A photograph.<br/><em>A conversation to keep.</em></h1><p>For the person keeping the family’s photos: choose one detail, take a question into a conversation, and keep the person’s words beside their source.</p></div>
     <div className="photo-choice" aria-label="Choose a sample photograph">{photoStories.map((story, i) => <button key={story.id} className={i === selected ? "" : "secondary"} aria-pressed={i === selected} onClick={() => setSelected(i)}>{story.label}</button>)}</div>
     <PhotoJourney key={photoStories[selected].id} story={photoStories[selected]}/>
+    <section id="photo-text-study" className="photo-step" aria-labelledby="text-clue-heading">
+      <div className="section-line"><h2 id="text-clue-heading">Text in a photograph can be a clue, too.</h2><span>Separate recorded evaluation · read only</span></div>
+      <div className="photo-text-study">
+        <figure><a href={photoTextStudy.image} target="_blank" rel="noopener noreferrer" aria-label="Open the evaluated storefront image (new tab)"><Image src={photoTextStudy.image} alt="Historical storefront photograph with stevensons in yellow lettering above the display windows." width={330} height={489} unoptimized/></a>
+          <figcaption>Flip Schulke / U.S. National Archives, NAID 558126 · Public domain.<br/><a href={photoTextStudy.sourceUrl} target="_blank" rel="noopener noreferrer">Source and rights statement ↗</a><br/>330 × 489 evaluation edition. Lossless web copy; metadata removed.</figcaption>
+        </figure>
+        <div><p className="eyebrow">Recorded Meta observation · Standard · Medium</p><blockquote>{photoTextStudy.observation}</blockquote><p><strong>Assistant visual check:</strong> the store name matches the visible lettering. A readable name can guide a question about a place; it does not establish who visited or when.</p>
+          <details><summary>Inspect the error in the same response</summary><blockquote>{photoTextStudy.overclaim}</blockquote><p>The small window figures do not establish that they are mannequins wearing dresses. This overclaim remains unresolved. The model’s caveat about reflections did not remove it.</p></details>
+          <p className="muted">One selected example from the earlier 30-request text-heavy evaluation, separate from the three-photo pilot below. Human quality review is pending. This is not a transcription accuracy score; no new model request runs here.</p>
+        </div>
+      </div>
+    </section>
     <section className="notice photo-limits" aria-labelledby="limits-heading"><h2 id="limits-heading">What this demonstration proves — and what it does not</h2>
       <p>These are licensed historical photographs, not AI-generated family pictures. The observations and questions are excerpts from recorded Meta Standard Medium requests. The practice answer is fictional; it is never attributed to the photographed people.</p>
       <p>{photoEvaluation.scope}</p><p>{photoEvaluation.limitations}</p>

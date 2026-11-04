@@ -1,4 +1,11 @@
 // Curated public excerpts; no workspace, account, run IDs or live provider imports.
+export const photoTextStudy = {
+  image: "/demo/storefront.webp",
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:A_NEWLY_RESTORED_AND_PAINTED_OLDER_STOREFRONT_ON_MINNESOTA_STREET_IN_NEW_ULM,_MINNESOTA._THE_BUILDING_NOW_HOUSES_A..._-_NARA_-_558126.jpg",
+  observation: "Storefront fascia bears the text 'stevensons' in stylized yellow lettering.",
+  overclaim: "Ground floor has a central entrance flanked by large display windows containing standing mannequins in dresses, with an additional door on the right side of the storefront.",
+} as const;
+
 export const photoStories = [
   {
     "id": "photo-02",
