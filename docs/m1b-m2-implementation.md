@@ -1,5 +1,38 @@
 # M1 Stabilisation and M2 Preparation
 
+## Photo inquiry and interactive sample — 5 November 2026
+
+This update supersedes the earlier next-session plans below; dated results remain
+historical evidence. A selected current observation can now produce a question
+from one photograph, or supply the exact source/parent revisions for a human
+question. Server-derived authorship prevents a human question from acquiring a
+model/run attribution. Stale, rejected, foreign and deleted clues are rejected;
+the imported model result rechecks that the selected clue did not change while
+the request ran. Testimony and illustrated exhibits retain their revision links.
+
+The app defaults to Medium. New inquiry/comparison guidance has explicit prompt
+versions and input/request hashes; old unguided input bytes and recorded replay
+versions are preserved. The new prompt pilot used 17 actual requests on three
+public-domain historical photographs, with all human quality reviews pending.
+See [the full evaluation distinction](real-world-evaluation.md#photo-inquiry-pilot--5-november-2026).
+No hosted Supabase acceptance or cleanup was repeated.
+
+`/demo/photo` is a public interactive sample: recorded Meta clue/question →
+editable question → fictional answer or unknown memory → illustrated exhibit.
+Changed answers/questions mark the existing exhibit for review. No sample state
+is persisted; refresh clears it. `/demo` retains the synthetic comparison and
+correction study. Public excerpts omit private IDs and raw execution data.
+
+New local verification: 141 unit/PGlite tests across 24 files passed; typecheck,
+lint (zero errors/warnings) and production build passed. Fourteen desktop/mobile
+browser tests passed, with the two
+real-local-Supabase tests skipped because that environment was not enabled.
+This includes single-photo inquiry through Fixture/PGlite and the anonymous
+photo sample with no private/outbound API requests. Hosted A/B isolation and
+HTTPS behaviour remain open; local tests do not establish them. The separately
+built static candidate passed desktop/mobile direct-link, refresh and navigation
+checks with private routes returning 404 and no private/external API requests.
+
 ## Real-world input validation follow-up — 3 November 2026
 
 The shared image pipeline now prepares bounded, metadata-free, lossless PNGs

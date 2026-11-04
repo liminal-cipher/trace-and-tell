@@ -507,3 +507,69 @@ fixed-batch audit implementations. They require private local packets and pin
 the originally approved Git baseline; they intentionally refuse a later checkout
 and do not authorise reruns. A future photo cohort needs a new fixed proposal and
 approval rather than editing old authorisations or journals.
+
+## Photo inquiry pilot — 5 November 2026
+
+Three public-domain FSA-OWI photographs were selected for everyday objects and
+memory questions, separately from the earlier nine-photo / thirty-request
+effort experiment. The source collection's [rights statement](https://wwws.loc.gov/rr/print/res/072_fsac.html)
+and item provenance were retrieved before transmission. These are existing
+historical photographs, not generated family images. Neutral scene/object use
+was screened separately from copyright; no identity, kinship or sensitive
+personal inference was requested. Catalogue names/dates were held out of inputs.
+
+| Photo / source | Edition and preparation | Remaining limit |
+| --- | --- | --- |
+| [Group indoors, LC-USF35-585](https://commons.wikimedia.org/wiki/File:Jack_Whinery_and_his_family,_homesteaders_1a34169v.jpg) | Russell Lee / Library of Congress. JPEG 1024×792 → PNG at the same dimensions. | Source descriptions disagree on month; small calendar text is not a capture date. |
+| [Meal, LC-USF35-326](https://commons.wikimedia.org/wiki/File:The_Faro_Caudill_(family)_eating_dinner_in_their_dugout,_Pie_Town,_New_Mexico_LCCN2017877693.jpg) | Russell Lee / Library of Congress. JPEG 4737×3308 → PNG 2048×1430. | Fine lettering/food detail can be lost on resizing; jar contents are uncertain. |
+| [Quilt, LC-USF35-577](https://www.flickr.com/photos/library_of_congress/2178354733/) | Russell Lee / Library of Congress official Flickr preview. JPEG 500×386 → PNG at the same dimensions. | Low resolution; most small lettering is unreadable. No enlargement or invented transcription. |
+
+All three editions and seven initial payloads passed offline preparation. Exact
+original/prepared bytes, hashes, input order, provisional reference facts, rights
+and execution identities were frozen locally before each phase. Human reference
+review stayed PENDING. Photographs were not uploaded to Supabase.
+
+| Phase | Actual requests | Output / review distinction |
+| --- | ---: | --- |
+| Initial observation/comparison | 7 | Three observations and four comparisons. Structurally valid. Assistant found generic questions and an unsupported use of scene differences as contradiction. |
+| Initial selected-clue inquiry | 3 | Three questions per photo. Assistant found repetitive reassurance and questions asking for already visible details. |
+| Paired prompt refinement | 7 | Same four comparisons and three inquiries with new guidance/hashes. Two shorter questions per inquiry. Missing links were separated from contradiction; a conflicting note still returned no questions. |
+| Total | 17 successful / 0 failed / 0 retried | Three unused slots deliberately left unspent; programme closed, Live disabled. Human quality review 0/17. |
+
+Model: `muse-spark-1.3`, Standard, Medium; 8,192 maximum completion tokens,
+180-second timeout, zero retries. Reported usage totals: 54,239 input and 34,503
+output tokens; summed request latency 377,239 ms. At the verified Standard
+prices ($1.25/M input, $4.25/M output), calculated cost is **$0.2144365**.
+Actual billing is unverified. Conservative reservation was $22.95 inside the
+$27/20-request programme; unused capacity is not permission to rerun it.
+
+Assistant preliminary findings: people/table objects, patterned textile and
+several surrounding clues were consistent with the inspected images. The model
+abstained on small quilt lettering and uncertain jar contents. Earlier questions
+were verbose and weak at eliciting memories; the refined jar-use and quilt-use
+questions better address missing context. These are qualitative observations,
+not human scores. Some wording still assumes familiarity or routines, and the
+same three photographs were reused during refinement, so no independent
+generalisation or accuracy gain is established. No face matching was evaluated.
+
+A further output review found a remaining overclaim in `group-quilt-refined`:
+although `contradicts` is empty, its statement and unknowns say “different
+people”. The pictures alone do not establish different identities. This remains
+an unresolved, medium-severity assistant finding; moving a claim into an
+uncertainty field does not make it grounded. The public limitations disclose it.
+Future evaluation must check both same-person and different-person assertions,
+and use a fresh holdout set before claiming that a prompt change generalises.
+
+The offline review packet retains all 17 original responses, both prompt
+versions, source/input images, raw usage, CSV exports and per-field human-review
+templates. Reviewers must split compound claims, compare both image editions,
+score omissions/uncertainty/questions separately and preserve failed claims.
+No Human PASS or semantic percentage is emitted for an empty review denominator.
+
+The public sample displays only credited web derivatives of these three photos
+and selected exact observation/question excerpts. It labels invented practice
+answers and discloses earlier limitations; it is not a complete evaluation
+report. Source/prepared/public-display hashes are separate in the private
+curation manifest. No raw model logs, allowances or private identifiers are
+published. The original twenty-three-photo dataset and all earlier ledgers remain
+preserved; this three-photo pilot does not replace or enlarge their denominators.
