@@ -14,7 +14,7 @@ test("synthetic archive is read only, responsive and survives reload", async ({
   expect(response?.headers()["x-frame-options"]).toBe("DENY");
   expect(response?.headers()["referrer-policy"]).toBe("no-referrer");
   await expect(page.getByText("SYNTHETIC · READ ONLY", { exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Keep the record. Find the question." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Could this note belong with this ticket?" })).toBeVisible();
   await page.screenshot({ path: `test-results/demo-opening-${test.info().project.name}.png` });
   await expect(page.locator("#connection")).toContainText("Recorded Meta output");
   await expect(page.locator("#question")).toContainText("The model returned no questions.");

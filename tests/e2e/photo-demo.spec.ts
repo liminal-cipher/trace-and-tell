@@ -14,7 +14,7 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await expect(page.getByRole("heading",{name:"02 / Ask for the story the photo cannot tell"})).toBeVisible();
  const question=page.getByLabel("Your question",{exact:true}),original=await question.inputValue();
  await question.fill("What, if anything, does this table remind you of?");
- await expect(page.getByText("Human-edited sample question.",{exact:false})).toBeVisible();
+ await expect(page.getByText("You edited Meta’s question.",{exact:false})).toBeVisible();
  await page.getByText("Keep the original question in view",{exact:true}).click();
  await expect(page.locator("section[aria-labelledby='question-heading'] details blockquote")).toHaveText(original);
  await page.getByRole("button",{name:"Choose this question",exact:true}).click();

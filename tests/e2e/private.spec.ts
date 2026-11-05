@@ -139,7 +139,7 @@ test.describe("real local Supabase Auth / PostgreSQL / Storage", () => {
       mimeType: "image/png",
       buffer: bytes,
     });
-    await expect(page.getByText(/duplicate skipped/)).toBeVisible();
+    await expect(page.getByText(/No second copy was added/)).toBeVisible();
     const snapshot = await (await page.request.get("/api/archive")).json();
     const photo = snapshot.assets.find(
       (a: { kind: string }) => a.kind === "photo",

@@ -13,7 +13,7 @@ export function DownloadNotes({ filename, text, children, disabled = false }: {
       url = URL.createObjectURL(new Blob([text()], { type: "text/plain;charset=utf-8" }));
       const link = document.createElement("a");
       link.href = url; link.download = filename; link.click();
-      setMessage("Text copy prepared. Check your downloads; nothing was sent to anyone.");
+      setMessage("Your text copy is ready. Check your downloads.");
     } catch { setMessage("The copy could not be prepared. Check the record and try again."); }
     finally { if (url) { const address = url; window.setTimeout(() => URL.revokeObjectURL(address), 1000); } }
   }
@@ -25,7 +25,7 @@ export function ConversationGuide({ question, origin, sources, questionRevision,
 }) {
   return <aside className="conversation-guide" aria-label="Prepare a conversation">
     <h4>Take one question to someone who might remember.</h4>
-    <ol><li>Show the photograph and ask whether they want to talk about it.</li><li>Ask your question, then listen without suggesting the answer.</li><li>Keep their words and permission to share. Not remembering or declining is valid.</li></ol>
+    <ol><li>Show the photograph and ask whether they want to talk about it.</li><li>Ask your question, then listen without suggesting the answer.</li><li>Write down their own words and ask what you may share. They can skip any question.</li></ol>
     <p>{sample ? "Try this with invented notes here. For your own collection, take the notes into a real conversation and return to record the response." : "Download a note sheet for the conversation, then return here to save their response. The sheet includes this question and its source revisions."}</p>
     <DownloadNotes filename="trace-and-tell-conversation.txt" disabled={disabled || !question.trim()} text={() => conversationNotes({ question, origin, sources, questionRevision, sample })}>Download conversation notes</DownloadNotes>
   </aside>;

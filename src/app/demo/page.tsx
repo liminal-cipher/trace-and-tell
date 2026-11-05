@@ -1,18 +1,18 @@
 import Image from "next/image";
 import { demoEvidence as evidence } from "@/lib/demo-evidence";
 
-export const metadata = { title: "Trace & Tell — A Living Family Gallery" };
+export const metadata = { title: "A ticket and a note | Trace & Tell" };
 
 export default function Demo() {
   return (
     <main className="page demo-story" id="story">
       <div className="eyebrow">THE OPEN COLLECTION <span className="badge">SYNTHETIC · READ ONLY</span></div>
       <section className="hero">
-        <div><h1>Keep the record.<br /><em>Find the question.</em></h1>
-          <p>Photographs outlive the stories behind them. Trace &amp; Tell helps a family record keeper notice clues, ask someone who might remember, and preserve their answer with its sources.</p>
+        <div><h1>Could this note belong<br /><em>with this ticket?</em></h1>
+          <p>A ticket and a typed note share two markings. Follow what Meta found and the question a person wrote next.</p>
           <a className="button" href="#sources">Follow two records ↓</a>
         </div>
-        <aside className="hero-note"><span className="folio">No. 001 / An open inquiry</span><p>A synthetic ticket and a note.<br />A possible connection.<br />Room for “I don’t know”.</p><p>No sign-in. No uploads. No live AI calls.</p></aside>
+        <aside className="hero-note"><span className="folio">About this sample</span><p>Both records were made for this example. The model’s observations come from a recorded run.</p><p>No sign-in. No uploads. No live AI calls.</p></aside>
       </section>
       <nav className="story-nav" aria-label="Demo journey"><a href="#sources">01 Sources</a><a href="#observation">02 Observe</a><a href="#connection">03 Connect</a><a href="#question">04 Ask</a><a href="#testimony">05 Listen</a><a href="#gallery">06 Exhibit</a></nav>
       <aside className="notice"><strong>A real model result, within an invented collection.</strong><p>The image and note are synthetic. Labelled excerpts below come from previously recorded Meta Standard runs. The human question is separately attributed; the testimony and exhibition wording are authored demo examples. This page reads no private workspace and saves nothing.</p></aside>

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 export const metadata: Metadata = {
-  title: "Trace & Tell — Archive",
+  title: "Family archive | Trace & Tell",
   description:
-    "A quiet place for records and the context that belongs with them.",
+    "Keep family photos, questions and the words of the people who remember them.",
 };
 export default function RootLayout({
   children,
@@ -26,7 +26,6 @@ export default function RootLayout({
         {children}
         <footer className="footer">
           <span>TRACE & TELL</span>
-          <span>Keep the record. Leave room for the unknown.</span>
           <span>A Living Family Gallery</span>
         </footer>
       </body>

@@ -197,7 +197,7 @@ export function Archive() {
       });
       updateUpload(item, {
         state: result.duplicate
-          ? "Already in this workspace — duplicate skipped."
+          ? "This file is already in your workspace. No second copy was added."
           : "Saved and verified.",
         finished: true,
       });
