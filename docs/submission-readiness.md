@@ -124,44 +124,37 @@ hosting candidate; the resulting artifact still requires approval and HTTPS chec
 ## C. Demo Script and Shot List
 
 Required length: **three minutes**, confirmed in the participant guide and form.
-The current film is an actual isolated-browser recording with captions, replacing
-the rejected screenshot drafts. The local delivery file is
-`.local/videos/trace-and-tell-demo/renders/recorded-v3.mp4`: exactly 180 seconds,
-1920×1080/30fps, H.264 with AAC 48kHz audio. Actual interaction occupies 142 seconds;
-the opening, evidence card and completed-exhibit payoff complete the film.
+The local delivery file is `.local/videos/trace-and-tell-demo/renders/recorded-v4.mp4`.
+The opening and closing show the same Library of Congress photograph. The opening
+question is the demonstrator's wording. The last line quotes the fictional
+practice speaker from the actual exhibit. Both attributions are visible in the film.
 
-The flow selects a real photo clue, edits a recorded Meta question, downloads
-conversation notes, records unknown memory, enters a visibly fictional practice
-answer, creates an exhibit, follows its evidence and updates it after a correction.
-A separate real storefront photo shows both readable lettering and an overclaim
-in the same response. ORBIT is not shown. No private profile, remote write or live
-model request was used during recording. The film's 17-request Medium pilot is a
-specific historical cohort; later quality tuning is reported separately.
+Between those two moments, 142 seconds of actual browser interaction show the
+recorded Meta observation, edited question, downloadable notes, unknown-memory
+option, attributed practice answer, exhibit and correction. The storefront
+example labels the readable sign and the unresolved figures together. The
+17-request photo pilot on the build card is a specific cohort. Later tuning is
+reported separately in the evaluation notes.
 
-All flow assertions and final composition checks passed. Encoded frames and
-typing/ending sequences were inspected; a fresh sheet reviewer found no remaining
-P0/P1 issues after corrections. Encoded narration measures -16.1LUFS with zero
-clipping. It uses on-device Kokoro, not Meta speech generation. Sound was measured
-and transcribed, not heard; full human playback acceptance remains pending.
-YouTube upload has not occurred because the browser-control attempt stopped
-when the native browser URL could not be verified. No alternate control bypass
-was used. The final file is ready for the authorised upload when access is usable.
+The complete 180-second file decoded at 1920×1080, 30 fps. The internal review
+covered the actual recording, the captions at phone width and the status of
+each quotation. The edited question and both fictional quotations match the
+text exported from the recorded app. English narration used local Kokoro.
+Human listening and signed-out playback after upload remain pending.
 
-Current recorded narration:
-
-| Time | Narration |
+| Time | Spoken narration |
 | --- | --- |
-| 0:00–0:12 | An old photograph can outlive the people who know its story. Trace and Tell helps a family record keeper turn a visible detail into a conversation worth preserving. |
-| 0:12–0:24 | This is an actual Library of Congress photograph. A recorded Meta observation points to cups and jars, while leaving their contents uncertain. |
-| 0:24–0:44 | Choose the clue to see Meta's recorded questions. Here, I make one more open: what, if anything, do these jars remind you of? The app labels my wording as human edited and keeps the original question visible. |
-| 0:44–0:56 | Next, download conversation notes. They carry the question and source, with reminders to ask permission, keep the person's own words, and leave room for uncertainty. |
-| 0:56–1:05 | If someone does not remember, record that. There is no need to fill a gap with an invented answer. |
-| 1:05–1:29 | For this public practice, I use a clearly fictional response. It is not testimony from anyone in the photograph. Creating the exhibit brings the photograph, question, and attributed response together. This is the record we want to keep, without treating someone's memory as verified history. |
-| 1:29–1:44 | Open the evidence trail, then download the exhibit text. The photograph and source stay linked. This public practice uploads nothing; the authenticated app separately stores records and their exact revisions. |
-| 1:44–2:12 | Now I change the question. The earlier exhibit keeps its original wording, shows that it needs review, and blocks export. Only after I update it does the new question appear. In the private workflow, previous revisions remain available. A correction should not silently rewrite the evidence behind a story. |
-| 2:12–2:34 | Photographs may also contain readable text. In this historical storefront, Meta read stevensons. But it also called tiny figures mannequins in dresses without enough evidence. We keep both the useful observation and the overclaim visible. Human quality review is still pending. |
-| 2:34–2:48 | During the hackathon, we built the private archive, reviewed inquiry, testimony, and source linked gallery. Seventeen pilot requests covered three photos. Real two user security checks remain open. |
-| 2:48–3:00 | Meta helps people notice and ask. People supply the memory. Trace and Tell keeps the photograph, words, and sources together, with room for the unknown. |
+| 0:00–0:12 | If this were your family album, who would you sit beside to look at this table? What, if anything, do these jars remind you of? |
+| 0:12–0:24 | This photograph comes from the Library of Congress. In Trace and Tell, Meta picked out cups and glass jars. What's inside them is hard to tell. |
+| 0:24–0:44 | Meta asks what the jars typically held. That assumes someone knows. I'd like to give them room to remember something else. I change the question in my own words. You can still read what Meta originally asked. |
+| 0:44–0:56 | I can take that question to the kitchen table. The notes include the photo reference and a reminder to ask permission before keeping anyone's words. |
+| 0:56–1:05 | Sometimes the answer is simply, “I don't remember.” There's a place for that, too. |
+| 1:05–1:29 | For this public demo, I'll use a fictional answer. “Jars like these remind me of keeping leftovers after a shared meal.” When I make the exhibit, those words sit beside the photograph. The label tells you who supplied them. |
+| 1:29–1:44 | I can open the evidence trail from here and take a copy of the exhibit text. This practice stays in the browser. The private collection saves the exact editions behind the story. |
+| 1:44–2:12 | Suppose I come back later and change what I asked. An answer belongs to the question someone heard. The earlier exhibit keeps that wording. Its download waits for review. I check the question and answer together before updating the exhibit. The private archive also keeps the earlier version. |
+| 2:12–2:34 | This shop window shows why a second look matters. Meta read the sign as “stevensons.” Then it described mannequins in dresses. Look at the window. The figures are too small to tell. Both lines came from the same response. |
+| 2:34–2:48 | During the hackathon, we built the private archive and the path you just saw. A family can bring home a question, then keep the answer with the photograph. |
+| 2:48–3:00 | Our fictional speaker remembered saving leftovers. Then comes the line I'd keep in their own words. “I cannot remember what was in them that day.” |
 
 Recording, original media, captions, script and review evidence remain in the
 ignored local video folder. Only cleared public/test material appears. Fictional
