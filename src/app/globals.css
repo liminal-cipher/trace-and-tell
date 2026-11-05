@@ -759,7 +759,16 @@ code {
 .photo-text-study p,.photo-text-study details { margin-bottom:20px; }
 @media(max-width:650px) { .photo-text-study { grid-template-columns:1fr; gap:24px; } }
 @media(max-width:900px) { .photo-workbench,.photo-intro { grid-template-columns:1fr; gap:24px; } .photo-intro > p { max-width:650px; } }
-@media(max-width:650px) { .photo-exhibit { grid-template-columns:1fr; padding:20px; } .photo-clue { padding:20px; } .photo-intro h1 { font-size:44px; } }
+@media(max-width:650px) {
+  .photo-demo { padding-top: 16px; }
+  .photo-intro { gap: 8px; margin: 12px 0; }
+  .photo-intro h1 { font-size: clamp(28px, 8.2vw, 37px); }
+  .photo-intro > p { font-size: 16px; line-height: 1.4; }
+  .photo-choice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 16px 0; }
+  .photo-choice button { min-height: 44px; padding: 6px; line-height: 1.25; }
+  .photo-exhibit { grid-template-columns: 1fr; padding: 20px; }
+  .photo-clue { padding: 20px; }
+}
 .demo-story section, .demo-story article, .demo-story details { scroll-margin-top: 24px; }
 .demo-story .hero p { max-width: 640px; }
 .demo-story .hero .button { margin-top: 24px; }

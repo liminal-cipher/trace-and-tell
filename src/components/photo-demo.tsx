@@ -9,8 +9,8 @@ import { exhibitNotes } from "@/lib/record-export";
 export function PhotoDemo() {
   const [selected, setSelected] = useState(0);
   return <main className="page photo-demo">
-    <div className="eyebrow">THE OPEN COLLECTION <span className="badge">INTERACTIVE SAMPLE · NOTHING UPLOADED</span></div>
-    <div className="photo-intro"><h1>Who would you ask<br/><em>about this photo?</em></h1><p>Choose a photograph. Look for one detail you could ask about, then try keeping the answer beside the picture.</p></div>
+    <p className="eyebrow">INTERACTIVE SAMPLE · NOTHING UPLOADED</p>
+    <div className="photo-intro"><h1>Who would you ask<br/><em>about this photo?</em></h1><p>Choose a photo and a detail to ask about. Keep the answer beside the picture.</p></div>
     <div className="photo-choice" aria-label="Choose a sample photograph">{photoStories.map((story, i) => <button key={story.id} className={i === selected ? "" : "secondary"} aria-pressed={i === selected} onClick={() => setSelected(i)}>{story.label}</button>)}</div>
     <PhotoJourney key={photoStories[selected].id} story={photoStories[selected]}/>
     <section id="photo-text-study" className="photo-step" aria-labelledby="text-clue-heading">

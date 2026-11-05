@@ -8,7 +8,13 @@ test("anonymous photo sample keeps provenance, edits and uncertainty without pri
  await expect(page).toHaveURL(/\/demo\/photo$/);
  await expect(page.getByText("INTERACTIVE SAMPLE · NOTHING UPLOADED",{exact:true})).toBeVisible();
  await expect(page.locator("#photo-original img")).toBeVisible();
- await expect.poll(()=>page.locator("#photo-original img").evaluate((image:HTMLImageElement)=>image.naturalWidth)).toBeGreaterThan(0);
+ const openingPhoto = page.locator("#photo-original img");
+ await openingPhoto.evaluate((image: HTMLImageElement) => image.decode());
+ // The picture should be visible before the visitor scrolls past the introduction.
+ await expect.poll(() => openingPhoto.evaluate(image => {
+   const bounds = image.getBoundingClientRect();
+   return (Math.min(innerHeight, bounds.bottom) - Math.max(0, bounds.top)) / bounds.height;
+ })).toBeGreaterThan(0.4);
  await page.screenshot({path:`test-results/photo-opening-${test.info().project.name}.png`});
  const clue=page.getByRole("button",{name:"Use this clue for a question",exact:true});await clue.focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"02 / Ask for the story the photo cannot tell"})).toBeVisible();
