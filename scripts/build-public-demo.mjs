@@ -5,6 +5,7 @@ import { resolve, dirname, join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 const root=resolve(import.meta.dirname,".."), target=resolve(root,".local",`public-demo-${Date.now()}`);
+mkdirSync(dirname(target), { recursive: true });
 mkdirSync(target);
 const files=["src/app/layout.tsx","src/app/globals.css","src/app/demo/page.tsx","src/app/demo/photo/page.tsx","src/components/photo-demo.tsx","src/components/conversation-guide.tsx","src/lib/record-export.ts","src/lib/photo-demo-evidence.ts","src/lib/demo-evidence.ts","postcss.config.mjs","public/demo/orbit-ticket.png","public/demo/photo-01.jpg","public/demo/photo-02.jpg","public/demo/photo-03.jpg"];
 files.push("public/demo/storefront.webp");
