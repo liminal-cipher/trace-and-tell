@@ -23,12 +23,12 @@ were read in Edge. The following requirements supersede the earlier public-page-
 | Confirmed | Viability, theme and Meta use are pass/fail gates. Scored judging: impact 30%, Meta tooling 25%, technical execution 20%, demo 25%. The guide discourages simple image analysers; demonstrate the complete inquiry-to-exhibit workflow. |
 | Confirmed | Fields include project description, Meta product use, why Meta matters, partner feedback and subjective API/tool surveys. An optional X link is shown. No separate live-URL field was observed; the guide mentions a live product alongside video and code. |
 | Unconfirmed | Character limits and detailed video hosting/encoding restrictions were not established. Read the final rules before submission; this inspection does not accept them. |
-| Decision before submission | Public repository publication needs a sensitive-history audit and separate authorisation. YouTube upload was authorised. The revised film is on hold for editorial feedback. The required survey answers have been entered. Public access, final video hosting and submission remain pending. |
+| Decision before submission | The repository owner made the project public. Anonymous access to the GitHub project page was verified on 5 November. The owner will upload the film. The video URL and final submission are pending. |
 
 During the 5 November drafting session, project text, Meta use, partner feedback,
 the repository address and the user’s two required survey answers were entered
 in the open form. The video field remained empty. Server-side draft persistence
-was not confirmed. The repository address still requires anonymous access.
+was not confirmed. The repository page subsequently returned HTTP 200 without an authenticated session.
 
 ### Critical review against the rubric
 
@@ -37,7 +37,7 @@ was not confirmed. The repository address still requires anonymous access.
 | Impact — 30% | A record keeper can take one photo-linked question into a conversation, preserve attributed words and leave with a sourced exhibit. Downloadable notes close the gap between a screen and that conversation. | No real-user usefulness study or retention measure. Do not substitute feature counts or model JSON success for demonstrated impact. |
 | Meta tooling — 25% | Actual observations, record comparisons and clue-grounded inquiries feed a reviewed workflow. Failure examples and human alternatives remain visible. | Small photo pilot; one revised comparison still made an unsupported identity distinction. No face matching claim. |
 | Technical execution — 20% | Exact revision references, server authorship, stale-evidence rejection, bounded live calls and separate local regression checks. | Real two-user isolation and HTTPS acceptance remain incomplete. Offer the isolated public static sample first. |
-| Demo — 25% | One visible journey reaches an illustrated exhibit, revisits evidence and visibly reacts to a changed question. | Final video, accessible repository and approved hosting are delivery gates. A local sample is not a hosted private-write demonstration. |
+| Demo — 25% | One visible journey reaches an illustrated exhibit, revisits evidence and visibly reacts to a changed question. | Video upload and signed-out playback remain to be checked. The sample demonstrates the local public workflow. |
 
 This review does not predict a judging score. The chosen focus is a conversation
 and a usable record; automatic recognition of relatives is outside the claim.
@@ -126,39 +126,31 @@ hosting candidate; the resulting artifact still requires approval and HTTPS chec
 
 ## C. Demo Script and Shot List
 
-Required length: **three minutes**, confirmed in the participant guide and form.
-The last completed cut is `.local/videos/trace-and-tell-demo/renders/recorded-v4.mp4`.
-The script below is the v5 working edit. The final render was paused for
-editorial feedback. There is no v5 delivery file or upload.
-The film starts with a Library of Congress photograph of a meal. A close-up
-shows the jars between the plates. The viewer hears the recorded question from
-Muse Spark 1.3, then a person's edit. Both are quoted in full.
+The review cut runs for three minutes. It opens with Russell Lee’s photograph of a
+meal, followed by the project title. The actual screen recording shows a photo
+clue from Muse Spark, its original question and the optional human edit. The
+notes scene uses excerpts of the downloaded text file alongside its source photo.
 
-The working edit includes 162 seconds of screen recording, from 0:12 to 2:54. It shows the conversation sheet, the option to leave a memory unknown,
-a fictional reply, an exhibit and the review required after an edit. A second
-photograph pairs a readable shop sign with an overconfident model observation.
-The final action follows the exhibit's source link back to the meal photograph.
-A brief credit identifies the hackathon work over the exhibit. The opening,
-closing, question edit and treatment of the fictional speaker are under review.
+The two sentences about the jars appear together in the fictional practice
+reply. The app retains its native attribution. The storefront example shows a
+readable sign and an unsupported detail from the same model response. The last
+shot pairs the original photograph with the speaker’s words before the project
+wordmark appears. No personal photographs or private account screens appear.
 
 | Time | Spoken narration |
 | --- | --- |
-| 0:00 to 0:12 | If this were your family album, who would you sit beside to look at this table? Maybe the conversation would start with those jars between the plates. |
-| 0:12 to 0:24 | This photograph comes from the Library of Congress. Meta's Muse Spark noticed the glass jars. Here's the question it suggested. |
-| 0:24 to 0:44 | What was typically kept in the large glass jars seen on the table? That asks for a fact. A family member might remember something else. What, if anything, do these jars remind you of? The original question stays alongside the edit. |
-| 0:44 to 0:56 | That question can leave the screen and go to the kitchen table. The notes name the photo and remind the listener to ask permission. |
+| 0:00 to 0:10 | Have you ever turned over a family photo, hoping someone had written on the back? This is Trace and Tell. |
+| 0:10 to 0:22 | Take this meal photographed by Russell Lee. Look between the plates. Meta's Muse Spark noticed the glass jars. Here's the question it suggested. |
+| 0:22 to 0:33 | What was typically kept in the large glass jars seen on the table? What, if anything, do these jars remind you of? Either question works. Asking it your way gives someone room to surprise you. |
+| 0:33 to 0:56 | You can take that question to the kitchen table. The note sheet travels with it. Here’s the sheet from that download. It names the photograph and leaves space for the speaker’s own words. Ask what they want to share. |
 | 0:56 to 1:05 | Sometimes the answer is simply, “I don't remember.” There's a place for that, too. |
-| 1:05 to 1:29 | Here's a fictional reply for this public example. “Jars like these remind me of keeping leftovers after a shared meal.” The photograph and those words now sit side by side. The label tells the next reader whose words they're reading. |
-| 1:29 to 1:44 | Each answer has a trail back to the question and the picture. This example stays in the browser. In a private collection, each saved version has its own source record. |
-| 1:44 to 2:12 | Suppose the question changes after someone has answered. An answer belongs to the question someone heard. The earlier exhibit keeps that wording. The download waits for review. Once the wording has been checked, the exhibit can be updated. The private archive also keeps the earlier version. |
-| 2:12 to 2:34 | This shop window shows why a second look matters. Meta read the sign as “stevensons.” Then it described mannequins in dresses. Look at the window. The figures are too small to tell. Both lines came from the same response. |
-| 2:34 to 2:48 | Back at the table, the answer is still attached to the photograph. Follow its source, and there's the picture that started the conversation. |
-| 2:48 to 3:00 | Our fictional speaker remembered saving leftovers. The rest stays in their own words. “I cannot remember what was in them that day.” |
-
-Recording, original media, captions, script and review evidence remain in the
-ignored local video folder. Only cleared public/test material appears. Fictional
-answers are not testimony by the photographed people, and the public sample is
-not a demonstration of a hosted private save.
+| 1:05 to 1:29 | Here's a fictional reply for this public example. “Jars like these remind me of keeping leftovers after a shared meal.” “I cannot remember what was in them that day.” The exhibit keeps both sentences beside the photograph. |
+| 1:29 to 1:44 | Each answer has a trail back to the question and the picture. You can take a copy of the exhibit text, too. In a private collection, each saved version keeps its sources. |
+| 1:44 to 1:58 | Suppose someone changes the question afterwards. The answer still belongs to the words the speaker heard. The exhibit keeps that earlier wording until someone reviews the change. |
+| 1:58 to 2:20 | A second photograph shows why a clue needs a second pair of eyes. Muse Spark read the shop sign as “stevensons.” You can see the word above the windows. The same response described mannequins wearing dresses. Look at the figures. They're too small to tell. |
+| 2:20 to 2:41 | Back at the table, the speaker’s words are still attached to this photograph. There’s a link underneath them. Follow it back to the original. Here’s the photograph again, with Russell Lee’s credit and the Library of Congress record. |
+| 2:41 to 2:57 | Someone looking at these jars years from now might wonder about that meal, too. The next person who opens this photo will find their words beside it. |
+| 2:57 to 3:00 | The wordmark and subtitle hold in silence. |
 
 ## D. Evidence Summary and Public Excerpt Selection
 
@@ -212,10 +204,11 @@ Items below are preparation gates, not invented official mandatory fields.
 - [ ] Review final rules and any unresolved field/format constraints.
 - [x] Confirm the form shows Indie Developer and Build for Your World, with Trace & Tell named in the description.
 - [ ] Approve a concrete demo-only hosting proposal; verify the resulting HTTPS URL and all deep links from an unauthenticated browser. No deployment approved here.
-- [ ] Audit repository history and obtain authorisation to make a clean submission repository public; private access alone does not satisfy the guide.
+- [x] Verify anonymous access to the project repository after its owner makes it public.
+- [ ] Complete a separate audit of previously published repository history.
 - [x] Produce and locally verify a screen-recorded three-minute video using cleared photos and labelled fictional practice material.
 - [ ] Upload the authorised final video and verify full playback without the author's account; human listening remains pending.
-- [ ] Check the filled draft before submission. Verify public repository access and add the video URL after signed-out playback.
+- [ ] Check the filled draft before submission and add the video URL after signed-out playback.
 - [ ] User reviews and explicitly authorises final submission; retain confirmation/receipt and timestamp before the deadline.
 
 ## Deployment Candidates and Security Gates
